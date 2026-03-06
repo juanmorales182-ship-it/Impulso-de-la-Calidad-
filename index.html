@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Impulso a la Calidad</title>
+<meta name="description" content="Cursos profesionales de calidad para ingenieros: AMEF, Control Estadístico, Servicio al Cliente y Moldeo de Inyección">
 
 <style>
 
@@ -18,29 +20,38 @@ font-family:Arial, Helvetica, sans-serif;
 body{
 background:#f4f6f9;
 color:#333;
+line-height:1.6;
 }
 
+/* HEADER */
+
 header{
-background:#0b3d91;
+background:linear-gradient(135deg,#0b3d91,#1c5ed6);
 color:white;
 text-align:center;
-padding:30px;
+padding:40px 20px;
 }
 
 header h1{
-font-size:32px;
+font-size:34px;
+margin-bottom:10px;
 }
 
 header p{
-margin-top:10px;
+font-size:16px;
+opacity:0.9;
 }
+
+/* CONTENEDOR */
 
 .container{
 width:90%;
 max-width:1100px;
 margin:auto;
-padding:40px 0;
+padding:50px 0;
 }
+
+/* GRID */
 
 .grid{
 display:grid;
@@ -48,28 +59,35 @@ grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
 gap:25px;
 }
 
+/* TARJETAS */
+
 .card{
 background:white;
-border-radius:10px;
+border-radius:12px;
 padding:25px;
-box-shadow:0 4px 10px rgba(0,0,0,0.1);
-transition:0.3s;
+box-shadow:0 4px 12px rgba(0,0,0,0.08);
+transition:all 0.3s ease;
 cursor:pointer;
+border-top:4px solid #0b3d91;
 }
 
 .card:hover{
-transform:translateY(-5px);
-box-shadow:0 8px 20px rgba(0,0,0,0.15);
+transform:translateY(-6px);
+box-shadow:0 10px 25px rgba(0,0,0,0.15);
 }
 
 .card h3{
 color:#0b3d91;
-margin-bottom:10px;
+margin-bottom:12px;
+font-size:20px;
 }
 
 .card p{
 font-size:14px;
+color:#555;
 }
+
+/* FOOTER */
 
 footer{
 background:#0b3d91;
@@ -77,9 +95,10 @@ color:white;
 text-align:center;
 padding:20px;
 margin-top:40px;
+font-size:14px;
 }
 
-/* Modal */
+/* MODAL */
 
 .modal{
 display:none;
@@ -89,24 +108,45 @@ left:0;
 top:0;
 width:100%;
 height:100%;
-background:rgba(0,0,0,0.7);
+background:rgba(0,0,0,0.8);
 justify-content:center;
 align-items:center;
+padding:20px;
 }
 
 .modal img{
-max-width:80%;
-max-height:80%;
+max-width:90%;
+max-height:85%;
 border-radius:10px;
+box-shadow:0 10px 30px rgba(0,0,0,0.5);
 }
 
 .close{
 position:absolute;
-top:20px;
+top:25px;
 right:40px;
-font-size:35px;
+font-size:40px;
 color:white;
 cursor:pointer;
+transition:0.2s;
+}
+
+.close:hover{
+transform:scale(1.2);
+}
+
+/* RESPONSIVE */
+
+@media(max-width:600px){
+
+header h1{
+font-size:26px;
+}
+
+.card{
+padding:20px;
+}
+
 }
 
 </style>
@@ -129,7 +169,7 @@ cursor:pointer;
 </div>
 
 <div class="card" onclick="mostrarFlyer('calidad.jpg')">
-<h3>La calidad en mi vida</h3>
+<h3>La calidad en mi vida y en el servicio al cliente</h3>
 <p>Aplicación de la calidad en la vida diaria y en el servicio al cliente.</p>
 </div>
 
@@ -139,8 +179,8 @@ cursor:pointer;
 </div>
 
 <div class="card" onclick="mostrarFlyer('inyeccion.jpg')">
-<h3>Defectos en moldeo de inyección</h3>
-<p>Solución de defectos en el proceso de moldeo de plásticos.</p>
+<h3>Solución de defectos en moldeo de inyección</h3>
+<p>Defectos en el proceso de moldeo de inyección de plásticos.</p>
 </div>
 
 </div>
@@ -151,22 +191,33 @@ cursor:pointer;
 <p>© 2026 Impulso a la Calidad | Formación para ingenieros</p>
 </footer>
 
-<!-- Modal -->
+<!-- MODAL -->
 
-<div id="modal" class="modal">
+<div id="modal" class="modal" onclick="cerrarModalFuera(event)">
 <span class="close" onclick="cerrarModal()">&times;</span>
-<img id="flyer">
+<img id="flyer" alt="Flyer del curso">
 </div>
 
 <script>
 
 function mostrarFlyer(imagen){
-document.getElementById("modal").style.display="flex";
-document.getElementById("flyer").src=imagen;
+
+const modal = document.getElementById("modal");
+const flyer = document.getElementById("flyer");
+
+flyer.src = imagen;
+modal.style.display = "flex";
+
 }
 
 function cerrarModal(){
 document.getElementById("modal").style.display="none";
+}
+
+function cerrarModalFuera(event){
+if(event.target.id === "modal"){
+cerrarModal();
+}
 }
 
 </script>
