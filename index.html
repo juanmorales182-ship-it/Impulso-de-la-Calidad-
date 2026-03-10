@@ -32,6 +32,15 @@ text-align:center;
 padding:40px 20px;
 }
 
+/* LOGO UTEQ */
+.logo-uteq{
+width:120px;
+margin-bottom:15px;
+background:white;
+padding:8px;
+border-radius:8px;
+}
+
 header h1{
 font-size:34px;
 margin-bottom:10px;
@@ -85,6 +94,15 @@ font-size:20px;
 .card p{
 font-size:14px;
 color:#555;
+}
+
+/* TALLERISTA */
+
+.tallerista{
+margin-top:10px;
+font-size:13px;
+font-weight:bold;
+color:#444;
 }
 
 /* FOOTER */
@@ -155,32 +173,44 @@ padding:20px;
 <body>
 
 <header>
+
+<img src="https://idiomas.uteq.edu.mx/images/uteq-logo.png" class="logo-uteq">
+
 <h1>Impulso a la Calidad</h1>
 <p>Capacitación profesional para mejorar procesos, calidad y toma de decisiones en la industria.</p>
+
 </header>
 
 <section class="container">
 
 <div class="grid">
 
-<div class="card" onclick="mostrarFlyer('AMEF.png')">
+<div class="card" onclick="mostrarFlyer('AMEF1.png')">
 <h3>AMEF sin Miedo</h3>
 <p>Anticiparse al error antes de que cueste millones.</p>
+<p class="tallerista">Tallerista: Ing. Juan Mariano Moreno Soria</p>
 </div>
 
-<div class="card" onclick="mostrarFlyer('Calidad.png')">
+<div class="card" onclick="mostrarFlyer('Calidad1.png')">
 <h3>La calidad en mi vida y en el servicio al cliente</h3>
 <p>Aplicación de la calidad en la vida diaria y en el servicio al cliente.</p>
+<p class="tallerista">Tallerista: Mtra. Edith Montalbán Loyola</p>
 </div>
 
-<div class="card" onclick="mostrarFlyer('estadistico.png')">
+<div class="card" onclick="mostrarFlyer('estadistico1.png')">
 <h3>Datos que deciden</h3>
 <p>Control Estadístico para Ingenieros Reales.</p>
+<p class="tallerista">Tallerista: Mtra. Wendy Jimenéz Alvarez</p>
 </div>
 
-<div class="card" onclick="mostrarFlyer('inyeccion.png')">
+<div class="card" onclick="mostrarFlyer('inyeccion1.png')">
 <h3>Solución de defectos en moldeo de inyección</h3>
 <p>Defectos en el proceso de moldeo de inyección de plásticos.</p>
+<p class="tallerista">
+Talleristas:<br>
+Mtro. Armando Israel Velázquez<br>
+Mtro. Fabián Armando Arellano
+</p>
 </div>
 
 </div>
@@ -224,4 +254,3 @@ cerrarModal();
 
 </body>
 </html>
-
