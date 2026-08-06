@@ -1,7 +1,8 @@
 import { useMemo, useState } from 'react';
 import { useStore } from '../../state/store';
 import {
-  getSheetHeaders,
+  getHeaderOptions,
+  getPreviewRows,
   listSheets,
   mapRowsToAuditors,
   mapRowsToLines,
@@ -13,8 +14,62 @@ import type * as XLSX from 'xlsx';
 import { exportStateAsJson, importStateFromJson } from '../../storage/db';
 import { buildPlanWorkbook, downloadWorkbook } from '../../excel/exportPlan';
 
-const EMPTY_LINE_MAPPING: LineColumnMapping = { sheetName: '', name: '', team: '', location: '' };
-const EMPTY_AUDITOR_MAPPING: AuditorColumnMapping = { sheetName: '', name: '', layers: '', location: '' };
+function emptyLineMapping(sheetName: string): LineColumnMapping {
+  return { sheetName, headerRowIndex: 0, nameColumn: -1, teamColumn: -1, locationColumn: undefined };
+}
+
+function emptyAuditorMapping(sheetName: string): AuditorColumnMapping {
+  return { sheetName, headerRowIndex: 0, nameColumn: -1, layersColumn: -1, locationColumn: undefined };
+}
+
+function ColumnSelect({
+  value,
+  onChange,
+  options,
+  optional,
+}: {
+  value: number | undefined;
+  onChange: (v: number | undefined) => void;
+  options: { columnIndex: number; label: string }[];
+  optional?: boolean;
+}) {
+  return (
+    <select
+      value={value === undefined || value === -1 ? '' : String(value)}
+      onChange={(e) => onChange(e.target.value === '' ? undefined : Number(e.target.value))}
+    >
+      <option value="">{optional ? '(no importar / default Principal)' : '— Selecciona —'}</option>
+      {options.map((o) => (
+        <option key={o.columnIndex} value={o.columnIndex}>
+          {o.label}
+        </option>
+      ))}
+    </select>
+  );
+}
+
+function SheetPreview({ rows, headerRowIndex }: { rows: string[][]; headerRowIndex: number }) {
+  if (rows.length === 0) return null;
+  return (
+    <div style={{ overflowX: 'auto', marginBottom: 10 }}>
+      <table className="data-table" style={{ fontSize: 11 }}>
+        <tbody>
+          {rows.map((row, rowIdx) => (
+            <tr key={rowIdx} style={rowIdx === headerRowIndex ? { background: 'var(--color-warning-bg)' } : undefined}>
+              <td style={{ fontWeight: 600, color: 'var(--color-text-muted)' }}>
+                Fila {rowIdx + 1}
+                {rowIdx === headerRowIndex ? ' (encabezados)' : ''}
+              </td>
+              {row.slice(0, 12).map((cell, cellIdx) => (
+                <td key={cellIdx}>{cell || '·'}</td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
 
 export default function ImportExportPage() {
   const data = useStore((s) => s.data);
@@ -24,19 +79,32 @@ export default function ImportExportPage() {
 
   const [workbook, setWorkbook] = useState<XLSX.WorkBook | null>(null);
   const [fileName, setFileName] = useState('');
-  const [lineMapping, setLineMapping] = useState<LineColumnMapping>(EMPTY_LINE_MAPPING);
-  const [auditorMapping, setAuditorMapping] = useState<AuditorColumnMapping>(EMPTY_AUDITOR_MAPPING);
+  const [lineMapping, setLineMapping] = useState<LineColumnMapping>(emptyLineMapping(''));
+  const [auditorMapping, setAuditorMapping] = useState<AuditorColumnMapping>(emptyAuditorMapping(''));
   const [lineWarnings, setLineWarnings] = useState<string[] | null>(null);
   const [auditorWarnings, setAuditorWarnings] = useState<string[] | null>(null);
   const [importedCount, setImportedCount] = useState<{ lines: number; auditors: number } | null>(null);
 
   const sheets = useMemo(() => (workbook ? listSheets(workbook) : []), [workbook]);
-  const lineSheetHeaders = useMemo(
-    () => (workbook && lineMapping.sheetName ? getSheetHeaders(workbook, lineMapping.sheetName) : []),
+
+  const lineHeaderOptions = useMemo(
+    () => (workbook && lineMapping.sheetName ? getHeaderOptions(workbook, lineMapping.sheetName, lineMapping.headerRowIndex) : []),
+    [workbook, lineMapping.sheetName, lineMapping.headerRowIndex],
+  );
+  const linePreviewRows = useMemo(
+    () => (workbook && lineMapping.sheetName ? getPreviewRows(workbook, lineMapping.sheetName, 6) : []),
     [workbook, lineMapping.sheetName],
   );
-  const auditorSheetHeaders = useMemo(
-    () => (workbook && auditorMapping.sheetName ? getSheetHeaders(workbook, auditorMapping.sheetName) : []),
+
+  const auditorHeaderOptions = useMemo(
+    () =>
+      workbook && auditorMapping.sheetName
+        ? getHeaderOptions(workbook, auditorMapping.sheetName, auditorMapping.headerRowIndex)
+        : [],
+    [workbook, auditorMapping.sheetName, auditorMapping.headerRowIndex],
+  );
+  const auditorPreviewRows = useMemo(
+    () => (workbook && auditorMapping.sheetName ? getPreviewRows(workbook, auditorMapping.sheetName, 6) : []),
     [workbook, auditorMapping.sheetName],
   );
 
@@ -45,15 +113,15 @@ export default function ImportExportPage() {
     setWorkbook(wb);
     setFileName(file.name);
     const firstSheet = listSheets(wb)[0] ?? '';
-    setLineMapping({ sheetName: firstSheet, name: '', team: '', location: '' });
-    setAuditorMapping({ sheetName: firstSheet, name: '', layers: '', location: '' });
+    setLineMapping(emptyLineMapping(firstSheet));
+    setAuditorMapping(emptyAuditorMapping(firstSheet));
     setImportedCount(null);
     setLineWarnings(null);
     setAuditorWarnings(null);
   }
 
   function handleImportLines() {
-    if (!workbook || !lineMapping.name || !lineMapping.team) return;
+    if (!workbook || lineMapping.nameColumn < 0 || lineMapping.teamColumn < 0) return;
     const { items, warnings } = mapRowsToLines(workbook, lineMapping);
     const count = importLines(items);
     setLineWarnings(warnings);
@@ -61,7 +129,7 @@ export default function ImportExportPage() {
   }
 
   function handleImportAuditors() {
-    if (!workbook || !auditorMapping.name || !auditorMapping.layers) return;
+    if (!workbook || auditorMapping.nameColumn < 0 || auditorMapping.layersColumn < 0) return;
     const { items, warnings } = mapRowsToAuditors(workbook, auditorMapping);
     const count = importAuditors(items);
     setAuditorWarnings(warnings);
@@ -94,8 +162,8 @@ export default function ImportExportPage() {
       <div className="card">
         <h3 style={{ marginTop: 0 }}>1. Cargar archivo Excel</h3>
         <p className="hint">
-          Sube tu Excel actual. Después eliges qué columna corresponde a cada campo — funciona con el formato que ya
-          tengas, no hace falta que coincida con nombres específicos.
+          Sube tu Excel actual. Después eliges la hoja, la fila donde están los encabezados reales (muchos Excels
+          tienen una fila de título arriba) y qué columna corresponde a cada campo.
         </p>
         <input
           type="file"
@@ -116,7 +184,7 @@ export default function ImportExportPage() {
               <label>Hoja</label>
               <select
                 value={lineMapping.sheetName}
-                onChange={(e) => setLineMapping((m) => ({ ...m, sheetName: e.target.value }))}
+                onChange={(e) => setLineMapping(emptyLineMapping(e.target.value))}
               >
                 {sheets.map((s) => (
                   <option key={s} value={s}>
@@ -126,42 +194,49 @@ export default function ImportExportPage() {
               </select>
             </div>
             <div className="mapping-row">
+              <label>Fila de encabezados</label>
+              <input
+                type="number"
+                min={1}
+                value={lineMapping.headerRowIndex + 1}
+                onChange={(e) =>
+                  setLineMapping((m) => ({ ...m, headerRowIndex: Math.max(0, Number(e.target.value) - 1), nameColumn: -1, teamColumn: -1, locationColumn: undefined }))
+                }
+                style={{ width: 80 }}
+              />
+            </div>
+            <SheetPreview rows={linePreviewRows} headerRowIndex={lineMapping.headerRowIndex} />
+            <div className="mapping-row">
               <label>Columna: Nombre de línea *</label>
-              <select value={lineMapping.name} onChange={(e) => setLineMapping((m) => ({ ...m, name: e.target.value }))}>
-                <option value="">— Selecciona —</option>
-                {lineSheetHeaders.map((h) => (
-                  <option key={h} value={h}>
-                    {h}
-                  </option>
-                ))}
-              </select>
+              <ColumnSelect
+                value={lineMapping.nameColumn}
+                onChange={(v) => setLineMapping((m) => ({ ...m, nameColumn: v ?? -1 }))}
+                options={lineHeaderOptions}
+              />
             </div>
             <div className="mapping-row">
               <label>Columna: Equipo/BU *</label>
-              <select value={lineMapping.team} onChange={(e) => setLineMapping((m) => ({ ...m, team: e.target.value }))}>
-                <option value="">— Selecciona —</option>
-                {lineSheetHeaders.map((h) => (
-                  <option key={h} value={h}>
-                    {h}
-                  </option>
-                ))}
-              </select>
+              <ColumnSelect
+                value={lineMapping.teamColumn}
+                onChange={(v) => setLineMapping((m) => ({ ...m, teamColumn: v ?? -1 }))}
+                options={lineHeaderOptions}
+              />
             </div>
             <div className="mapping-row">
               <label>Columna: Ubicación</label>
-              <select
-                value={lineMapping.location}
-                onChange={(e) => setLineMapping((m) => ({ ...m, location: e.target.value }))}
-              >
-                <option value="">(no importar / default Principal)</option>
-                {lineSheetHeaders.map((h) => (
-                  <option key={h} value={h}>
-                    {h}
-                  </option>
-                ))}
-              </select>
+              <ColumnSelect
+                value={lineMapping.locationColumn}
+                onChange={(v) => setLineMapping((m) => ({ ...m, locationColumn: v }))}
+                options={lineHeaderOptions}
+                optional
+              />
             </div>
-            <button type="button" className="btn" disabled={!lineMapping.name || !lineMapping.team} onClick={handleImportLines}>
+            <button
+              type="button"
+              className="btn"
+              disabled={lineMapping.nameColumn < 0 || lineMapping.teamColumn < 0}
+              onClick={handleImportLines}
+            >
               Importar líneas
             </button>
             {lineWarnings && (
@@ -182,11 +257,16 @@ export default function ImportExportPage() {
 
           <div className="card">
             <h3 style={{ marginTop: 0 }}>3. Mapeo de columnas — Auditores</h3>
+            <p className="hint">
+              Si tu catálogo de auditores está partido en varios bloques de columnas (p. ej. "Auditores de LPA's" y
+              "Auditores de Producto" lado a lado), repite este paso una vez por bloque — los nombres se emparejan
+              autom&aacute;ticamente, no se duplican.
+            </p>
             <div className="mapping-row">
               <label>Hoja</label>
               <select
                 value={auditorMapping.sheetName}
-                onChange={(e) => setAuditorMapping((m) => ({ ...m, sheetName: e.target.value }))}
+                onChange={(e) => setAuditorMapping(emptyAuditorMapping(e.target.value))}
               >
                 {sheets.map((s) => (
                   <option key={s} value={s}>
@@ -196,51 +276,47 @@ export default function ImportExportPage() {
               </select>
             </div>
             <div className="mapping-row">
+              <label>Fila de encabezados</label>
+              <input
+                type="number"
+                min={1}
+                value={auditorMapping.headerRowIndex + 1}
+                onChange={(e) =>
+                  setAuditorMapping((m) => ({ ...m, headerRowIndex: Math.max(0, Number(e.target.value) - 1), nameColumn: -1, layersColumn: -1, locationColumn: undefined }))
+                }
+                style={{ width: 80 }}
+              />
+            </div>
+            <SheetPreview rows={auditorPreviewRows} headerRowIndex={auditorMapping.headerRowIndex} />
+            <div className="mapping-row">
               <label>Columna: Nombre de auditor *</label>
-              <select
-                value={auditorMapping.name}
-                onChange={(e) => setAuditorMapping((m) => ({ ...m, name: e.target.value }))}
-              >
-                <option value="">— Selecciona —</option>
-                {auditorSheetHeaders.map((h) => (
-                  <option key={h} value={h}>
-                    {h}
-                  </option>
-                ))}
-              </select>
+              <ColumnSelect
+                value={auditorMapping.nameColumn}
+                onChange={(v) => setAuditorMapping((m) => ({ ...m, nameColumn: v ?? -1 }))}
+                options={auditorHeaderOptions}
+              />
             </div>
             <div className="mapping-row">
-              <label>Columna: Capas (L1/L2/L3) *</label>
-              <select
-                value={auditorMapping.layers}
-                onChange={(e) => setAuditorMapping((m) => ({ ...m, layers: e.target.value }))}
-              >
-                <option value="">— Selecciona —</option>
-                {auditorSheetHeaders.map((h) => (
-                  <option key={h} value={h}>
-                    {h}
-                  </option>
-                ))}
-              </select>
+              <label>Columna: Capas (L1/L2/L3 o 1/2/3) *</label>
+              <ColumnSelect
+                value={auditorMapping.layersColumn}
+                onChange={(v) => setAuditorMapping((m) => ({ ...m, layersColumn: v ?? -1 }))}
+                options={auditorHeaderOptions}
+              />
             </div>
             <div className="mapping-row">
               <label>Columna: Ubicación</label>
-              <select
-                value={auditorMapping.location}
-                onChange={(e) => setAuditorMapping((m) => ({ ...m, location: e.target.value }))}
-              >
-                <option value="">(no importar / default Principal)</option>
-                {auditorSheetHeaders.map((h) => (
-                  <option key={h} value={h}>
-                    {h}
-                  </option>
-                ))}
-              </select>
+              <ColumnSelect
+                value={auditorMapping.locationColumn}
+                onChange={(v) => setAuditorMapping((m) => ({ ...m, locationColumn: v }))}
+                options={auditorHeaderOptions}
+                optional
+              />
             </div>
             <button
               type="button"
               className="btn"
-              disabled={!auditorMapping.name || !auditorMapping.layers}
+              disabled={auditorMapping.nameColumn < 0 || auditorMapping.layersColumn < 0}
               onClick={handleImportAuditors}
             >
               Importar auditores

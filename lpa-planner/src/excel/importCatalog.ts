@@ -11,17 +11,56 @@ export function listSheets(workbook: XLSX.WorkBook): string[] {
   return workbook.SheetNames;
 }
 
-export function getSheetHeaders(workbook: XLSX.WorkBook, sheetName: string): string[] {
-  const sheet = workbook.Sheets[sheetName];
-  if (!sheet) return [];
-  const rows = XLSX.utils.sheet_to_json<string[]>(sheet, { header: 1, blankrows: false });
-  return (rows[0] ?? []).map((h) => String(h ?? '').trim());
+function columnLetter(index: number): string {
+  let n = index + 1;
+  let letters = '';
+  while (n > 0) {
+    const rem = (n - 1) % 26;
+    letters = String.fromCharCode(65 + rem) + letters;
+    n = Math.floor((n - 1) / 26);
+  }
+  return letters;
 }
 
-export function getSheetRows(workbook: XLSX.WorkBook, sheetName: string): Record<string, unknown>[] {
+/**
+ * Matriz cruda de la hoja (fila -> columna -> texto), con filas totalmente vacías descartadas.
+ * Es la única fuente de verdad: encabezados y datos se leen de la misma matriz para que
+ * nunca queden desalineados (a diferencia del modo "objeto" de SheetJS, que puede usar una
+ * fila distinta como encabezado si hay filas de título en blanco arriba de los datos).
+ */
+export function getSheetMatrix(workbook: XLSX.WorkBook, sheetName: string): string[][] {
   const sheet = workbook.Sheets[sheetName];
   if (!sheet) return [];
-  return XLSX.utils.sheet_to_json<Record<string, unknown>>(sheet, { defval: '' });
+  const rows = XLSX.utils.sheet_to_json<unknown[]>(sheet, { header: 1, defval: '', blankrows: false });
+  return rows.map((row) => row.map((cell) => (cell === null || cell === undefined ? '' : String(cell).trim())));
+}
+
+/** Primeras `count` filas de la hoja, para mostrar una vista previa y elegir bien la fila de encabezados. */
+export function getPreviewRows(workbook: XLSX.WorkBook, sheetName: string, count = 6): string[][] {
+  return getSheetMatrix(workbook, sheetName).slice(0, count);
+}
+
+export interface HeaderOption {
+  columnIndex: number;
+  label: string;
+}
+
+/**
+ * Columnas disponibles en la fila de encabezados elegida, identificadas por índice de columna
+ * (no por el texto del encabezado) para que headers duplicados o vacíos — comunes en Excels con
+ * varios bloques de columnas — no se confundan entre sí.
+ */
+export function getHeaderOptions(workbook: XLSX.WorkBook, sheetName: string, headerRowIndex: number): HeaderOption[] {
+  const matrix = getSheetMatrix(workbook, sheetName);
+  const headerRow = matrix[headerRowIndex] ?? [];
+  return headerRow.map((h, i) => ({
+    columnIndex: i,
+    label: `${columnLetter(i)}: ${h || '(sin título)'}`,
+  }));
+}
+
+export function getDataRows(workbook: XLSX.WorkBook, sheetName: string, headerRowIndex: number): string[][] {
+  return getSheetMatrix(workbook, sheetName).slice(headerRowIndex + 1);
 }
 
 function normalize(text: unknown): string {
@@ -53,6 +92,11 @@ export function normalizeLocation(raw: unknown): { value: PlantLocation; recogni
   return { value: 'Principal', recognized: false };
 }
 
+/**
+ * Acepta tanto texto ("L1", "L1,L2,L3") como el número de nivel solo ("1", "2", "3"),
+ * porque algunos catálogos reales (p. ej. una columna "Capa auditor" con valores 1/2/3)
+ * usan el número desnudo en vez de "L1"/"L2"/"L3".
+ */
 export function parseLayers(raw: unknown): { layers: Layer[]; unknown: string[] } {
   const parts = String(raw ?? '')
     .split(/[,;/\s]+/)
@@ -61,8 +105,9 @@ export function parseLayers(raw: unknown): { layers: Layer[]; unknown: string[] 
   const layers: Layer[] = [];
   const unknownParts: string[] = [];
   for (const part of parts) {
-    if (part === 'L1' || part === 'L2' || part === 'L3') {
-      if (!layers.includes(part)) layers.push(part);
+    const normalized = /^[123]$/.test(part) ? `L${part}` : part;
+    if (normalized === 'L1' || normalized === 'L2' || normalized === 'L3') {
+      if (!layers.includes(normalized)) layers.push(normalized);
     } else {
       unknownParts.push(part);
     }
@@ -72,17 +117,18 @@ export function parseLayers(raw: unknown): { layers: Layer[]; unknown: string[] 
 
 export interface LineColumnMapping {
   sheetName: string;
-  name: string;
-  team: string;
-  location?: string;
-  active?: string;
+  headerRowIndex: number;
+  nameColumn: number;
+  teamColumn: number;
+  locationColumn?: number;
 }
 
 export interface AuditorColumnMapping {
   sheetName: string;
-  name: string;
-  layers: string;
-  location?: string;
+  headerRowIndex: number;
+  nameColumn: number;
+  layersColumn: number;
+  locationColumn?: number;
 }
 
 export interface ImportResult<T> {
@@ -91,26 +137,26 @@ export interface ImportResult<T> {
 }
 
 export function mapRowsToLines(workbook: XLSX.WorkBook, mapping: LineColumnMapping): ImportResult<LineInput> {
-  const rows = getSheetRows(workbook, mapping.sheetName);
+  const rows = getDataRows(workbook, mapping.sheetName, mapping.headerRowIndex);
   const warnings: string[] = [];
   const items: LineInput[] = [];
 
   rows.forEach((row, idx) => {
-    const rowNum = idx + 2; // +1 por encabezado, +1 por índice base 1
-    const name = String(row[mapping.name] ?? '').trim();
+    const rowNum = mapping.headerRowIndex + idx + 2; // fila real en Excel (1-based)
+    const name = (row[mapping.nameColumn] ?? '').trim();
     if (!name) {
-      warnings.push(`Fila ${rowNum}: sin nombre de línea, se omite.`);
       return;
     }
-    const team = String(row[mapping.team] ?? '').trim() || 'MT1';
+    const team = (row[mapping.teamColumn] ?? '').trim() || 'MT1';
 
     let location: PlantLocation = 'Principal';
-    if (mapping.location) {
-      const result = normalizeLocation(row[mapping.location]);
+    if (mapping.locationColumn !== undefined) {
+      const rawValue = row[mapping.locationColumn];
+      const result = normalizeLocation(rawValue);
       location = result.value;
-      if (!result.recognized) {
+      if (rawValue && !result.recognized) {
         warnings.push(
-          `Fila ${rowNum} (${name}): ubicación "${row[mapping.location]}" no reconocida, se asignó "Principal" — revísala.`,
+          `Fila ${rowNum} (${name}): ubicación "${rawValue}" no reconocida, se asignó "Principal" — revísala.`,
         );
       }
     }
@@ -125,19 +171,18 @@ export function mapRowsToAuditors(
   workbook: XLSX.WorkBook,
   mapping: AuditorColumnMapping,
 ): ImportResult<AuditorInput> {
-  const rows = getSheetRows(workbook, mapping.sheetName);
+  const rows = getDataRows(workbook, mapping.sheetName, mapping.headerRowIndex);
   const warnings: string[] = [];
   const items: AuditorInput[] = [];
 
   rows.forEach((row, idx) => {
-    const rowNum = idx + 2;
-    const name = String(row[mapping.name] ?? '').trim();
+    const rowNum = mapping.headerRowIndex + idx + 2;
+    const name = (row[mapping.nameColumn] ?? '').trim();
     if (!name) {
-      warnings.push(`Fila ${rowNum}: sin nombre de auditor, se omite.`);
       return;
     }
 
-    const { layers, unknown } = parseLayers(row[mapping.layers]);
+    const { layers, unknown } = parseLayers(row[mapping.layersColumn]);
     if (unknown.length > 0) {
       warnings.push(`Fila ${rowNum} (${name}): valores de capa no reconocidos: ${unknown.join(', ')}.`);
     }
@@ -147,12 +192,13 @@ export function mapRowsToAuditors(
     }
 
     let location: PlantLocation = 'Principal';
-    if (mapping.location) {
-      const result = normalizeLocation(row[mapping.location]);
+    if (mapping.locationColumn !== undefined) {
+      const rawValue = row[mapping.locationColumn];
+      const result = normalizeLocation(rawValue);
       location = result.value;
-      if (!result.recognized) {
+      if (rawValue && !result.recognized) {
         warnings.push(
-          `Fila ${rowNum} (${name}): ubicación "${row[mapping.location]}" no reconocida, se asignó "Principal" — revísala.`,
+          `Fila ${rowNum} (${name}): ubicación "${rawValue}" no reconocida, se asignó "Principal" — revísala.`,
         );
       }
     }
