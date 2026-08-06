@@ -260,3 +260,146 @@ export function getWeekAssignments(state: AppState, weekKey: string): Assignment
 export function getHistoryAssignments(state: AppState, now: Date = new Date()): Assignment[] {
   return state.assignments.filter((a) => isWeekKeyLocked(state, a.weekKey, now));
 }
+
+// ---------- Migración de histórico (Excel) ----------
+
+export interface HistoricalAssignmentInput {
+  weekKey: string;
+  lineName: string;
+  team: Team;
+  location: PlantLocation;
+  station?: string;
+  layer: Layer;
+  auditorName: string | null;
+  folio: string;
+}
+
+export interface ImportHistoricalResult {
+  state: AppState;
+  createdLines: number;
+  createdAuditors: number;
+  createdAssignments: number;
+  skippedDuplicates: number;
+}
+
+/**
+ * Carga en bloque asignaciones históricas ya cerradas (migradas de un Excel), creando líneas y
+ * auditores nuevos por nombre cuando hace falta (case-insensitive, igual que importLines/
+ * importAuditors). A diferencia de addManualAssignment, NO respeta el bloqueo por fecha: estos
+ * registros nacen ya como historial cerrado, no son ediciones de una semana en curso. Es idempotente:
+ * si la misma combinación línea+semana+capa+estación ya existe, se omite en vez de duplicarse.
+ */
+export function importHistoricalAssignments(
+  state: AppState,
+  inputs: HistoricalAssignmentInput[],
+): ImportHistoricalResult {
+  let next = state;
+  let createdLines = 0;
+  let createdAuditors = 0;
+  let createdAssignments = 0;
+  let skippedDuplicates = 0;
+
+  const existingKeys = new Set(
+    next.assignments.map((a) => `${a.lineId}::${a.weekKey}::${a.layer}::${a.station ?? ''}`),
+  );
+
+  for (const input of inputs) {
+    let line = next.lines.find((l) => l.name.toLowerCase() === input.lineName.toLowerCase());
+    if (!line) {
+      next = createLine(next, { name: input.lineName, team: input.team, location: input.location });
+      line = next.lines[next.lines.length - 1];
+      createdLines += 1;
+    }
+
+    let auditorId: string | null = null;
+    if (input.auditorName) {
+      let auditor = next.auditors.find((a) => a.name.toLowerCase() === input.auditorName!.toLowerCase());
+      if (!auditor) {
+        next = createAuditor(next, { name: input.auditorName, layers: [input.layer], location: 'Principal' });
+        auditor = next.auditors[next.auditors.length - 1];
+        createdAuditors += 1;
+      } else if (!auditor.layers.includes(input.layer)) {
+        next = updateAuditor(next, auditor.id, { layers: [...auditor.layers, input.layer] });
+        auditor = next.auditors.find((a) => a.id === auditor!.id)!;
+      }
+      auditorId = auditor.id;
+    }
+
+    const { state: withWeek } = ensureWeek(next, input.weekKey);
+    next = withWeek;
+
+    const dedupeKey = `${line.id}::${input.weekKey}::${input.layer}::${input.station ?? ''}`;
+    if (existingKeys.has(dedupeKey)) {
+      skippedDuplicates += 1;
+      continue;
+    }
+    existingKeys.add(dedupeKey);
+
+    const assignment: Assignment = {
+      id: newId(),
+      weekKey: input.weekKey,
+      lineId: line.id,
+      layer: input.layer,
+      auditorId,
+      folio: input.folio,
+      status: 'cerrada',
+      reason: 'normal',
+      needsAttention: !auditorId,
+      station: input.station || undefined,
+      createdAt: nowIso(),
+      updatedAt: nowIso(),
+    };
+    next = { ...next, assignments: [...next.assignments, assignment] };
+    createdAssignments += 1;
+  }
+
+  next = backfillLineAuditDates(next);
+
+  return { state: next, createdLines, createdAuditors, createdAssignments, skippedDuplicates };
+}
+
+/**
+ * Tras una carga masiva, recalcula lastL3Date (última L3 de cualquier tipo) y lastL2L3Date
+ * (última semana en que una línea tuvo L2 Y L3 juntas) por línea, para que el ciclo trimestral
+ * futuro arranque desde el punto correcto en vez de considerar todas las líneas "nunca auditadas".
+ */
+function backfillLineAuditDates(state: AppState): AppState {
+  const byLine = new Map<string, Assignment[]>();
+  for (const a of state.assignments) {
+    if (!byLine.has(a.lineId)) byLine.set(a.lineId, []);
+    byLine.get(a.lineId)!.push(a);
+  }
+
+  const lines = state.lines.map((line) => {
+    const assignments = byLine.get(line.id) ?? [];
+
+    let lastL3Date: string | null = null;
+    const weeksWithL2 = new Set<string>();
+    const weeksWithL3 = new Set<string>();
+
+    for (const a of assignments) {
+      const week = getWeek(state, a.weekKey) ?? buildWeekByKey(a.weekKey);
+      if (a.layer === 'L3') {
+        weeksWithL3.add(week.startDate);
+        if (!lastL3Date || week.startDate > lastL3Date) lastL3Date = week.startDate;
+      }
+      if (a.layer === 'L2') weeksWithL2.add(week.startDate);
+    }
+
+    let lastL2L3Date: string | null = null;
+    for (const date of weeksWithL3) {
+      if (weeksWithL2.has(date) && (!lastL2L3Date || date > lastL2L3Date)) {
+        lastL2L3Date = date;
+      }
+    }
+
+    if (lastL3Date === line.lastL3Date && lastL2L3Date === line.lastL2L3Date) return line;
+    return {
+      ...line,
+      lastL3Date: lastL3Date ?? line.lastL3Date,
+      lastL2L3Date: lastL2L3Date ?? line.lastL2L3Date,
+    };
+  });
+
+  return { ...state, lines };
+}

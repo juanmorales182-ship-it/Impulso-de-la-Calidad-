@@ -10,9 +10,11 @@ import {
   type AuditorColumnMapping,
   type LineColumnMapping,
 } from '../../excel/importCatalog';
+import { parsePlanHistory, type HistoryColumnMapping } from '../../excel/importHistory';
 import type * as XLSX from 'xlsx';
 import { exportStateAsJson, importStateFromJson } from '../../storage/db';
 import { buildPlanWorkbook, downloadWorkbook } from '../../excel/exportPlan';
+import type { ImportHistoricalResult } from '../../storage/repository';
 
 function emptyLineMapping(sheetName: string): LineColumnMapping {
   return { sheetName, headerRowIndex: 0, nameColumn: -1, teamColumn: -1, locationColumn: undefined };
@@ -20,6 +22,24 @@ function emptyLineMapping(sheetName: string): LineColumnMapping {
 
 function emptyAuditorMapping(sheetName: string): AuditorColumnMapping {
   return { sheetName, headerRowIndex: 0, nameColumn: -1, layersColumn: -1, locationColumn: undefined };
+}
+
+/**
+ * Estructura de columnas confirmada para la hoja "PLAN" del archivo del usuario. Se usa como
+ * valor por defecto cuando el nombre de hoja coincide (ajustable a mano para otros archivos).
+ */
+function guessHistoryMapping(sheetName: string): HistoryColumnMapping {
+  const looksLikePlan = /^(plan|programa)$/i.test(sheetName.trim());
+  return {
+    sheetName,
+    headerRowIndex: 0,
+    teamColumn: looksLikePlan ? 2 : -1,
+    locationColumn: looksLikePlan ? 3 : -1,
+    lineColumn: looksLikePlan ? 4 : -1,
+    station1Column: looksLikePlan ? 5 : -1,
+    station2Column: looksLikePlan ? 6 : -1,
+    firstWeekColumn: looksLikePlan ? 8 : -1,
+  };
 }
 
 function ColumnSelect({
@@ -75,14 +95,18 @@ export default function ImportExportPage() {
   const data = useStore((s) => s.data);
   const importLines = useStore((s) => s.importLines);
   const importAuditors = useStore((s) => s.importAuditors);
+  const importHistory = useStore((s) => s.importHistory);
   const restoreFromBackup = useStore((s) => s.restoreFromBackup);
 
   const [workbook, setWorkbook] = useState<XLSX.WorkBook | null>(null);
   const [fileName, setFileName] = useState('');
   const [lineMapping, setLineMapping] = useState<LineColumnMapping>(emptyLineMapping(''));
   const [auditorMapping, setAuditorMapping] = useState<AuditorColumnMapping>(emptyAuditorMapping(''));
+  const [historyMapping, setHistoryMapping] = useState<HistoryColumnMapping>(guessHistoryMapping(''));
   const [lineWarnings, setLineWarnings] = useState<string[] | null>(null);
   const [auditorWarnings, setAuditorWarnings] = useState<string[] | null>(null);
+  const [historyWarnings, setHistoryWarnings] = useState<string[] | null>(null);
+  const [historyResult, setHistoryResult] = useState<ImportHistoricalResult | null>(null);
   const [importedCount, setImportedCount] = useState<{ lines: number; auditors: number } | null>(null);
 
   const sheets = useMemo(() => (workbook ? listSheets(workbook) : []), [workbook]);
@@ -108,16 +132,33 @@ export default function ImportExportPage() {
     [workbook, auditorMapping.sheetName],
   );
 
+  const historyHeaderOptions = useMemo(
+    () =>
+      workbook && historyMapping.sheetName
+        ? getHeaderOptions(workbook, historyMapping.sheetName, historyMapping.headerRowIndex)
+        : [],
+    [workbook, historyMapping.sheetName, historyMapping.headerRowIndex],
+  );
+  const historyPreviewRows = useMemo(
+    () => (workbook && historyMapping.sheetName ? getPreviewRows(workbook, historyMapping.sheetName, 4) : []),
+    [workbook, historyMapping.sheetName],
+  );
+
   async function handleFile(file: File) {
     const wb = await readWorkbook(file);
     setWorkbook(wb);
     setFileName(file.name);
-    const firstSheet = listSheets(wb)[0] ?? '';
+    const allSheets = listSheets(wb);
+    const firstSheet = allSheets[0] ?? '';
+    const planSheet = allSheets.find((s) => /^(plan|programa)$/i.test(s.trim())) ?? firstSheet;
     setLineMapping(emptyLineMapping(firstSheet));
     setAuditorMapping(emptyAuditorMapping(firstSheet));
+    setHistoryMapping(guessHistoryMapping(planSheet));
     setImportedCount(null);
     setLineWarnings(null);
     setAuditorWarnings(null);
+    setHistoryWarnings(null);
+    setHistoryResult(null);
   }
 
   function handleImportLines() {
@@ -134,6 +175,33 @@ export default function ImportExportPage() {
     const count = importAuditors(items);
     setAuditorWarnings(warnings);
     setImportedCount((prev) => ({ lines: prev?.lines ?? 0, auditors: count }));
+  }
+
+  function handleMigrateHistory() {
+    if (
+      !workbook ||
+      historyMapping.teamColumn < 0 ||
+      historyMapping.locationColumn < 0 ||
+      historyMapping.lineColumn < 0 ||
+      historyMapping.firstWeekColumn < 0
+    ) {
+      return;
+    }
+    const { drafts, warnings } = parsePlanHistory(workbook, historyMapping);
+    const result = importHistory(
+      drafts.map((d) => ({
+        weekKey: d.weekKey,
+        lineName: d.lineName,
+        team: d.team,
+        location: d.location,
+        station: d.station,
+        layer: d.layer,
+        auditorName: d.auditorName,
+        folio: d.folio,
+      })),
+    );
+    setHistoryWarnings(warnings);
+    setHistoryResult(result);
   }
 
   function handleBackupDownload() {
@@ -343,6 +411,125 @@ export default function ImportExportPage() {
               actualizados (se emparejan por nombre).
             </div>
           )}
+
+          <div className="card">
+            <h3 style={{ marginTop: 0 }}>4. Migrar historial completo (hoja tipo "PLAN")</h3>
+            <p className="hint">
+              Cada semana ocupa dos columnas: la columna de <strong>número de semana</strong> trae el auditor + folio
+              (texto libre), y la columna de <strong>fecha</strong> de esa misma semana trae solo "L1"/"L2"/"L3". Se
+              migra como histórico ya cerrado (auditorías pasadas), sin importar líneas inactivas.
+            </p>
+            <div className="mapping-row">
+              <label>Hoja</label>
+              <select
+                value={historyMapping.sheetName}
+                onChange={(e) => setHistoryMapping(guessHistoryMapping(e.target.value))}
+              >
+                {sheets.map((s) => (
+                  <option key={s} value={s}>
+                    {s}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="mapping-row">
+              <label>Fila de encabezados</label>
+              <input
+                type="number"
+                min={1}
+                value={historyMapping.headerRowIndex + 1}
+                onChange={(e) =>
+                  setHistoryMapping((m) => ({ ...m, headerRowIndex: Math.max(0, Number(e.target.value) - 1) }))
+                }
+                style={{ width: 80 }}
+              />
+            </div>
+            <SheetPreview rows={historyPreviewRows} headerRowIndex={historyMapping.headerRowIndex} />
+            <div className="mapping-row">
+              <label>Columna: Equipo/BU *</label>
+              <ColumnSelect
+                value={historyMapping.teamColumn}
+                onChange={(v) => setHistoryMapping((m) => ({ ...m, teamColumn: v ?? -1 }))}
+                options={historyHeaderOptions}
+              />
+            </div>
+            <div className="mapping-row">
+              <label>Columna: Ubicación *</label>
+              <ColumnSelect
+                value={historyMapping.locationColumn}
+                onChange={(v) => setHistoryMapping((m) => ({ ...m, locationColumn: v ?? -1 }))}
+                options={historyHeaderOptions}
+              />
+            </div>
+            <div className="mapping-row">
+              <label>Columna: Línea de producción *</label>
+              <ColumnSelect
+                value={historyMapping.lineColumn}
+                onChange={(v) => setHistoryMapping((m) => ({ ...m, lineColumn: v ?? -1 }))}
+                options={historyHeaderOptions}
+              />
+            </div>
+            <div className="mapping-row">
+              <label>Columna: Estación 1</label>
+              <ColumnSelect
+                value={historyMapping.station1Column}
+                onChange={(v) => setHistoryMapping((m) => ({ ...m, station1Column: v ?? -1 }))}
+                options={historyHeaderOptions}
+                optional
+              />
+            </div>
+            <div className="mapping-row">
+              <label>Columna: Estación 2</label>
+              <ColumnSelect
+                value={historyMapping.station2Column}
+                onChange={(v) => setHistoryMapping((m) => ({ ...m, station2Column: v ?? -1 }))}
+                options={historyHeaderOptions}
+                optional
+              />
+            </div>
+            <div className="mapping-row">
+              <label>Primera columna de semana *</label>
+              <ColumnSelect
+                value={historyMapping.firstWeekColumn}
+                onChange={(v) => setHistoryMapping((m) => ({ ...m, firstWeekColumn: v ?? -1 }))}
+                options={historyHeaderOptions}
+              />
+            </div>
+            <button
+              type="button"
+              className="btn"
+              disabled={
+                historyMapping.teamColumn < 0 ||
+                historyMapping.locationColumn < 0 ||
+                historyMapping.lineColumn < 0 ||
+                historyMapping.firstWeekColumn < 0
+              }
+              onClick={handleMigrateHistory}
+            >
+              Migrar historial
+            </button>
+            {historyResult && (
+              <div
+                className="warning-box"
+                style={{ marginTop: 12, background: 'var(--color-success-bg)', color: 'var(--color-success-text)' }}
+              >
+                {historyResult.createdAssignments} auditoría(s) histórica(s) migrada(s) · {historyResult.createdLines}{' '}
+                línea(s) nueva(s) · {historyResult.createdAuditors} auditor(es) nuevo(s)
+                {historyResult.skippedDuplicates > 0 && ` · ${historyResult.skippedDuplicates} ya existían, se omitieron`}
+                .
+              </div>
+            )}
+            {historyWarnings && historyWarnings.length > 0 && (
+              <div className="warning-box" style={{ marginTop: 12 }}>
+                <strong>Avisos ({historyWarnings.length}):</strong>
+                <ul>
+                  {historyWarnings.map((w, i) => (
+                    <li key={i}>{w}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
         </>
       )}
 

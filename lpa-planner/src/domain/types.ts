@@ -7,7 +7,7 @@ export type PlantLocation = 'Principal' | 'Ext.' | 'Ambas';
 /** Equipo/BU de una línea. Catálogo abierto: el usuario puede agregar más además de los conocidos. */
 export type Team = string;
 
-export const KNOWN_TEAMS = ['MT1', 'MT2', 'GM', 'FIREWALL'] as const;
+export const KNOWN_TEAMS = ['MT1', 'MT2', 'MT3', 'MT4', 'MT5', 'MT6', 'GM', 'FIREWALL'] as const;
 
 /** Nombres de línea que pertenecen al equipo GM, usados para sembrar el catálogo inicial. */
 export const GM_LINE_NAMES = ['DELTA', 'T1XX', '31XX', 'D2UX', 'C234', 'L234 Ext.'] as const;
@@ -67,6 +67,8 @@ export interface Assignment {
   reason: AssignmentReason;
   /** true si no se pudo encontrar auditor válido al generar (requiere atención manual). */
   needsAttention: boolean;
+  /** Estación específica dentro de la línea (solo presente en registros migrados del histórico Excel; la app no la usa para las reglas de negocio, que operan a nivel línea). */
+  station?: string;
   createdAt: string;
   updatedAt: string;
 }

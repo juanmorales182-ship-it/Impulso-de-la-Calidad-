@@ -93,6 +93,22 @@ export function normalizeLocation(raw: unknown): { value: PlantLocation; recogni
 }
 
 /**
+ * Reconoce variantes reales encontradas en el Excel del usuario ("EQUIPO GM", " FIRE WALL",
+ * "EQUIPO MT1:") y las reduce a los códigos cortos (GM, FIREWALL, MT1...) que el motor de
+ * reglas compara literalmente. Un valor no reconocido se conserva tal cual como equipo
+ * personalizado (catálogo abierto), solo recortado de espacios.
+ */
+export function normalizeTeam(raw: unknown): string {
+  const original = String(raw ?? '').trim();
+  const key = normalize(original).replace(/^equipo\s+/, '').replace(/:$/, '').replace(/\s+/g, ' ').trim();
+  if (key === 'gm') return 'GM';
+  if (key === 'fire wall' || key === 'firewall') return 'FIREWALL';
+  const mtMatch = key.match(/^mt\s*([1-6])$/);
+  if (mtMatch) return `MT${mtMatch[1]}`;
+  return original;
+}
+
+/**
  * Acepta tanto texto ("L1", "L1,L2,L3") como el número de nivel solo ("1", "2", "3"),
  * porque algunos catálogos reales (p. ej. una columna "Capa auditor" con valores 1/2/3)
  * usan el número desnudo en vez de "L1"/"L2"/"L3".
@@ -147,7 +163,7 @@ export function mapRowsToLines(workbook: XLSX.WorkBook, mapping: LineColumnMappi
     if (!name) {
       return;
     }
-    const team = (row[mapping.teamColumn] ?? '').trim() || 'MT1';
+    const team = normalizeTeam(row[mapping.teamColumn]) || 'MT1';
 
     let location: PlantLocation = 'Principal';
     if (mapping.locationColumn !== undefined) {

@@ -2,7 +2,13 @@ import { create } from 'zustand';
 import type { AppState, Assignment, Layer, PlantLocation, Team } from '../domain/types';
 import { loadState, saveState } from '../storage/db';
 import * as repo from '../storage/repository';
-import type { AssignmentPatch, AuditorInput, LineInput } from '../storage/repository';
+import type {
+  AssignmentPatch,
+  AuditorInput,
+  HistoricalAssignmentInput,
+  ImportHistoricalResult,
+  LineInput,
+} from '../storage/repository';
 
 interface StoreState {
   data: AppState;
@@ -27,6 +33,7 @@ interface StoreState {
 
   importLines: (items: LineInput[]) => number;
   importAuditors: (items: AuditorInput[]) => number;
+  importHistory: (inputs: HistoricalAssignmentInput[]) => ImportHistoricalResult;
 
   restoreFromBackup: (state: AppState) => void;
   clearError: () => void;
@@ -174,6 +181,14 @@ export const useStore = create<StoreState>((set, get) => ({
     persist(data);
     set(() => ({ data }));
     return count;
+  },
+
+  importHistory: (inputs) => {
+    const s = get();
+    const result = repo.importHistoricalAssignments(s.data, inputs);
+    persist(result.state);
+    set(() => ({ data: result.state }));
+    return result;
   },
 
   restoreFromBackup: (state) =>
