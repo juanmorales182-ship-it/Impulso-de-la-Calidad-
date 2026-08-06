@@ -14,6 +14,9 @@ interface StoreState {
   data: AppState;
   lastWarnings: string[];
   error: string | null;
+  /** Semana seleccionada actualmente en "Propuesta semanal", para poder saltar ahí desde otras vistas (p. ej. la Matriz). No se persiste: es solo estado de navegación. */
+  uiWeekKey: string | null;
+  setUiWeekKey: (weekKey: string) => void;
 
   addLine: (input: LineInput) => void;
   updateLine: (id: string, patch: Partial<LineInput>) => void;
@@ -55,6 +58,8 @@ export const useStore = create<StoreState>((set, get) => ({
   data: loadState(),
   lastWarnings: [],
   error: null,
+  uiWeekKey: null,
+  setUiWeekKey: (weekKey) => set(() => ({ uiWeekKey: weekKey })),
 
   addLine: (input) =>
     set((s) => {

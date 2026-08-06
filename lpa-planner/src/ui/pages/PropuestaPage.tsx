@@ -22,8 +22,11 @@ export default function PropuestaPage() {
   const deleteAssignment = useStore((s) => s.deleteAssignment);
   const addManualAssignment = useStore((s) => s.addManualAssignment);
   const lastWarnings = useStore((s) => s.lastWarnings);
+  const uiWeekKey = useStore((s) => s.uiWeekKey);
+  const setUiWeekKey = useStore((s) => s.setUiWeekKey);
 
-  const [weekKey, setWeekKey] = useState(() => nextWeek(currentWeek()).key);
+  const weekKey = uiWeekKey ?? nextWeek(currentWeek()).key;
+  const setWeekKey = setUiWeekKey;
   const [addLineId, setAddLineId] = useState('');
   const [addLayer, setAddLayer] = useState<Layer>('L1');
 

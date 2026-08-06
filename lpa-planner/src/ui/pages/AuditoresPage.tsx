@@ -80,13 +80,17 @@ export default function AuditoresPage() {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [showInactive, setShowInactive] = useState(false);
   const [weekInput, setWeekInput] = useState<Record<string, string>>({});
+  const [search, setSearch] = useState('');
 
   const thisWeekKey = useMemo(() => currentWeek().key, []);
 
-  const visible = useMemo(
-    () => auditors.filter((a) => showInactive || a.active).sort((a, b) => a.name.localeCompare(b.name)),
-    [auditors, showInactive],
-  );
+  const visible = useMemo(() => {
+    const q = search.trim().toLowerCase();
+    return auditors
+      .filter((a) => showInactive || a.active)
+      .filter((a) => !q || a.name.toLowerCase().includes(q))
+      .sort((a, b) => a.name.localeCompare(b.name));
+  }, [auditors, showInactive, search]);
 
   return (
     <div>
@@ -102,14 +106,25 @@ export default function AuditoresPage() {
       <div className="card">
         <div className="page-header" style={{ marginBottom: 10 }}>
           <h3 style={{ margin: 0 }}>Catálogo ({visible.length})</h3>
-          <label style={{ fontSize: 13 }}>
-            <input type="checkbox" checked={showInactive} onChange={(e) => setShowInactive(e.target.checked)} /> Mostrar
-            inactivos
-          </label>
+          <div style={{ display: 'flex', gap: 14, alignItems: 'center' }}>
+            <input
+              type="text"
+              placeholder="Buscar por nombre..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              style={{ padding: '6px 10px', border: '1px solid var(--color-border)', borderRadius: 6, width: 200 }}
+            />
+            <label style={{ fontSize: 13 }}>
+              <input type="checkbox" checked={showInactive} onChange={(e) => setShowInactive(e.target.checked)} />{' '}
+              Mostrar inactivos
+            </label>
+          </div>
         </div>
 
         {visible.length === 0 ? (
-          <p className="empty-state">Sin auditores registrados todavía.</p>
+          <p className="empty-state">
+            {search ? `Sin auditores que coincidan con "${search}".` : 'Sin auditores registrados todavía.'}
+          </p>
         ) : (
           <table className="data-table">
             <thead>

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { buildWeek, buildWeekByKey, isWeekLocked, nextWeek, previousWeek, weekKeyOf } from '../weeks';
+import { buildWeek, buildWeekByKey, isWeekLocked, nextWeek, previousWeek, shiftWeek, weekKeyOf } from '../weeks';
 
 describe('weeks', () => {
   it('builds a week with Monday start, Sunday end, Thursday close', () => {
@@ -32,5 +32,12 @@ describe('weeks', () => {
     expect(isWeekLocked(week, new Date('2026-08-06'))).toBe(false); // el mismo jueves aún no
     expect(isWeekLocked(week, new Date('2026-08-07'))).toBe(true); // viernes siguiente
     expect(isWeekLocked(week, new Date('2026-09-01'))).toBe(true); // mucho después
+  });
+
+  it('shifts a week forward and backward by n weeks', () => {
+    const week = buildWeek(new Date('2026-08-06T12:00:00'));
+    expect(shiftWeek(week, 4).startDate).toBe('2026-08-31');
+    expect(shiftWeek(week, -4).startDate).toBe('2026-07-06');
+    expect(shiftWeek(week, 0).startDate).toBe(week.startDate);
   });
 });

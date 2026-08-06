@@ -58,6 +58,12 @@ export function previousWeek(week: Week): Week {
   return buildWeek(monday);
 }
 
+/** Desplaza `week` por `n` semanas (n puede ser negativo). */
+export function shiftWeek(week: Week, n: number): Week {
+  const monday = addWeeks(parseISO(week.startDate), n);
+  return buildWeek(monday);
+}
+
 export function currentWeek(now: Date = new Date()): Week {
   return buildWeek(now);
 }

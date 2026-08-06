@@ -324,3 +324,92 @@ table.data-table tr.locked-row td {
   padding: 20px 0;
   text-align: center;
 }
+
+/* Vista Matriz (líneas x semanas, estilo Excel) */
+
+.matrix-scroll {
+  overflow-x: auto;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+}
+
+table.matrix-table {
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 12px;
+}
+
+table.matrix-table th,
+table.matrix-table td {
+  border-bottom: 1px solid var(--color-border);
+  border-right: 1px solid var(--color-border);
+  padding: 4px 6px;
+  vertical-align: top;
+  white-space: nowrap;
+}
+
+table.matrix-table .matrix-line-col {
+  position: sticky;
+  left: 0;
+  background: white;
+  z-index: 2;
+  min-width: 170px;
+  max-width: 220px;
+  white-space: normal;
+}
+
+table.matrix-table thead th.matrix-line-col {
+  z-index: 3;
+  background: #f8f9fb;
+}
+
+table.matrix-table thead th {
+  background: #f8f9fb;
+  color: var(--color-text-muted);
+  font-weight: 600;
+  cursor: pointer;
+  min-width: 78px;
+}
+
+table.matrix-table thead th:hover {
+  background: #eef3fc;
+  color: var(--color-primary-dark);
+}
+
+table.matrix-table th.matrix-week-locked {
+  background: var(--color-locked-bg);
+}
+
+table.matrix-table td.matrix-week-locked {
+  background: #fafbfc;
+}
+
+.layer-chip {
+  display: block;
+  border-radius: 4px;
+  padding: 1px 5px;
+  margin-bottom: 2px;
+  font-size: 11px;
+  line-height: 1.5;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.layer-chip.layer-L1 {
+  background: #ffe0b2;
+  color: #8a4b00;
+}
+
+.layer-chip.layer-L2 {
+  background: #cfe3fb;
+  color: #0b3d91;
+}
+
+.layer-chip.layer-L3 {
+  background: #d7f0db;
+  color: #1e6b32;
+}
+
+.layer-chip.needs-attention {
+  outline: 1px dashed var(--color-danger);
+}

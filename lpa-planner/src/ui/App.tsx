@@ -1,14 +1,16 @@
 import { useState } from 'react';
 import { useStore } from '../state/store';
+import MatrizPage from './pages/MatrizPage';
 import PropuestaPage from './pages/PropuestaPage';
 import LineasPage from './pages/LineasPage';
 import AuditoresPage from './pages/AuditoresPage';
 import HistorialPage from './pages/HistorialPage';
 import ImportExportPage from './pages/ImportExportPage';
 
-type Tab = 'propuesta' | 'lineas' | 'auditores' | 'historial' | 'importar';
+type Tab = 'matriz' | 'propuesta' | 'lineas' | 'auditores' | 'historial' | 'importar';
 
 const TABS: { id: Tab; label: string }[] = [
+  { id: 'matriz', label: 'Vista Matriz' },
   { id: 'propuesta', label: 'Propuesta semanal' },
   { id: 'lineas', label: 'Líneas' },
   { id: 'auditores', label: 'Auditores' },
@@ -17,9 +19,15 @@ const TABS: { id: Tab; label: string }[] = [
 ];
 
 export default function AppShell() {
-  const [tab, setTab] = useState<Tab>('propuesta');
+  const [tab, setTab] = useState<Tab>('matriz');
   const error = useStore((s) => s.error);
   const clearError = useStore((s) => s.clearError);
+  const setUiWeekKey = useStore((s) => s.setUiWeekKey);
+
+  function navigateToWeek(weekKey: string) {
+    setUiWeekKey(weekKey);
+    setTab('propuesta');
+  }
 
   return (
     <div className="app-shell">
@@ -45,6 +53,7 @@ export default function AppShell() {
             </button>
           </div>
         )}
+        {tab === 'matriz' && <MatrizPage onNavigateToWeek={navigateToWeek} />}
         {tab === 'propuesta' && <PropuestaPage />}
         {tab === 'lineas' && <LineasPage />}
         {tab === 'auditores' && <AuditoresPage />}
