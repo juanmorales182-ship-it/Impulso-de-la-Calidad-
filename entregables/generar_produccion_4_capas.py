@@ -44,7 +44,9 @@ def center(e):
 
 
 import os
-FULL = os.environ.get("FULL") == "1"
+MODE = os.environ.get("FULL", "0")
+FULL = MODE in ("1", "2")
+MERGE = MODE == "1"
 L0 = "0-PLANTA GENERAL"
 src = ezdxf.readfile(IN)
 msp_src = src.modelspace()
@@ -73,7 +75,7 @@ else:
 
 for name, col in ((L1, 7), (L2, 2), (L3, 3), (L4, 4)):
     doc.layers.add(name, color=col)
-if FULL:
+if MERGE:
     doc.layers.add(L0, color=8)
 
 
@@ -105,7 +107,9 @@ for e in list(msp):
     if lay == "ÁREA SIN COMPONENTES" and FULL:
         c = center(e)
         if not (c and inside(*c, ROOM, .05)):
-            resolve(e, lay); e.dxf.layer = L0; stats["planta"] += 1
+            if MERGE:
+                resolve(e, lay); e.dxf.layer = L0
+            stats["planta"] += 1
             continue
     if lay in ("PRODUCCIÓN", "ÁREA SIN COMPONENTES"):
         resolve(e, lay) if FULL else None
@@ -128,14 +132,18 @@ for e in list(msp):
             msp.delete_entity(e); stats["drop"] += 1
     elif FULL:
         if lay.strip() == "COTAS":
-            msp.delete_entity(e); stats["drop"] += 1; continue
+            if MERGE:
+                msp.delete_entity(e); stats["drop"] += 1
+            continue
         if lay == "FLUJO LOGÍSTICO":
             c = center(e)
             if c and inside(*c, ROOM, .05):     # replaced by the new flow diagram
                 msp.delete_entity(e); stats["drop"] += 1; continue
-        resolve(e, lay); e.dxf.layer = L0; stats["planta"] += 1
+        if MERGE:
+            resolve(e, lay); e.dxf.layer = L0
+        stats["planta"] += 1
 
-if FULL:  # block contents -> layer 0 (inherit insert layer), keep look
+if MERGE:  # block contents -> layer 0 (inherit insert layer), keep look
     for blk in doc.blocks:
         if blk.name.lower().startswith(("*model_space", "*paper_space")):
             continue
@@ -356,7 +364,7 @@ sen_legend(224.0 if FULL else 216.0, 214.0)
 dr_legend(258.0 if FULL else 250.0, 214.0)
 
 # ------------------------------------------------------------- cleanup: only our 4 layers (+0, Defpoints)
-keep = {"0", "Defpoints", L0, L1, L2, L3, L4}
+keep = {"0", "Defpoints", L1, L2, L3, L4} | ({L0} if MERGE else set())
 used = {e.dxf.layer for e in msp}
 for blk in doc.blocks:
     for e in blk:
@@ -369,6 +377,22 @@ for lay in list(doc.layers):
             doc.layers.remove(n)
         except Exception as ex:
             print("cannot remove", n, ex)
+if MODE == "2":
+    for blk in doc.blocks:
+        for e in blk:
+            if e.dxf.layer in ("PRODUCCIÓN", "SEGURIDAD E HIGIENE "):
+                e.dxf.layer = L1 if e.dxf.layer == "PRODUCCIÓN" else L2
+    for n in ("PRODUCCIÓN", "SEGURIDAD E HIGIENE "):
+        if n in doc.layers:
+            doc.layers.remove(n)
+if MODE == "2":  # areas keep their own layer: tidy names, everything visible
+    for lay in list(doc.layers):
+        n = lay.dxf.name
+        if n in ("Defpoints", "Edges") or n.strip() == "COTAS":
+            continue
+        lay.on(); lay.thaw()
+        if n != n.strip() and n.strip() not in doc.layers:
+            lay.rename(n.strip())
 if doc.header.get("$CLAYER", "0") not in doc.layers:
     doc.header["$CLAYER"] = "0"
 doc.saveas(OUT)
