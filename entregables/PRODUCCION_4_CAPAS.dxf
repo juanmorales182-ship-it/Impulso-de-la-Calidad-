@@ -493,7 +493,7 @@ $SKPOLY
   9
 $TDCREATE
  40
-2461355.0971296295
+2461355.103310185
   9
 $TDUCREATE
  40
@@ -501,7 +501,7 @@ $TDUCREATE
   9
 $TDUPDATE
  40
-2461355.097141204
+2461355.103310185
   9
 $TDUUPDATE
  40
@@ -933,11 +933,11 @@ $PSTYLEMODE
   9
 $FINGERPRINTGUID
   2
-{7A83BF8F-B0F4-4037-8F56-FD78108EA2BE}
+{A7B60D62-88F9-43D4-856B-EB401CCDE408}
   9
 $VERSIONGUID
   2
-{F9A853A0-A4E0-4AF1-B7D0-BA404A790E0E}
+{5451586E-B7C3-45EC-B1B3-B2A43D3C6D5F}
   9
 $EXTNAMES
 290
@@ -1327,9 +1327,9 @@ ISM
   0
 CLASS
   1
-LAYOUT
+ACDBPLACEHOLDER
   2
-AcDbLayout
+AcDbPlaceHolder
   3
 ObjectDBX Classes
  90
@@ -1343,9 +1343,9 @@ ObjectDBX Classes
   0
 CLASS
   1
-ACDBPLACEHOLDER
+LAYOUT
   2
-AcDbPlaceHolder
+AcDbLayout
   3
 ObjectDBX Classes
  90
@@ -2235,36 +2235,6 @@ AcDbSymbolTableRecord
 100
 AcDbLinetypeTableRecord
   2
-HIDD1
- 70
-0
-  3
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
- 72
-65
- 73
-2
- 40
-0.175
- 49
-0.1
- 74
-0
- 49
--0.075
- 74
-0
-  0
-LTYPE
-  5
-5CA0
-330
-2
-100
-AcDbSymbolTableRecord
-100
-AcDbLinetypeTableRecord
-  2
 AM_ISO02W050x2
  70
 0
@@ -2282,6 +2252,36 @@ AM_ISO02W050x2
 0
  49
 -0.75
+ 74
+0
+  0
+LTYPE
+  5
+5CA0
+330
+2
+100
+AcDbSymbolTableRecord
+100
+AcDbLinetypeTableRecord
+  2
+HIDD1
+ 70
+0
+  3
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+ 72
+65
+ 73
+2
+ 40
+0.175
+ 49
+0.1
+ 74
+0
+ 49
+-0.075
  74
 0
   0
@@ -3197,34 +3197,6 @@ AcDbSymbolTableRecord
 100
 AcDbTextStyleTableRecord
   2
-COMIN Simb Señalizacion
- 70
-0
- 40
-0.0
- 41
-1.0
- 50
-0.0
- 71
-0
- 42
-0.0572412346000135
-  3
-
-  4
-
-  0
-STYLE
-  5
-5CA2
-330
-5
-100
-AcDbSymbolTableRecord
-100
-AcDbTextStyleTableRecord
-  2
 Arial
  70
 0
@@ -3240,6 +3212,34 @@ Arial
 2.5
   3
 arial.ttf
+  4
+
+  0
+STYLE
+  5
+5CA2
+330
+5
+100
+AcDbSymbolTableRecord
+100
+AcDbTextStyleTableRecord
+  2
+COMIN Simb Señalizacion
+ 70
+0
+ 40
+0.0
+ 41
+1.0
+ 50
+0.0
+ 71
+0
+ 42
+0.0572412346000135
+  3
+
   4
 
   0
@@ -699743,7 +699743,7 @@ DictionaryVariables
 280
 0
   1
-1.4.5 @ 2026-11-10T02:19:52.587671+00:00
+1.4.5 @ 2026-11-10T02:28:46.200602+00:00
   0
 VISUALSTYLE
   5
@@ -706305,7 +706305,7 @@ DictionaryVariables
 280
 0
   1
-1.4.5 @ 2026-11-10T02:19:53.147293+00:00
+1.4.5 @ 2026-11-10T02:28:46.848600+00:00
   0
 ENDSEC
   0

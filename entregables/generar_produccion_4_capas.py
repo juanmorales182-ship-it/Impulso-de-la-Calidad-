@@ -43,37 +43,72 @@ def center(e):
     return None
 
 
+import os
+FULL = os.environ.get("FULL") == "1"
+L0 = "0-PLANTA GENERAL"
 src = ezdxf.readfile(IN)
 msp_src = src.modelspace()
-doc = ezdxf.new("R2018", setup=True)
-doc.header["$INSUNITS"] = 6
-doc.header["$MEASUREMENT"] = 1
-msp = doc.modelspace()
-
-# ------------------------------------------------------------- 1) pick source entities
-pick = []
-for e in msp_src:
-    lay = e.dxf.layer
-    if lay == "PRODUCCIÓN":
-        pick.append(e)
-    elif lay == "ÁREA SIN COMPONENTES":
-        c = center(e)
-        if c and inside(*c, ROOM, .05):
+if FULL:
+    doc = src
+    msp = msp_src
+else:
+    doc = ezdxf.new("R2018", setup=True)
+    doc.header["$INSUNITS"] = 6
+    doc.header["$MEASUREMENT"] = 1
+    msp = doc.modelspace()
+    pick = []
+    for e in msp_src:
+        lay = e.dxf.layer
+        if lay == "PRODUCCIÓN":
             pick.append(e)
-    elif lay == "SEGURIDAD E HIGIENE ":
-        pick.append(e)
-
-imp = Importer(src, doc)
-imp.import_entities(pick, msp)
-imp.finalize()
+        elif lay == "ÁREA SIN COMPONENTES":
+            c = center(e)
+            if c and inside(*c, ROOM, .05):
+                pick.append(e)
+        elif lay == "SEGURIDAD E HIGIENE ":
+            pick.append(e)
+    imp = Importer(src, doc)
+    imp.import_entities(pick, msp)
+    imp.finalize()
 
 for name, col in ((L1, 7), (L2, 2), (L3, 3), (L4, 4)):
     doc.layers.add(name, color=col)
+if FULL:
+    doc.layers.add(L0, color=8)
 
-stats = {"area": 0, "sen": 0, "exits": 0, "drop": 0}
+
+def resolve(e, layname):
+    """Freeze BYLAYER colour/linetype/lineweight so the look survives a layer change."""
+    if layname not in doc.layers:
+        return
+    L = doc.layers.get(layname)
+    try:
+        if e.dxf.get("color", 256) == 256 and not e.dxf.hasattr("true_color"):
+            e.dxf.color = abs(L.dxf.color) or 7
+            if L.dxf.hasattr("true_color"):
+                e.dxf.true_color = L.dxf.true_color
+        if e.dxf.get("linetype", "BYLAYER").upper() == "BYLAYER":
+            lt = L.dxf.get("linetype", "Continuous")
+            if lt.upper() != "CONTINUOUS":
+                e.dxf.linetype = lt
+        if e.dxf.get("lineweight", -1) == -1:
+            lw = L.dxf.get("lineweight", -3)
+            if lw >= 0:
+                e.dxf.lineweight = lw
+    except Exception:
+        pass
+
+
+stats = {"area": 0, "sen": 0, "exits": 0, "drop": 0, "planta": 0}
 for e in list(msp):
     lay = e.dxf.layer
+    if lay == "ÁREA SIN COMPONENTES" and FULL:
+        c = center(e)
+        if not (c and inside(*c, ROOM, .05)):
+            resolve(e, lay); e.dxf.layer = L0; stats["planta"] += 1
+            continue
     if lay in ("PRODUCCIÓN", "ÁREA SIN COMPONENTES"):
+        resolve(e, lay) if FULL else None
         e.dxf.layer = L1; stats["area"] += 1
     elif lay == "SEGURIDAD E HIGIENE ":
         c = center(e)
@@ -81,15 +116,33 @@ for e in list(msp):
             msp.delete_entity(e); stats["drop"] += 1; continue
         x, y = c
         dmin = min(math.hypot(x - a, y - b) for a, b in EXIT_TXT)
-        is_al = e.dxftype() == "TEXT" and e.dxf.text.strip() == "AL"
+        if FULL:
+            resolve(e, lay)
         if dmin < 1.2 or (x < 158.5 and y < 187):          # exit signs, PR-2
             e.dxf.layer = L3; stats["exits"] += 1
-        elif inside(x, y, REGION):
+        elif inside(x, y, REGION) or (FULL and dmin >= 3.0):
             e.dxf.layer = L2; stats["sen"] += 1
         elif dmin < 3.0:                                    # alarms beside exits
             e.dxf.layer = L3; stats["exits"] += 1
         else:
             msp.delete_entity(e); stats["drop"] += 1
+    elif FULL:
+        if lay.strip() == "COTAS":
+            msp.delete_entity(e); stats["drop"] += 1; continue
+        if lay == "FLUJO LOGÍSTICO":
+            c = center(e)
+            if c and inside(*c, ROOM, .05):     # replaced by the new flow diagram
+                msp.delete_entity(e); stats["drop"] += 1; continue
+        resolve(e, lay); e.dxf.layer = L0; stats["planta"] += 1
+
+if FULL:  # block contents -> layer 0 (inherit insert layer), keep look
+    for blk in doc.blocks:
+        if blk.name.lower().startswith(("*model_space", "*paper_space")):
+            continue
+        for e in blk:
+            if e.dxf.layer != "0":
+                resolve(e, e.dxf.layer); e.dxf.layer = "0"
+    doc.layers.get(L0).on()
 print("imported", stats)
 
 # ------------------------------------------------------------- 2) signage (production only)
@@ -98,12 +151,12 @@ count = {}
 for px, py, codes in ROWS:
     for i, c in enumerate(codes):
         x, y = T(px + i * GAP, py)
-        if inside(x, y, REGION):
+        if FULL or inside(x, y, REGION):
             place(msp, c, x, y); count[c] = count.get(c, 0) + 1
 for x0, y0, codes in ROWS_DXF:
     for i, c in enumerate(codes):
         x = x0 + i * GAP_M
-        if inside(x, y0, REGION):
+        if FULL or inside(x, y0, REGION):
             place(msp, c, x, y0); count[c] = count.get(c, 0) + 1
 x0, y0 = T(ESD[0], ESD[1]); x1, y1 = T(ESD[2], ESD[3])
 msp.add_lwpolyline([(x0, y0), (x1, y0), (x1, y1), (x0, y1)], close=True,
@@ -250,13 +303,14 @@ for k, v in SYM.items():
     rot = v[2] if len(v) > 2 else 0
     ins = msp.add_blockref(BN[kind], (v[0], v[1]), dxfattribs={"layer": L4, "rotation": rot})
     ins.add_auto_attribs({"NUM": k[1:], "ACTIVIDAD": ACT[k]})
-text(msp, "ALMACEN DE MATERIA PRIMA", 173.1, 218.4, .3, L4, 4)
-text(msp, "ALMACEN DE PRODUCTO TERMINADO", 194.6, 205.2, .3, L4, 4)
+if not FULL:
+    text(msp, "ALMACEN DE MATERIA PRIMA", 173.1, 218.4, .3, L4, 4)
+    text(msp, "ALMACEN DE PRODUCTO TERMINADO", 194.6, 205.2, .3, L4, 4)
 
 
 # ------------------------------------------------------------- legends
 def sen_legend(X, Y):
-    text(msp, "SIMBOLOGIA DE SEÑALETICA - AREA DE PRODUCCION", X, Y, .55, L2, 7)
+    text(msp, "SIMBOLOGIA DE SEÑALETICA - " + ("PLANTA GENERAL" if FULL else "AREA DE PRODUCCION"), X, Y, .55, L2, 7)
     text(msp, "Colores y formas segun NOM-026-STPS-2008", X, Y - .8, .3, L2, 7)
     y = Y - 2.0
     for c, hd in zip([X, X + 1.3, X + 3.0, X + 13.5], ["Simb.", "Cant.", "Texto de la senal", "Fundamento (NOM)"]):
@@ -298,11 +352,11 @@ def dr_legend(X, Y):
         y -= .75
 
 
-sen_legend(216.0, 214.0)
-dr_legend(250.0, 214.0)
+sen_legend(224.0 if FULL else 216.0, 214.0)
+dr_legend(258.0 if FULL else 250.0, 214.0)
 
 # ------------------------------------------------------------- cleanup: only our 4 layers (+0, Defpoints)
-keep = {"0", "Defpoints", L1, L2, L3, L4}
+keep = {"0", "Defpoints", L0, L1, L2, L3, L4}
 used = {e.dxf.layer for e in msp}
 for blk in doc.blocks:
     for e in blk:
@@ -315,5 +369,7 @@ for lay in list(doc.layers):
             doc.layers.remove(n)
         except Exception as ex:
             print("cannot remove", n, ex)
+if doc.header.get("$CLAYER", "0") not in doc.layers:
+    doc.header["$CLAYER"] = "0"
 doc.saveas(OUT)
 print("saved", OUT, "signs", count)
