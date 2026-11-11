@@ -1,0 +1,28 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+  html,body{margin:0;width:1920px;height:1080px;overflow:hidden;background:#0b1220;font-family:"DejaVu Sans",Arial,sans-serif}
+  #c{position:absolute;inset:0}
+  #title{position:absolute;left:0;right:0;top:0;bottom:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    color:#fff;text-align:center;opacity:0;background:radial-gradient(ellipse at center,rgba(16,32,52,.55),rgba(16,32,52,.25))}
+  #title h1{font-size:72px;margin:0 0 18px;letter-spacing:1px;text-shadow:0 4px 18px rgba(0,0,0,.45)}
+  #title p{font-size:32px;margin:0;opacity:.92;text-shadow:0 2px 10px rgba(0,0,0,.5)}
+  #card{position:absolute;left:64px;bottom:72px;max-width:900px;opacity:0;padding:26px 34px 28px;border-radius:14px;
+    background:rgba(18,30,46,.82);color:#fff;border-left:8px solid #2f9e5b;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+  #card .k{font-size:22px;letter-spacing:3px;text-transform:uppercase;opacity:.75;margin-bottom:6px}
+  #card .h{font-size:46px;font-weight:bold;margin-bottom:8px}
+  #card .s{font-size:26px;line-height:1.35;opacity:.92}
+  #step{position:absolute;right:64px;top:56px;opacity:0;padding:16px 24px;border-radius:12px;background:rgba(18,30,46,.82);color:#fff;
+    font-size:26px;max-width:640px;line-height:1.35}
+  #step b{color:#9be27a}
+  #bar{position:absolute;left:0;bottom:0;height:8px;background:#2f9e5b;width:0}
+</style></head>
+<body>
+<canvas id="c" width="1920" height="1080"></canvas>
+<div id="title"><h1 id="tt"></h1><p id="ts"></p></div>
+<div id="card"><div class="k" id="ck"></div><div class="h" id="ch"></div><div class="s" id="cs"></div></div>
+<div id="step"></div>
+<div id="bar"></div>
+<script type="importmap">{"imports":{"three":"./node_modules/three/build/three.module.js"}}</script>
+<script type="module" src="./scene.js"></script>
+</body></html>
