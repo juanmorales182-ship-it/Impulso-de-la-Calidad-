@@ -32,11 +32,11 @@
 const tl = gsap.timeline({ paused: true });
 const B = (s) => QK.box(s);
 const ids = ["D3", "D4", "D5D6", "D7", "D8"], dates = ["24.10.2026", "02.11.2026", "06.11.2026", "16.11.2026", "04.12.2026"];
-const dues = ids.map((d) => B("#s09-due" + d));
+const dues = [B("#s09-dueD3"), B("#s09-dueD4"), B("#s09-dueD5D6"), B("#s09-dueD7"), B("#s09-dueD8")];
 const timing = B("#s09-timing"), bd = B("#s09-f-bd"), pg = B("#s09-f-pg"), tab4 = B("#s09-tab4");
 const ty = QK.typing(tl);
 // hold where s08 ended, then glide to the Timing column
-tl.set("#s09-cur", { x: 1100, y: 600 }, 0);
+QK.cursorAt(tl, "#s09-cur", 1100, 600);
 QK.instr(tl, "#s09-i", 0.1, null);
 QK.focus(tl, "#s09-cam", timing.cx, timing.cy + 20, 1.9, 0.3, 1.1, 1180, 400);
 QK.place("#s09-hl1", timing, 8);

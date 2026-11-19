@@ -33,7 +33,7 @@ const st = B("#s15-b-status"), stat = B("#s15-status"), timing = B("#s15-timing"
 gsap.set("#s15-m", { left: st.x, top: st.y + st.h + 2 });
 const ty = QK.typing(tl);
 tl.fromTo("#s15-cam", { opacity: 0, filter: "blur(12px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.45, ease: "power2.out" }, 0);
-tl.set("#s15-cur", { x: 900, y: 600 }, 0);
+QK.cursorAt(tl, "#s15-cur", 900, 600);
 QK.instr(tl, "#s15-i", 0.3, null);
 QK.focus(tl, "#s15-cam", st.x + 200, st.cy + 70, 2.1, 0.5, 0.9, 860, 360);
 QK.move(tl, "#s15-cur", st.cx, st.cy, 0.9, 0.7);

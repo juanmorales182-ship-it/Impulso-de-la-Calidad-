@@ -58,6 +58,7 @@
   </div>
   <div id="s05-ovc" class="clip" data-start="0" data-duration="15" data-track-index="5" style="position:absolute;inset:0;z-index:30"><div id="s05-ov"></div></div>
 </div>
+<script>window.__QKM=Object.assign(window.__QKM||{},{"#s05-desc":{"x":474.0119934082031,"y":378.65625,"w":440.0199890136719,"h":25.14398193359375,"cx":694.0219879150391,"cy":391.2282409667969},"#s05-rep":{"x":474.0119934082031,"y":411.6577453613281,"w":440.0199890136719,"h":25.14398193359375,"cx":694.0219879150391,"cy":424.229736328125},"#s05-resp":{"x":474.0119934082031,"y":444.65924072265625,"w":157.14999389648438,"h":25.14398193359375,"cx":552.5869903564453,"cy":457.2312316894531},"#s05-f-resp":{"x":238.28700256347656,"y":440.7304992675781,"w":690.6742553710938,"h":33.001495361328125,"cx":583.6241302490234,"cy":457.2312469482422},"#s05-tab1":{"x":392.3553771972656,"y":230.93524169921875,"w":157.80068969726562,"h":27.501251220703125,"cx":471.25572204589844,"cy":244.6858673095703},"#s05-f-desc .r":{"x":329.1025085449219,"y":382.5849914550781,"w":5.8194580078125,"h":16.500762939453125,"cx":332.0122375488281,"cy":390.8353729248047},"#s05-win":{"x":210,"y":40,"w":1500,"h":868,"cx":960,"cy":474}});</script>
 <script>
 const tl = gsap.timeline({ paused: true });
 // measure before any tween
@@ -71,7 +72,7 @@ const ty = QK.typing(tl);
 tl.fromTo("#s05-ov", { clipPath: "inset(0px 0px 0px 0px round 0px)" },
   { clipPath: `inset(${W.y}px ${1920 - W.x - W.w}px ${1080 - W.y - W.h}px ${W.x}px round 14px)`, duration: 0.7, ease: "power3.inOut" }, 0.05);
 tl.to("#s05-ov", { opacity: 0, duration: 0.2 }, 0.7);
-tl.set("#s05-cur", { x: 900, y: 700 }, 0);
+QK.cursorAt(tl, "#s05-cur", 900, 700);
 QK.instr(tl, "#s05-i", 0.6, null);
 QK.focus(tl, "#s05-cam", fDesc.x + 120, fDesc.cy + 60, 2.0, 1.1, 1.1, 820, 400);
 tl.set("#s05-hl", { opacity: 0 }, 0);
@@ -105,7 +106,8 @@ QK.click(tl, "#s05-cur", 13.9, "#s05-ring");
 gsap.set("#s05-ring", { left: tab1.cx, top: tab1.cy });
 tl.to("#s05-i", { y: 190, opacity: 0, duration: 0.35, ease: "power3.in" }, 14.2);
 // whip left
-tl.to("#s05-cam", { x: -420, filter: "blur(14px)", opacity: 0.4, duration: 0.3, ease: "power3.in" }, 14.65);
+QK.camTo(tl, "#s05-cam", { x: -420 }, 14.65, 0.3, "power3.in");
+tl.fromTo("#s05-cam", { filter: "blur(0px)", opacity: 1 }, { filter: "blur(14px)", opacity: 0.4, duration: 0.3, ease: "power3.in", immediateRender: false }, 14.65);
 window.__timelines["s05"] = tl;
 </script>
 </template>

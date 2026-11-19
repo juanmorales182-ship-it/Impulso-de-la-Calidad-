@@ -40,7 +40,7 @@ const B = (s) => QK.box(s);
 const a0 = B("#s13-act0"), a5 = B("#s13-act5"), drop = B("#s13-drop"), rd3 = B("#s13-rdD3"), ok = B("#s13-okb"), pop = B("#s13-pop");
 // arrive by blur swap
 tl.fromTo("#s13-cam", { opacity: 0, filter: "blur(12px)", scale: 1.04 }, { opacity: 1, filter: "blur(0px)", scale: 1, duration: 0.5, ease: "power2.out" }, 0);
-tl.set("#s13-cur", { x: 1000, y: 820 }, 0);
+QK.cursorAt(tl, "#s13-cur", 1000, 820);
 tl.set("#s13-file", { x: 1580, y: 840, opacity: 0 }, 0);
 QK.instr(tl, "#s13-i", 0.3, null);
 const tree = { x: a0.x, y: a0.y, w: a0.w, h: (a5.y + a5.h) - a0.y };

@@ -55,6 +55,7 @@
     </div>
   </div>
 </div>
+<script>window.__QKM=Object.assign(window.__QKM||{},{"#s15-b-status":{"x":406.142822265625,"y":137.03811645507812,"w":137.78863525390625,"h":28.287002563476562,"cx":475.0371398925781,"cy":151.1816177368164},"#s15-status":{"x":474.0119934082031,"y":755.8162231445312,"w":235.72494506835938,"h":25.14398193359375,"cx":591.8744659423828,"cy":768.3882141113281},"#s15-timing":{"x":960.3912353515625,"y":447.80224609375,"w":721.3184814453125,"h":165.00750732421875,"cx":1321.0504760742188,"cy":530.3059997558594},"#s15-qm":{"x":1172.543701171875,"y":762.8880004882812,"w":157.1500244140625,"h":25.14398193359375,"cx":1251.1187133789062,"cy":775.4599914550781}});</script>
 <script>
 const tl = gsap.timeline({ paused: true });
 const B = (s) => QK.box(s);
@@ -62,7 +63,7 @@ const st = B("#s15-b-status"), stat = B("#s15-status"), timing = B("#s15-timing"
 gsap.set("#s15-m", { left: st.x, top: st.y + st.h + 2 });
 const ty = QK.typing(tl);
 tl.fromTo("#s15-cam", { opacity: 0, filter: "blur(12px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.45, ease: "power2.out" }, 0);
-tl.set("#s15-cur", { x: 900, y: 600 }, 0);
+QK.cursorAt(tl, "#s15-cur", 900, 600);
 QK.instr(tl, "#s15-i", 0.3, null);
 QK.focus(tl, "#s15-cam", st.x + 200, st.cy + 70, 2.1, 0.5, 0.9, 860, 360);
 QK.move(tl, "#s15-cur", st.cx, st.cy, 0.9, 0.7);

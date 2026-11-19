@@ -58,6 +58,7 @@
   </div>
   <div id="s12-irisc" class="clip" data-start="0" data-duration="15" data-track-index="5" style="position:absolute;inset:0;z-index:30"><div id="s12-iris"></div></div>
 </div>
+<script>window.__QKM=Object.assign(window.__QKM||{},{"#s12-tab6":{"x":935.9961547851562,"y":227.79225158691406,"w":178.78265380859375,"h":30.644241333007812,"cx":1025.3874816894531,"cy":243.11437225341797},"#s12-pd":{"x":238.28700256347656,"y":471.3747253417969,"w":705.996337890625,"h":72.28897094726562,"cx":591.2851715087891,"cy":507.5192108154297},"#s12-ic":{"x":975.7133178710938,"y":471.3747253417969,"w":705.9963989257812,"h":72.28897094726562,"cx":1328.7115173339844,"cy":507.5192108154297},"#s12-co":{"x":238.28700256347656,"y":574.3079833984375,"w":705.996337890625,"h":72.28900146484375,"cx":591.2851715087891,"cy":610.4524841308594},"#s12-cn":{"x":975.7133178710938,"y":574.3079833984375,"w":705.9963989257812,"h":72.28900146484375,"cx":1328.7115173339844,"cy":610.4524841308594},"#s12-ca":{"x":238.28700256347656,"y":677.2412109375,"w":705.996337890625,"h":72.28900146484375,"cx":591.2851715087891,"cy":713.3857116699219},"#s12-ka":{"x":975.7133178710938,"y":677.2412109375,"w":705.9963989257812,"h":72.28900146484375,"cx":1328.7115173339844,"cy":713.3857116699219},"#s12-cas":{"x":536.8719482421875,"y":753.458984375,"w":172.864990234375,"h":25.14398193359375,"cx":623.304443359375,"cy":766.0309753417969},"#s12-kas":{"x":1274.29833984375,"y":753.458984375,"w":172.864990234375,"h":25.14398193359375,"cx":1360.7308349609375,"cy":766.0309753417969}});</script>
 <script>
 const tl = gsap.timeline({ paused: true });
 const B = (s) => QK.box(s);
@@ -65,7 +66,7 @@ const tab6 = B("#s12-tab6"), pd = B("#s12-pd"), ic = B("#s12-ic"), co = B("#s12-
 const ty = QK.typing(tl);
 // iris opens from the tab that was clicked
 tl.fromTo("#s12-iris", { clipPath: `circle(2300px at ${tab6.cx}px ${tab6.cy}px)` }, { clipPath: `circle(0px at ${tab6.cx}px ${tab6.cy}px)`, duration: 0.6, ease: "power3.out" }, 0);
-tl.set("#s12-cur", { x: tab6.cx, y: tab6.cy }, 0);
+QK.cursorAt(tl, "#s12-cur", tab6.cx, tab6.cy);
 QK.instr(tl, "#s12-i", 0.3, null);
 const top = { x: pd.x, y: pd.y - 34, w: (ic.x + ic.w) - pd.x, h: (cn.y + cn.h) - (pd.y - 34) };
 QK.focus(tl, "#s12-cam", top.x + top.w / 2, top.y + top.h / 2 + 50, 1.3, 0.6, 1.0, 960, 430);
@@ -98,7 +99,8 @@ ty.add("#s12-ka", "Instalar alarma de carga no asegurada en montacargas.", 12.3,
 QK.move(tl, "#s12-cur", kas.x + kas.w - 20, kas.cy, 13.6, 0.4); QK.click(tl, "#s12-cur", 14.05, null);
 ty.set("#s12-kas", "Implemented", 14.15);
 tl.to("#s12-i", { y: 190, opacity: 0, duration: 0.35, ease: "power3.in" }, 14.5);
-tl.to("#s12-cam", { scale: 0.9, opacity: 0, filter: "blur(10px)", duration: 0.3, ease: "power3.in" }, 14.65);
+QK.camTo(tl, "#s12-cam", { scale: 0.9 }, 14.65, 0.3, "power3.in");
+tl.fromTo("#s12-cam", { filter: "blur(0px)", opacity: 1 }, { opacity: 0, filter: "blur(10px)", duration: 0.3, ease: "power3.in", immediateRender: false }, 14.65);
 window.__timelines["s12"] = tl;
 </script>
 </template>

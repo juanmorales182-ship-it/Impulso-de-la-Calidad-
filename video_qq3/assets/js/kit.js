@@ -1,5 +1,7 @@
 /* QQ3 tutorial helpers. Every effect is a function of timeline time (seek-safe). */
 (function () {
+  // seeking jumps over many tweens at once; lazy start-value recording would read stale values
+  gsap.defaults({ lazy: false });
   const QK = {};
 
   /* ---- Typing: one onUpdate per timeline drives every typing job from tl.time() ---- */
@@ -48,6 +50,8 @@
 
   /* ---- Measure an element in stage px (call before any tween is built) ---- */
   QK.box = function (sel) {
+    // positions measured at build time (measure.mjs): the render may build a scene while it is hidden
+    if (window.__QKM && window.__QKM[sel]) return Object.assign({}, window.__QKM[sel]);
     const el = document.querySelector(sel);
     // the scene may be hidden while its timeline is built: show hidden ancestors just for the measurement
     const forced = [];
@@ -79,17 +83,40 @@
   };
 
   /* ---- Camera: focus stage point (px,py) at scale s, landing it at (cx,cy) ---- */
+  /* Camera moves are chained fromTo tweens (explicit start state), so any seek order renders the same frame. */
+  QK._cam = new WeakMap();
+  QK._camState = function (tl, sel) {
+    let m = QK._cam.get(tl); if (!m) { m = {}; QK._cam.set(tl, m); }
+    if (!m[sel]) m[sel] = { scale: 1, x: 0, y: 0 };
+    return m;
+  };
+  QK.camTo = function (tl, sel, to, t, dur, ease) {
+    const m = QK._camState(tl, sel);
+    const from = Object.assign({}, m[sel]);
+    tl.fromTo(sel, from, Object.assign({}, to, { duration: dur, ease: ease || "power2.inOut", immediateRender: false }), t);
+    m[sel] = Object.assign({}, m[sel], to);
+  };
   QK.focus = function (tl, sel, px, py, s, t, dur, cx, cy, ease) {
     cx = cx == null ? 960 : cx; cy = cy == null ? 470 : cy;
-    tl.to(sel, { scale: s, x: cx - s * px, y: cy - s * py, duration: dur, ease: ease || "power2.inOut" }, t);
+    QK.camTo(tl, sel, { scale: s, x: cx - s * px, y: cy - s * py }, t, dur, ease);
   };
   QK.camReset = function (tl, sel, t, dur) {
-    tl.to(sel, { scale: 1, x: 0, y: 0, duration: dur || 0.9, ease: "power2.inOut" }, t);
+    QK.camTo(tl, sel, { scale: 1, x: 0, y: 0 }, t, dur || 0.9);
   };
 
   /* ---- Cursor ---- */
   QK.move = function (tl, sel, x, y, t, dur, ease) {
-    tl.to(sel, { x: x, y: y, duration: dur || 0.8, ease: ease || "power3.inOut" }, t);
+    const m = QK._camState(tl, "cur:" + sel);
+    const k = "cur:" + sel;
+    if (m[k].x === 0 && m[k].y === 0 && sel in (QK._curStart || {})) Object.assign(m[k], QK._curStart[sel]);
+    tl.fromTo(sel, { x: m[k].x, y: m[k].y }, { x: x, y: y, duration: dur || 0.8, ease: ease || "power3.inOut", immediateRender: false }, t);
+    m[k].x = x; m[k].y = y;
+  };
+  /* declare where a cursor starts (instead of tl.set) so moves chain from it */
+  QK.cursorAt = function (tl, sel, x, y) {
+    const m = QK._camState(tl, "cur:" + sel);
+    m["cur:" + sel].x = x; m["cur:" + sel].y = y;
+    tl.set(sel, { x: x, y: y }, 0);
   };
   QK.click = function (tl, sel, t, ringSel) {
     tl.to(sel, { scale: 0.82, duration: 0.07, ease: "power2.in", transformOrigin: "4px 4px" }, t);

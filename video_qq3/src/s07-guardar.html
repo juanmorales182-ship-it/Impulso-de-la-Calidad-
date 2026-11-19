@@ -35,7 +35,7 @@ const tl = gsap.timeline({ paused: true });
 const B = (s) => QK.box(s);
 const save = B("#s07-b-save"), title = B("#s07-title-a"), tab0 = B("#s07-tab0");
 const ty = QK.typing(tl);
-tl.set("#s07-cur", { x: save.cx, y: save.cy }, 0);
+QK.cursorAt(tl, "#s07-cur", save.cx, save.cy);
 gsap.set("#s07-ring", { left: save.cx, top: save.cy });
 QK.instr(tl, "#s07-i", 0.2, null);
 QK.focus(tl, "#s07-cam", title.x + 330, title.cy + 40, 2.1, 0.4, 1.0, 760, 330);
@@ -62,7 +62,8 @@ QK.camReset(tl, "#s07-cam", 7.0, 0.9);
 QK.move(tl, "#s07-cur", tab0.cx, tab0.cy, 7.3, 0.8);
 QK.click(tl, "#s07-cur", 8.2, null);
 tl.to("#s07-i", { y: 190, opacity: 0, duration: 0.35, ease: "power3.in" }, 8.6);
-tl.to("#s07-cam", { x: 420, filter: "blur(14px)", opacity: 0.4, duration: 0.3, ease: "power3.in" }, 9.05);
+QK.camTo(tl, "#s07-cam", { x: 420 }, 9.05, 0.3, "power3.in");
+tl.fromTo("#s07-cam", { filter: "blur(0px)", opacity: 1 }, { filter: "blur(14px)", opacity: 0.4, duration: 0.3, ease: "power3.in", immediateRender: false }, 9.05);
 window.__timelines["s07"] = tl;
 </script>
 </template>

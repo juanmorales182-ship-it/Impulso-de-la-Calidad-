@@ -41,7 +41,7 @@ const save = B("#s06-b-save");
 const ty = QK.typing(tl);
 // whip in from the right
 tl.fromTo("#s06-cam", { x: 420, filter: "blur(14px)" }, { x: 0, filter: "blur(0px)", duration: 0.45, ease: "power3.out" }, 0);
-tl.set("#s06-cur", { x: 760, y: 220 }, 0);
+QK.cursorAt(tl, "#s06-cur", 760, 220);
 QK.instr(tl, "#s06-i", 0.3, null);
 // team
 QK.focus(tl, "#s06-cam", tbl.cx - 120, tbl.cy + 30, 1.55, 0.6, 1.0, 900, 420);

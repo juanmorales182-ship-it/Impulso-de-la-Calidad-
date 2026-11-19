@@ -20,3 +20,6 @@ for f in sorted((root / "src").glob("*.html")):
     s = re.sub(r"\{\{FORM:(\w+):([\w-]+)(?::(\{.*?\}))?\}\}", form, s)
     (root / "compositions" / f.name).write_text(s)
     print("built", f.name)
+
+import subprocess
+subprocess.run(["node", str(root / "measure.mjs")], check=True)

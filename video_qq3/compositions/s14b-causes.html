@@ -19,13 +19,14 @@
     </div>
   </div>
 </div>
+<script>window.__QKM=Object.assign(window.__QKM||{},{"#s14b-dcg":{"x":1165.471923828125,"y":538.1634521484375,"w":141.43505859375,"h":25.14404296875,"cx":1236.189453125,"cy":550.7354736328125},"#s14b-dcd":{"x":1165.471923828125,"y":571.1649780273438,"w":141.43505859375,"h":25.14398193359375,"cx":1236.189453125,"cy":583.7369689941406},"#s14b-f-dcg":{"x":961.177001953125,"y":534.2347412109375,"w":720.53271484375,"h":33.00146484375,"cx":1321.443359375,"cy":550.7354736328125},"#s14b-f-dcd":{"x":961.177001953125,"y":567.2362060546875,"w":720.53271484375,"h":33.00152587890625,"cx":1321.443359375,"cy":583.7369689941406},"#s14b-body table":{"x":238.28700256347656,"y":268.6512451171875,"w":1437.9224853515625,"h":169.72198486328125,"cx":957.2482452392578,"cy":353.5122375488281},"#s14b-cg0":{"x":864.8857421875,"y":299.6883544921875,"w":148.2857666015625,"h":34.572998046875,"cx":939.0286254882812,"cy":316.974853515625}});</script>
 <script>
 const tl = gsap.timeline({ paused: true });
 const B = (s) => QK.box(s);
 const dcg = B("#s14b-dcg"), dcd = B("#s14b-dcd"), dcgL = B("#s14b-f-dcg"), dcdL = B("#s14b-f-dcd"), tbl = B("#s14b-body table"), cg0 = B("#s14b-cg0");
 const ty = QK.typing(tl);
 tl.fromTo("#s14b-cam", { x: 420, filter: "blur(14px)" }, { x: 0, filter: "blur(0px)", duration: 0.45, ease: "power3.out" }, 0);
-tl.set("#s14b-cur", { x: 700, y: 300 }, 0);
+QK.cursorAt(tl, "#s14b-cur", 700, 300);
 QK.instr(tl, "#s14b-i", 0.3, null);
 const code = { x: dcgL.x, y: dcg.y, w: (dcg.x + dcg.w + 380) - dcgL.x, h: (dcd.y + dcd.h) - dcg.y };
 QK.focus(tl, "#s14b-cam", code.x + code.w / 2, code.y + code.h / 2, 2.0, 0.7, 0.9, 960, 430);
@@ -45,7 +46,7 @@ QK.hl(tl, "#s14b-hl2", 7.0, 9.4);
 gsap.set("#s14b-tag", { left: cg0.x + 120, top: tbl.y - 40 });
 tl.fromTo("#s14b-tag", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.4, ease: "expo.out" }, 7.2);
 tl.to("#s14b-i", { y: 190, opacity: 0, duration: 0.35, ease: "power3.in" }, 9.4);
-tl.to("#s14b-cam", { opacity: 0, filter: "blur(10px)", duration: 0.25, ease: "power2.in" }, 9.7);
+tl.fromTo("#s14b-cam", { filter: "blur(0px)", opacity: 1 }, { opacity: 0, filter: "blur(10px)", duration: 0.25, ease: "power2.in", immediateRender: false }, 9.7);
 window.__timelines["s14b"] = tl;
 </script>
 </template>

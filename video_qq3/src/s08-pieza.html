@@ -45,7 +45,7 @@ const dy = (statSec.y - 90) - (body.y + 10);
 const S = (b) => ({ x: b.x, y: b.y - dy, w: b.w, h: b.h, cx: b.cx, cy: b.cy - dy });
 const acc2 = S(acc), cau2 = S(cau), loc2 = S(loc), qcl2 = S(qcl), qcf2 = S(qcf);
 tl.fromTo("#s08-cam", { x: -420, filter: "blur(14px)" }, { x: 0, filter: "blur(0px)", duration: 0.45, ease: "power3.out" }, 0);
-tl.set("#s08-cur", { x: 700, y: 260 }, 0);
+QK.cursorAt(tl, "#s08-cur", 700, 260);
 QK.instr(tl, "#s08-i", 0.3, null);
 QK.focus(tl, "#s08-cam", plant.x + 200, cc.cy - 40, 2.0, 0.6, 1.0, 820, 430);
 QK.place("#s08-hl1", { x: mro.x, y: plant.y, w: 700, h: (cc.y + cc.h) - plant.y }, 8);

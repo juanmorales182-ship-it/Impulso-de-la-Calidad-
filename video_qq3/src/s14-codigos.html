@@ -49,7 +49,7 @@ const ty = QK.typing(tl);
 gsap.set("#s14-err", { left: msg.x - 14, top: msg.y, width: 1500 - 4, height: 0 });
 gsap.set("#s14-m", { left: st.x, top: st.y + st.h + 2 });
 QK.chapter(tl, "s14", 0, 2.6);
-tl.set("#s14-cur", { x: 900, y: 600 }, 0);
+QK.cursorAt(tl, "#s14-cur", 900, 600);
 QK.instr(tl, "#s14-i", 3.2, null);
 QK.focus(tl, "#s14-cam", st.x + 200, st.cy + 70, 2.1, 3.3, 1.0, 860, 360);
 QK.move(tl, "#s14-cur", st.cx, st.cy, 3.8, 0.7);
@@ -97,7 +97,8 @@ QK.camReset(tl, "#s14-cam", 15.3, 0.8);
 QK.move(tl, "#s14-cur", tab5.cx, tab5.cy, 15.7, 0.8);
 gsap.set("#s14-ring", { left: tab5.cx, top: tab5.cy });
 QK.click(tl, "#s14-cur", 16.7, "#s14-ring");
-tl.to("#s14-cam", { x: -420, filter: "blur(14px)", opacity: 0.4, duration: 0.3, ease: "power3.in" }, 17.65);
+QK.camTo(tl, "#s14-cam", { x: -420 }, 17.65, 0.3, "power3.in");
+tl.fromTo("#s14-cam", { filter: "blur(0px)", opacity: 1 }, { filter: "blur(14px)", opacity: 0.4, duration: 0.3, ease: "power3.in", immediateRender: false }, 17.65);
 window.__timelines["s14"] = tl;
 </script>
 </template>
