@@ -49,6 +49,21 @@
   /* ---- Measure an element in stage px (call before any tween is built) ---- */
   QK.box = function (sel) {
     const el = document.querySelector(sel);
+    // the scene may be hidden while its timeline is built: show hidden ancestors just for the measurement
+    const forced = [];
+    for (let n = el; n && n.nodeType === 1; n = n.parentElement) {
+      const cs = getComputedStyle(n);
+      if (cs.display === "none" || cs.visibility === "hidden") {
+        forced.push([n, n.style.display, n.style.visibility]);
+        if (cs.display === "none") n.style.display = "block";
+        n.style.visibility = "visible";
+      }
+    }
+    try { return QK._box(el); } finally {
+      for (const [n, d, v] of forced) { n.style.display = d; n.style.visibility = v; }
+    }
+  };
+  QK._box = function (el) {
     const host = el.closest("[data-composition-id]") || document.documentElement;
     const hr = host.getBoundingClientRect();
     const k = 1920 / (hr.width || 1920);
