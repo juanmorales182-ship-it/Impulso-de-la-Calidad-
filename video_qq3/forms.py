@@ -8,67 +8,7 @@ and toggled by opacity in the scene timeline.
 TABS = ["Overview", "Risk Definition &amp; Team", "Description", "○ Activities", "5-WHY", "Causes",
         "TopQ - One Pager", "Reference Objects", "Administrative Data", "Change Documents"]
 
-CSS = """
-<style>
-.qf{position:absolute;left:0;top:0;width:1909px;height:1049px;background:#F2F2F2;font-family:Arial,Helvetica,sans-serif;color:#333;overflow:hidden}
-.qf-title{height:58px;background:#E0E0E0;display:flex;align-items:center;padding:0 22px;font:700 27px Arial;color:#111;position:relative}
-.qf-title .ai{position:absolute;right:22px;font:400 19px Arial;color:#0A6ED1}
-.qf-tb{height:56px;background:#DDDFDF;display:flex;align-items:center;gap:10px;padding:0 14px;border-bottom:1px solid #C8C8C8}
-.qf-b{border:1px solid #A3A5A8;background:#F4F4F4;padding:6px 13px;font:19px Arial;color:#222;white-space:nowrap;position:relative}
-.qf-b.dis{color:#A0A0A0}
-.qf-b.dd{padding-right:22px}
-.qf-b.dd::after{content:"";position:absolute;right:4px;bottom:4px;border:5px solid transparent;border-right-color:#555;border-bottom-color:#555}
-.qf-b .ico{display:inline-block;width:18px;height:18px;vertical-align:-3px;margin-right:8px;border-radius:2px;background:#2F6DB5;box-shadow:inset 0 -7px 0 #CFE0F5}
-.qf-b.on{background:#2F7AB0;color:#fff;border-color:#2F7AB0}
-.qf-sp{flex:1}
-.qf-msg{position:relative;height:44px;background:#fff;border-bottom:1px solid #D6D6D6}
-.qf-msg > div{position:absolute;left:18px;top:0;height:44px;display:flex;align-items:center;gap:12px;font:19px Arial;white-space:nowrap}
-.qf-msg .nm{color:#888;font-style:italic}
-.qf-msg .lk{color:#2A6EAF;font-style:normal}
-.qf-ok{width:24px;height:24px;border-radius:50%;background:#3C9A43;color:#fff;font:700 16px Arial;display:flex;align-items:center;justify-content:center}
-.qf-er{width:24px;height:24px;border-radius:3px;background:#C0392B;color:#fff;font:700 17px Arial;display:flex;align-items:center;justify-content:center}
-.qf-tabs{position:relative;display:flex;align-items:flex-end;gap:40px;margin:0 18px;padding:18px 10px 0 54px;border-bottom:2px solid #BACBD5;height:66px}
-.qf-tabs::before{content:"";position:absolute;left:12px;top:24px;width:26px;height:26px;border-radius:50%;border:2px solid #777}
-.qf-tab{font:20px Arial;color:#444;padding-bottom:12px;white-space:nowrap;position:relative}
-.qf-tab.on{font:700 27px Arial;color:#111;padding-bottom:8px}
-.qf-tab.on::after{content:"";position:absolute;left:50%;bottom:-2px;margin-left:-9px;border:9px solid transparent;border-bottom-color:#357CAD}
-.qf-body{position:absolute;left:0;right:0;top:225px;bottom:0;padding:10px 36px;overflow:hidden}
-.qf-sec{font:700 21px Arial;color:#333;border-bottom:1px solid #D0D0D0;padding:12px 0 6px;margin-bottom:8px;white-space:nowrap}
-.qf-f{display:flex;align-items:center;height:42px;font:19px Arial;white-space:nowrap}
-.qf-f .l{text-align:right;padding-right:22px;color:#444;flex:none}
-.qf-f .l .r{color:#0A6ED1;margin-right:4px}
-.qf-i{height:32px;border:1px solid #A0A0A0;background:#fff;padding:0 9px;display:flex;align-items:center;font:700 19px Arial;color:#111;position:relative;white-space:nowrap;overflow:hidden;flex:none}
-.qf-i.ro{background:transparent;border-color:transparent;padding-left:0}
-.qf-i.gr{background:#E8E8E8;border-color:#C8C8C8;color:#555}
-.qf-i.dd{padding-right:30px}
-.qf-i.dd::after{content:"";position:absolute;right:11px;top:9px;width:8px;height:8px;border-right:2px solid #555;border-bottom:2px solid #555;transform:rotate(45deg)}
-.qf-i.vh{padding-right:30px}
-.qf-i.vh::after{content:"";position:absolute;right:7px;top:7px;width:12px;height:12px;border:2px solid #777;border-radius:2px;box-shadow:-4px 4px 0 -1px #fff,-4px 4px 0 1px #777}
-.qf-i.cal{padding-right:32px}
-.qf-i.cal::after{content:"";position:absolute;right:6px;top:5px;width:17px;height:17px;border:2px solid #777;border-top-width:5px;border-radius:2px}
-.qf-i.yel{background:#FFF3A0}
-.qf-desc{margin-left:14px;font:700 19px Arial;color:#222}
-.qf-unit{margin-left:10px;font:19px Arial;color:#444}
-.qf-tl{width:24px;height:24px;border-radius:50%;margin-left:14px;border:3px solid #B8C8D0;background:#F4FAFD;position:relative;flex:none}
-.qf-tl i{position:absolute;inset:2px;border-radius:50%;background:#0B7A1E;opacity:0}
-.qf-box{background:#fff;border:1px solid #A0A0A0;font:19px Arial;color:#111;padding:8px 10px;line-height:1.35;overflow:hidden}
-.qf-box.dis{background:#E3E7EC;border-color:#C5CCD5}
-.qf-t{border-collapse:collapse;font:19px Arial}
-.qf-t th{background:#E4E4E4;border:1px solid #CFCFCF;padding:8px 12px;text-align:left;font-weight:400;color:#333;white-space:nowrap}
-.qf-t td{border:1px solid #DADADA;padding:7px 12px;background:#fff;white-space:nowrap;height:44px}
-.qf-t tr:nth-child(odd) td{background:#EEF2F6}
-.qf-t td.sel{width:26px;padding:0;background:#E9E9E9}
-.qf-mini{display:flex;gap:6px;margin:6px 0}
-.qf-mini span{width:30px;height:26px;border:1px solid #B5B5B5;background:#EDEDED;display:block}
-.qf-mini span.go{background:#fff}
-.qf-mini span.go::after{content:"➜";color:#2F6DB5;font:700 16px Arial;display:block;text-align:center;line-height:24px}
-.qf-menu{position:absolute;background:#fff;box-shadow:0 6px 18px rgba(0,0,0,.25);border:1px solid #BDBDBD;font:20px Arial;min-width:230px;z-index:5}
-.qf-menu div{padding:10px 18px;color:#999;white-space:nowrap}
-.qf-menu div.en{color:#222}
-.qf-menu div.hov{background:#2F7AB0;color:#fff}
-.qf-warn{font:24px Arial;color:#2F78C4;text-align:center}
-</style>
-"""
+CSS = ""  # styles live in assets/css/forms.css
 
 
 def title_bar(p, before="New Quality Issue: QQ3 - Internal Complaint (QQ3)", after=None):
@@ -334,34 +274,7 @@ def onepager(p):
 
 # ---------------------------------------------------------------- SAP GUI: activities tree + upload
 def activities(p):
-    css = """<style>
-.gui{position:absolute;left:0;top:0;width:1909px;height:1049px;background:#F3F5F7;font-family:Arial,Helvetica,sans-serif;color:#222;overflow:hidden}
-.gui-menu{height:40px;background:#fff;display:flex;align-items:center;gap:30px;padding:0 18px;font:19px Arial;border-bottom:1px solid #D8DDE3}
-.gui-head{height:64px;background:linear-gradient(#A7C4E0,#C8DCEA);display:flex;align-items:center;gap:18px;padding:0 18px;font:700 27px Arial;color:#1d2b3a}
-.gui-head .sap{background:#3AA0D6;color:#fff;font:700 18px Arial;padding:4px 10px;border-radius:3px}
-.gui-cmd{height:48px;background:#EEF2F6;display:flex;align-items:center;gap:12px;padding:0 18px;border-bottom:1px solid #D0D7DE;font:19px Arial}
-.gui-cmd .f{width:260px;height:30px;border:1px solid #A9B4BF;background:#fff}
-.gui-pan{position:absolute;top:152px;bottom:44px;background:#fff;border:1px solid #C9D2DB}
-.gui-tb{height:42px;background:#EEF2F6;border-bottom:1px solid #D0D7DE;display:flex;align-items:center;gap:16px;padding:0 12px;font:18px Arial;color:#333;white-space:nowrap}
-.gui-th{display:flex;background:#E4E9EE;border-bottom:1px solid #CBD3DB;font:18px Arial;color:#333}
-.gui-th div{padding:7px 10px;border-right:1px solid #CBD3DB}
-.gui-row{display:flex;align-items:center;height:40px;font:19px Arial;white-space:nowrap;border-bottom:1px solid #EEF1F4}
-.gui-row .tw{width:20px;color:#666}
-.gui-ic{display:inline-block;width:20px;height:16px;border-radius:2px;margin-right:8px;vertical-align:-2px}
-.gui-ic.fo{background:#E8B84A}.gui-ic.ac{background:#6C8EBF}.gui-ic.doc{background:#fff;border:2px solid #6C8EBF;width:16px;height:20px}
-.gui-new{color:#555;margin-left:auto;padding-right:14px;font:17px Arial}
-.gui-drop{position:absolute;left:14px;right:14px;bottom:14px;height:150px;border:2px dashed #9FB0C2;display:flex;align-items:center;justify-content:center;
-  font:20px 'Courier New',monospace;color:#7D8A97;background:#FAFBFC}
-.gui-foot{position:absolute;left:0;right:0;bottom:0;height:44px;background:#2C3A47}
-.gui-pop{position:absolute;left:760px;top:250px;width:440px;background:#fff;box-shadow:0 14px 40px rgba(0,0,0,.35);border:1px solid #8C9AA8;opacity:0}
-.gui-pop .h{background:#C8DCEA;font:700 20px Arial;padding:10px 14px}
-.gui-pop .q{font:19px Arial;padding:12px 16px 4px}
-.gui-pop .r{display:flex;align-items:center;gap:10px;font:19px Arial;padding:5px 22px}
-.gui-pop .r i{width:18px;height:18px;border-radius:50%;border:2px solid #555;position:relative}
-.gui-pop .r i.on::after{content:"";position:absolute;inset:3px;border-radius:50%;background:#2F6DB5}
-.gui-pop .f{background:#2C3A47;height:52px;display:flex;align-items:center;justify-content:flex-end;gap:12px;padding:0 14px;margin-top:10px}
-.gui-pop .f span{width:36px;height:32px;border-radius:4px;display:flex;align-items:center;justify-content:center;font:700 22px Arial;background:#fff}
-</style>"""
+    css = ""  # styles live in assets/css/forms.css
     acts = [("8000002020069", "D2 - Description"), ("8000002020068", "D3 - Containment Action(s)"), ("8000002020065", "D4 - Cause(s)"),
             ("8000002020064", "D5/D6 - Corrective Actions"), ("8000002020063", "D7 - Preventive Action(s)"), ("8000002020060", "D8 - Completion")]
     tree = ('<div class="gui-row"><span class="tw">▸</span><span class="gui-ic fo"></span>Overview</div>'
