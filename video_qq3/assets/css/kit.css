@@ -84,3 +84,7 @@
 .bubble::after{content:"";position:absolute;width:30px;height:30px;background:#fff;transform:rotate(45deg);bottom:-12px;left:60px;border-radius:4px}
 .bubble.left::after{left:auto;right:60px}
 .bubble.side::after{left:-12px;top:40px;bottom:auto}
+
+.tag.sm{font:700 15px Inter;padding:5px 10px;border-radius:6px}
+.cam .hl{border-width:3px;box-shadow:0 0 0 4px rgba(245,168,0,.22)}
+.cam .ring{width:44px;height:44px;margin:-22px 0 0 -22px;border-width:3px}

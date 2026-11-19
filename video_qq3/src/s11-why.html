@@ -1,0 +1,71 @@
+<template>
+<link rel="stylesheet" href="assets/css/kit.css">
+<style>
+#root{position:absolute;inset:0}
+</style>
+<div id="root" data-composition-id="s11" data-width="1920" data-height="1080">
+  <div id="s11-bg" class="ground clip" data-start="0" data-duration="15" data-track-index="0"><div class="band2"></div><div class="band"></div></div>
+  <div id="s11-camclip" class="clip" data-start="0" data-duration="15" data-track-index="1" style="position:absolute;inset:0;z-index:1">
+    <div id="s11-cam" class="cam">
+      {{FORM:why:s11}}
+      <div class="hl" id="s11-hl1" style="opacity:0"></div>
+      <div class="hl" id="s11-hl2" style="opacity:0"></div>
+      <div class="tag acc sm" id="s11-tag" style="opacity:0">Repite con las 4 causas</div>
+      <div class="ring" id="s11-ring" style="opacity:0"></div>
+      <svg class="cursor" id="s11-cur" viewBox="0 0 22 30"><path d="M2 2 L2 24 L8 18.5 L12 28 L16 26.3 L12 17 L20 17 Z" fill="#fff" stroke="#111" stroke-width="1.6" stroke-linejoin="round"/></svg>
+    </div>
+  </div>
+  <div id="s11-i" class="instr clip" data-start="0" data-duration="15" data-track-index="4"><div class="num">8</div>
+    <div style="position:relative;flex:1;height:84px">
+      <div class="txt" id="s11-t1" style="position:absolute;inset:0;display:flex;align-items:center">En la pestaña <b>&nbsp;5-WHY</b>, escribe un porqué en cada casilla.</div>
+      <div class="txt alt" id="s11-t2" style="position:absolute;inset:0;display:flex;align-items:center;opacity:0">Describe la causa y dale <b>&nbsp;Create Cause</b>.</div>
+      <div class="txt alt" id="s11-t3" style="position:absolute;inset:0;display:flex;align-items:center;opacity:0">Después, el resumen: pestaña <b>&nbsp;TopQ - One Pager</b>.</div>
+    </div>
+  </div>
+</div>
+<script>
+const tl = gsap.timeline({ paused: true });
+const B = (s) => QK.box(s);
+const w = [0, 1, 2].map((i) => B("#s11-w0" + i));
+const det = B("#s11-det0"), cc = B("#s11-cc0"), blk1 = B("#s11-w10"), blk1d = B("#s11-det1"), tab6 = B("#s11-tab6");
+const ty = QK.typing(tl);
+tl.fromTo("#s11-cam", { y: 340, filter: "blur(14px)", opacity: 0 }, { y: 0, filter: "blur(0px)", opacity: 1, duration: 0.7, ease: "expo.out" }, 0);
+tl.set("#s11-cur", { x: 900, y: 700 }, 0);
+QK.instr(tl, "#s11-i", 0.3, null);
+const row = { x: w[0].x, y: w[0].y - 30, w: (det.x + det.w) - w[0].x, h: (cc.y + cc.h) - (w[0].y - 30) };
+QK.focus(tl, "#s11-cam", row.x + row.w / 2, row.y + row.h / 2 + 30, 1.45, 0.8, 1.0, 960, 420);
+const words = ["Material caído al suelo", "Operador no asegura la carga", "Distracción por paros de línea"];
+let t = 1.6;
+w.forEach((b, i) => {
+  QK.move(tl, "#s11-cur", b.x + 40, b.cy, t, 0.45);
+  QK.click(tl, "#s11-cur", t + 0.48, null);
+  tl.to("#s11-w0" + i, { backgroundColor: "#ffffff", borderColor: "#A0A0A0", duration: 0.1 }, t + 0.5);
+  ty.add("#s11-w0" + i, words[i], t + 0.6, 26);
+  t += 1.75;
+});
+QK.instrSwap(tl, "#s11-t1", "#s11-t2", 6.9);
+QK.move(tl, "#s11-cur", det.x + 40, det.cy, 7.0, 0.5);
+QK.click(tl, "#s11-cur", 7.55, null);
+ty.add("#s11-det0", "Distracción del operador por paros de línea durante el día", 7.7, 40);
+QK.move(tl, "#s11-cur", cc.cx, cc.cy, 9.3, 0.5);
+gsap.set("#s11-ring", { left: cc.cx, top: cc.cy });
+QK.click(tl, "#s11-cur", 9.85, "#s11-ring");
+tl.to("#s11-cc0", { color: "#A0A0A0", duration: 0.1 }, 10.0);
+ty.set("#s11-cid0", "S_00023", 10.0);
+tl.fromTo("#s11-cid0", { scale: 1.6, color: "#2E9E4F" }, { scale: 1, color: "#111111", duration: 0.5, ease: "back.out(2)" }, 10.0);
+gsap.set("#s11-tag", { left: blk1.x, top: blk1.y - 70 });
+// pan down to the second (non-detection) block, already filled
+QK.focus(tl, "#s11-cam", row.x + row.w / 2, blk1.cy + 20, 1.45, 10.6, 0.9, 960, 420);
+QK.place("#s11-hl1", { x: blk1.x, y: blk1.y - 30, w: (blk1d.x + blk1d.w) - blk1.x, h: blk1d.h + 74 }, 8);
+QK.hl(tl, "#s11-hl1", 11.3, 13.0);
+tl.fromTo("#s11-tag", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.4, ease: "expo.out" }, 11.4);
+tl.to("#s11-tag", { opacity: 0, duration: 0.2 }, 13.0);
+QK.instrSwap(tl, "#s11-t2", "#s11-t3", 13.0);
+QK.camReset(tl, "#s11-cam", 13.0, 0.8);
+QK.move(tl, "#s11-cur", tab6.cx, tab6.cy, 13.3, 0.8);
+gsap.set("#s11-ring", { left: tab6.cx, top: tab6.cy });
+QK.click(tl, "#s11-cur", 14.2, null);
+tl.to("#s11-i", { y: 190, opacity: 0, duration: 0.35, ease: "power3.in" }, 14.4);
+window.__timelines["s11"] = tl;
+</script>
+</template>

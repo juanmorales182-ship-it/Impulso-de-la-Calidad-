@@ -1,0 +1,81 @@
+<template>
+<link rel="stylesheet" href="assets/css/kit.css">
+<style>
+#root{position:absolute;inset:0}
+#s05-ov{position:absolute;inset:0;background:#F2F2F2}
+#s05-q{left:1610px;top:560px;width:230px;height:276px}
+#s05-b{left:1110px;top:340px;width:560px}
+</style>
+<div id="root" data-composition-id="s05" data-width="1920" data-height="1080">
+  <div id="s05-bg" class="ground clip" data-start="0" data-duration="15" data-track-index="0"><div class="band2"></div><div class="band"></div></div>
+  <div id="s05-camclip" class="clip" data-start="0" data-duration="15" data-track-index="1" style="position:absolute;inset:0;z-index:1">
+    <div id="s05-cam" class="cam">
+      {{FORM:overview:s05}}
+      <div class="hl" id="s05-hl" style="opacity:0"></div>
+      <div class="tag acc sm" id="s05-tag" style="opacity:0">* = obligatorio</div>
+      <div class="ring" id="s05-ring" style="opacity:0"></div>
+      <svg class="cursor" id="s05-cur" viewBox="0 0 22 30"><path d="M2 2 L2 24 L8 18.5 L12 28 L16 26.3 L12 17 L20 17 Z" fill="#fff" stroke="#111" stroke-width="1.6" stroke-linejoin="round"/></svg>
+    </div>
+  </div>
+  <div id="s05-q" class="quali clip" data-start="0" data-duration="15" data-track-index="2">{{QUALI:s05q}}</div>
+  <div id="s05-b" class="bubble left clip" data-start="0" data-duration="15" data-track-index="3">Los campos con <b>*</b> son obligatorios. ¡No los dejes vacíos!</div>
+  <div id="s05-i" class="instr clip" data-start="0" data-duration="15" data-track-index="4"><div class="num">3</div>
+    <div style="position:relative;flex:1;height:84px">
+      <div class="txt" id="s05-t1" style="position:absolute;inset:0;display:flex;align-items:center">Escribe una <b>&nbsp;descripción corta</b>: qué pasó y dónde.</div>
+      <div class="txt alt" id="s05-t2" style="position:absolute;inset:0;display:flex;align-items:center;opacity:0">Indica <b>&nbsp;quién lo reportó&nbsp;</b> y <b>&nbsp;quién es el responsable</b>.</div>
+      <div class="txt alt" id="s05-t3" style="position:absolute;inset:0;display:flex;align-items:center;opacity:0">Ahora pasa a la pestaña <b>&nbsp;Risk Definition &amp; Team</b>.</div>
+    </div>
+  </div>
+  <div id="s05-ovc" class="clip" data-start="0" data-duration="15" data-track-index="5" style="position:absolute;inset:0;z-index:30"><div id="s05-ov"></div></div>
+</div>
+<script>
+const tl = gsap.timeline({ paused: true });
+// measure before any tween
+const B = (s) => QK.box(s);
+const fDesc = B("#s05-desc"), fRep = B("#s05-rep"), fResp = B("#s05-resp"), fRespL = B("#s05-f-resp");
+const tab1 = B("#s05-tab1");
+const reqMark = B("#s05-f-desc .r");
+const W = B("#s05-win");
+const ty = QK.typing(tl);
+// the grey of the clicked type list contracts into the window
+tl.fromTo("#s05-ov", { clipPath: "inset(0px 0px 0px 0px round 0px)" },
+  { clipPath: `inset(${W.y}px ${1920 - W.x - W.w}px ${1080 - W.y - W.h}px ${W.x}px round 14px)`, duration: 0.7, ease: "power3.inOut" }, 0.05);
+tl.to("#s05-ov", { opacity: 0, duration: 0.2 }, 0.7);
+tl.set("#s05-cur", { x: 900, y: 700 }, 0);
+QK.instr(tl, "#s05-i", 0.6, null);
+QK.focus(tl, "#s05-cam", fDesc.x + 120, fDesc.cy + 60, 2.0, 1.1, 1.1, 820, 400);
+tl.set("#s05-hl", { opacity: 0 }, 0);
+QK.place("#s05-hl", { x: fDesc.x, y: fDesc.y, w: fDesc.w, h: fDesc.h }, 6);
+QK.hl(tl, "#s05-hl", 1.8, 4.7);
+QK.move(tl, "#s05-cur", fDesc.x + 40, fDesc.cy - 4, 1.6, 0.7);
+QK.click(tl, "#s05-cur", 2.35, null);
+ty.add("#s05-desc", "Material caído al suelo – Línea 3", 2.6, 20);
+QK.instrSwap(tl, "#s05-t1", "#s05-t2", 4.9);
+QK.move(tl, "#s05-cur", fRep.x + 40, fRep.cy - 4, 5.0, 0.5);
+QK.click(tl, "#s05-cur", 5.55, null);
+ty.add("#s05-rep", "Operador de montacargas", 5.75, 20);
+QK.move(tl, "#s05-cur", fResp.x + 40, fResp.cy - 4, 7.1, 0.5);
+QK.click(tl, "#s05-cur", 7.65, null);
+ty.add("#s05-resp", "USR8D01", 7.85, 16);
+tl.fromTo("#s05-respd", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 8.5);
+ty.set("#s05-respd", "Líder 8D (ejemplo)", 8.45);
+// required marker
+gsap.set("#s05-tag", { left: fDesc.x + fDesc.w + 14, top: fDesc.y - 2 });
+tl.fromTo("#s05-tag", { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.5, ease: "back.out(2)" }, 9.0);
+tl.to("#s05-tag", { opacity: 0, duration: 0.25 }, 12.4);
+const q = QK.quali(tl, "s05q");
+q.pop(9.2).idle(10.1, 12.6).blink([10.8]);
+q.say("#s05-b", 9.9, 12.4);
+q.leave(12.5);
+// go to the next tab
+QK.instrSwap(tl, "#s05-t2", "#s05-t3", 12.6);
+QK.camReset(tl, "#s05-cam", 12.6, 1.0);
+QK.move(tl, "#s05-cur", tab1.cx, tab1.cy, 13.0, 0.8);
+QK.click(tl, "#s05-cur", 13.9, "#s05-ring");
+gsap.set("#s05-ring", { left: tab1.cx, top: tab1.cy });
+tl.to("#s05-i", { y: 190, opacity: 0, duration: 0.35, ease: "power3.in" }, 14.2);
+// whip left
+tl.to("#s05-cam", { x: -420, filter: "blur(14px)", opacity: 0.4, duration: 0.3, ease: "power3.in" }, 14.65);
+window.__timelines["s05"] = tl;
+</script>
+</template>

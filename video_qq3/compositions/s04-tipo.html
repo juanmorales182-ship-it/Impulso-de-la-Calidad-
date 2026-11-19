@@ -10,7 +10,7 @@
 </style>
 <div id="root" data-composition-id="s04" data-width="1920" data-height="1080">
   <div id="s04-bg" class="ground clip" data-start="0" data-duration="8" data-track-index="0"><div class="band2"></div><div class="band"></div></div>
-  <div id="s04-camclip" class="clip" data-start="0" data-duration="8" data-track-index="1" style="position:absolute;inset:0">
+  <div id="s04-camclip" class="clip" data-start="0" data-duration="8" data-track-index="1" style="position:absolute;inset:0;z-index:1">
     <div id="s04-cam" class="cam">
       <div class="win" id="s04-win" style="left:210px;top:40px;width:1500px">
         <div class="win-bar"><div class="tabdot"></div>QIM<div class="url">Quality Issue Management · Create · New Issue</div></div>
@@ -57,10 +57,10 @@
   <div id="s04-i" class="instr clip" data-start="0" data-duration="8" data-track-index="4"><div class="num">2</div>
     <div style="position:relative;flex:1;height:84px">
       <div class="txt" id="s04-t1" style="position:absolute;inset:0;display:flex;align-items:center">Elige el tipo de issue que quieres levantar.</div>
-      <div class="txt" id="s04-t2" style="position:absolute;inset:0;display:flex;align-items:center;opacity:0">Dale <b>&nbsp;doble clic&nbsp;</b> a <b>&nbsp;QQ3 – Internal Complaint</b>.</div>
+      <div class="txt alt" id="s04-t2" style="position:absolute;inset:0;display:flex;align-items:center;opacity:0">Dale <b>&nbsp;doble clic&nbsp;</b> a <b>&nbsp;QQ3 – Internal Complaint</b>.</div>
     </div>
   </div>
-  <div id="s04-fl" class="clip" data-start="0" data-duration="8" data-track-index="5" style="position:absolute;inset:0"><div id="s04-flash"></div><div id="s04-iris"></div></div>
+  <div id="s04-fl" class="clip" data-start="0" data-duration="8" data-track-index="5" style="position:absolute;inset:0;z-index:30"><div id="s04-flash"></div><div id="s04-iris"></div></div>
 </div>
 <script>
 const tl = gsap.timeline({ paused: true });

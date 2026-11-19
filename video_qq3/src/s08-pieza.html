@@ -1,0 +1,98 @@
+<template>
+<link rel="stylesheet" href="assets/css/kit.css">
+<style>
+#root{position:absolute;inset:0}
+#s08-q{left:1630px;top:520px;width:230px;height:276px}
+#s08-b{left:1100px;top:300px;width:580px}
+</style>
+<div id="root" data-composition-id="s08" data-width="1920" data-height="1080">
+  <div id="s08-bg" class="ground clip" data-start="0" data-duration="19" data-track-index="0"><div class="band2"></div><div class="band"></div></div>
+  <div id="s08-camclip" class="clip" data-start="0" data-duration="19" data-track-index="1" style="position:absolute;inset:0;z-index:1">
+    <div id="s08-cam" class="cam">
+      {{FORM:overview:s08:{"state":"saved","filled":false}}}
+      <div class="hl" id="s08-hl1" style="opacity:0"></div>
+      <div class="hl" id="s08-hl2" style="opacity:0"></div>
+      <div class="hl" id="s08-hl3" style="opacity:0"></div>
+      <div class="qf-menu" id="s08-m" style="opacity:0;font:15px Arial;min-width:0">
+        <div class="en">In Analysis</div><div class="hov">Plant Operations</div><div class="en">Process design</div><div class="en">Product design</div>
+        <div class="en">Supplier (external)</div><div class="en">Supplier (internal)</div><div class="en">Customer</div><div class="en">Field Warranty - NTF</div></div>
+      <div class="tag acc sm" id="s08-tag1" style="opacity:0">Se propone 8D y grupo de producto</div>
+      <div class="tag acc sm" id="s08-tag2" style="opacity:0">Reclamadas vs. NOK confirmadas</div>
+      <svg class="cursor" id="s08-cur" viewBox="0 0 22 30"><path d="M2 2 L2 24 L8 18.5 L12 28 L16 26.3 L12 17 L20 17 Z" fill="#fff" stroke="#111" stroke-width="1.6" stroke-linejoin="round"/></svg>
+    </div>
+  </div>
+  <div id="s08-q" class="quali clip" data-start="0" data-duration="19" data-track-index="2">{{QUALI:s08q}}</div>
+  <div id="s08-b" class="bubble left clip" data-start="0" data-duration="19" data-track-index="3"><b>Causer</b> es quién provocó la falla: aquí, la operación de la planta.</div>
+  <div id="s08-i" class="instr clip" data-start="0" data-duration="19" data-track-index="4"><div class="num">6</div>
+    <div style="position:relative;flex:1;height:84px">
+      <div class="txt" id="s08-t1" style="position:absolute;inset:0;display:flex;align-items:center">Llena el objeto: <b>&nbsp;planta, material&nbsp;</b> y <b>&nbsp;centro de costo</b>.</div>
+      <div class="txt alt" id="s08-t2" style="position:absolute;inset:0;display:flex;align-items:center;opacity:0">Define el estatus: <b>&nbsp;aceptación, causante&nbsp;</b> y <b>&nbsp;ubicación</b>.</div>
+      <div class="txt alt" id="s08-t3" style="position:absolute;inset:0;display:flex;align-items:center;opacity:0">Captura las <b>&nbsp;piezas reclamadas&nbsp;</b> y las <b>&nbsp;confirmadas NOK</b>.</div>
+    </div>
+  </div>
+</div>
+<script>
+const tl = gsap.timeline({ paused: true });
+const B = (s) => QK.box(s);
+const SC = 0.78575;
+const plant = B("#s08-plant"), mat = B("#s08-mat"), cc = B("#s08-cc"), mro = B("#s08-f-plant");
+const acc = B("#s08-acc"), cau = B("#s08-cau"), loc = B("#s08-loc"), qcl = B("#s08-qcl"), qcf = B("#s08-qcf");
+const statSec = B("#s08-f-acc"), body = B("#s08-body");
+const ty = QK.typing(tl);
+// scroll so the Status section sits near the top of the form body
+const dy = (statSec.y - 90) - (body.y + 10);
+const S = (b) => ({ x: b.x, y: b.y - dy, w: b.w, h: b.h, cx: b.cx, cy: b.cy - dy });
+const acc2 = S(acc), cau2 = S(cau), loc2 = S(loc), qcl2 = S(qcl), qcf2 = S(qcf);
+tl.fromTo("#s08-cam", { x: -420, filter: "blur(14px)" }, { x: 0, filter: "blur(0px)", duration: 0.45, ease: "power3.out" }, 0);
+tl.set("#s08-cur", { x: 700, y: 260 }, 0);
+QK.instr(tl, "#s08-i", 0.3, null);
+QK.focus(tl, "#s08-cam", plant.x + 200, cc.cy - 40, 2.0, 0.6, 1.0, 820, 430);
+QK.place("#s08-hl1", { x: mro.x, y: plant.y, w: 700, h: (cc.y + cc.h) - plant.y }, 8);
+QK.hl(tl, "#s08-hl1", 1.4, 6.6);
+QK.move(tl, "#s08-cur", plant.x + 30, plant.cy, 1.5, 0.6); QK.click(tl, "#s08-cur", 2.15, null);
+ty.add("#s08-plant", "1000", 2.3, 12); ty.set("#s08-plantd", "Planta ejemplo", 2.75);
+QK.move(tl, "#s08-cur", mat.x + 30, mat.cy, 3.0, 0.5); QK.click(tl, "#s08-cur", 3.55, null);
+ty.add("#s08-mat", "MAT-000123", 3.7, 18); ty.set("#s08-matd", "Módulo de puerta (ejemplo)", 4.35);
+tl.to("#s08-mat", { backgroundColor: "#FFF3A0", duration: 0.25 }, 4.4);
+gsap.set("#s08-tag1", { left: mat.x + mat.w + 230, top: mat.y });
+tl.fromTo("#s08-tag1", { opacity: 0, x: -10 }, { opacity: 1, x: 0, duration: 0.4, ease: "expo.out" }, 4.6);
+tl.to("#s08-tag1", { opacity: 0, duration: 0.2 }, 6.4);
+QK.move(tl, "#s08-cur", cc.x + 30, cc.cy, 5.0, 0.5); QK.click(tl, "#s08-cur", 5.55, null);
+ty.add("#s08-cc", "CC-4410", 5.7, 16); ty.set("#s08-ccd", "Ensamble (ejemplo)", 6.2);
+// scroll down to Status
+QK.instrSwap(tl, "#s08-t1", "#s08-t2", 6.8);
+tl.to("#s08-scroll", { y: -dy / SC, duration: 0.9, ease: "power2.inOut" }, 6.8);
+QK.focus(tl, "#s08-cam", acc2.x + 150, cau2.cy + 20, 2.0, 6.8, 0.9, 820, 420);
+QK.move(tl, "#s08-cur", acc2.x + acc2.w - 20, acc2.cy, 7.4, 0.6); QK.click(tl, "#s08-cur", 8.05, null);
+ty.set("#s08-acc", "Accepted (Brose fault)", 8.2);
+gsap.set("#s08-m", { left: cau2.x, top: cau2.y + cau2.h, width: cau2.w });
+QK.move(tl, "#s08-cur", cau2.x + cau2.w - 20, cau2.cy, 8.5, 0.5); QK.click(tl, "#s08-cur", 9.05, null);
+tl.to("#s08-m", { opacity: 1, duration: 0.1 }, 9.1);
+QK.move(tl, "#s08-cur", cau2.x + 120, cau2.y + cau2.h + 54, 9.3, 0.4); QK.click(tl, "#s08-cur", 10.6, null);
+tl.to("#s08-m", { opacity: 0, duration: 0.1 }, 10.7);
+ty.set("#s08-cau", "Plant Operations", 10.7);
+const q = QK.quali(tl, "s08q");
+q.pop(9.3).idle(10.2, 12.8).blink([11.2]);
+q.say("#s08-b", 9.9, 12.6);
+q.leave(12.7);
+QK.move(tl, "#s08-cur", loc2.x + loc2.w - 20, loc2.cy, 11.0, 0.5); QK.click(tl, "#s08-cur", 11.55, null);
+ty.set("#s08-loc", "Scrapped by Brose", 11.7);
+// quantities
+QK.instrSwap(tl, "#s08-t2", "#s08-t3", 12.8);
+QK.focus(tl, "#s08-cam", qcl2.x + 150, qcf2.cy, 2.2, 12.8, 0.8, 820, 420);
+QK.place("#s08-hl2", { x: qcl2.x - 300, y: qcl2.y, w: 300 + qcl2.w + 60, h: (qcf2.y + qcf2.h) - qcl2.y }, 8);
+QK.hl(tl, "#s08-hl2", 13.4, 17.6);
+QK.move(tl, "#s08-cur", qcl2.x + 40, qcl2.cy, 13.4, 0.5); QK.click(tl, "#s08-cur", 13.95, null);
+ty.add("#s08-qcl", "100", 14.1, 10);
+QK.move(tl, "#s08-cur", qcf2.x + 40, qcf2.cy, 14.6, 0.4); QK.click(tl, "#s08-cur", 15.05, null);
+ty.add("#s08-qcf", "50", 15.2, 10);
+gsap.set("#s08-tag2", { left: qcl2.x + qcl2.w + 60, top: qcl2.y + 20 });
+tl.fromTo("#s08-tag2", { opacity: 0, x: -10 }, { opacity: 1, x: 0, duration: 0.4, ease: "expo.out" }, 15.6);
+tl.to("#s08-tag2", { opacity: 0, duration: 0.2 }, 17.6);
+// pull back, scroll home: the Timing column is next
+tl.to("#s08-scroll", { y: 0, duration: 0.9, ease: "power2.inOut" }, 17.8);
+QK.camReset(tl, "#s08-cam", 17.8, 0.9);
+tl.to("#s08-i", { y: 190, opacity: 0, duration: 0.35, ease: "power3.in" }, 18.3);
+window.__timelines["s08"] = tl;
+</script>
+</template>

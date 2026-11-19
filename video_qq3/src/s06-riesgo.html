@@ -1,0 +1,109 @@
+<template>
+<link rel="stylesheet" href="assets/css/kit.css">
+<style>
+#root{position:absolute;inset:0}
+#s06-q{left:1620px;top:520px;width:240px;height:288px}
+#s06-b{left:1060px;top:300px;width:620px}
+.s06-menu{position:absolute;opacity:0}
+</style>
+<div id="root" data-composition-id="s06" data-width="1920" data-height="1080">
+  <div id="s06-bg" class="ground clip" data-start="0" data-duration="19" data-track-index="0"><div class="band2"></div><div class="band"></div></div>
+  <div id="s06-camclip" class="clip" data-start="0" data-duration="19" data-track-index="1" style="position:absolute;inset:0;z-index:1">
+    <div id="s06-cam" class="cam">
+      {{FORM:risk:s06}}
+      <div class="hl" id="s06-hl1" style="opacity:0"></div>
+      <div class="hl" id="s06-hl2" style="opacity:0"></div>
+      <div class="hl" id="s06-hl3" style="opacity:0"></div>
+      <div class="qf-menu s06-menu" id="s06-m1" style="font:15px Arial;min-width:0"><div class="en">[0] No</div><div class="hov">[1] Yes</div></div>
+      <div class="qf-menu s06-menu" id="s06-m2" style="font:15px Arial;min-width:0"><div class="en">[0] No</div><div class="hov">[2] PSC: D-characteristic affected</div><div class="en">[3] Suspected recall critical issue</div></div>
+      <div class="tag acc sm" id="s06-tag" style="opacity:0">Nivel 2 = riesgo alto</div>
+      <svg class="cursor" id="s06-cur" viewBox="0 0 22 30"><path d="M2 2 L2 24 L8 18.5 L12 28 L16 26.3 L12 17 L20 17 Z" fill="#fff" stroke="#111" stroke-width="1.6" stroke-linejoin="round"/></svg>
+    </div>
+  </div>
+  <div id="s06-q" class="quali clip" data-start="0" data-duration="19" data-track-index="2">{{QUALI:s06q}}</div>
+  <div id="s06-b" class="bubble left clip" data-start="0" data-duration="19" data-track-index="3">¡Nivel 2! El <b>One Pager</b> se vuelve obligatorio y se envía una alerta.</div>
+  <div id="s06-i" class="instr clip" data-start="0" data-duration="19" data-track-index="4"><div class="num">4</div>
+    <div style="position:relative;flex:1;height:84px">
+      <div class="txt" id="s06-t1" style="position:absolute;inset:0;display:flex;align-items:center">Arma tu <b>&nbsp;equipo 8D</b>: líder, Champion y Quality Manager.</div>
+      <div class="txt alt" id="s06-t2" style="position:absolute;inset:0;display:flex;align-items:center;opacity:0">Contesta la matriz <b>&nbsp;TopQ - Risk Level&nbsp;</b> pregunta por pregunta.</div>
+      <div class="txt alt" id="s06-t3" style="position:absolute;inset:0;display:flex;align-items:center;opacity:0">El <b>&nbsp;nivel de riesgo&nbsp;</b> se calcula solo con tus respuestas.</div>
+    </div>
+  </div>
+</div>
+<script>
+const tl = gsap.timeline({ paused: true });
+const B = (s) => QK.box(s);
+const tbl = B("#s06-body table");
+const r1 = B("#s06-tid1"), r2 = B("#s06-tid2"), row1 = B("#s06-tr1"), row2 = B("#s06-tr2");
+const rk = B("#s06-f-rk0"), rkEnd = B("#s06-rlv"), rep = B("#s06-rk4"), rec = B("#s06-rk1"), lvl = B("#s06-rlv"), warn = B("#s06-warn");
+const save = B("#s06-b-save");
+const ty = QK.typing(tl);
+// whip in from the right
+tl.fromTo("#s06-cam", { x: 420, filter: "blur(14px)" }, { x: 0, filter: "blur(0px)", duration: 0.45, ease: "power3.out" }, 0);
+tl.set("#s06-cur", { x: 760, y: 220 }, 0);
+QK.instr(tl, "#s06-i", 0.3, null);
+// team
+QK.focus(tl, "#s06-cam", tbl.cx - 120, tbl.cy + 30, 1.55, 0.6, 1.0, 900, 420);
+QK.place("#s06-hl1", tbl, 6);
+QK.hl(tl, "#s06-hl1", 1.4, 3.0);
+QK.move(tl, "#s06-cur", r1.x + 20, row1.cy, 2.2, 0.6);
+QK.click(tl, "#s06-cur", 2.85, null);
+ty.add("#s06-tid1", "USRCH01", 3.0, 16);
+ty.set("#s06-tnm1", "Champion (ejemplo)", 3.6);
+ty.set("#s06-tml1", "champion@ejemplo.com", 3.6);
+tl.fromTo("#s06-tnm1, #s06-tml1", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 3.6);
+QK.move(tl, "#s06-cur", r2.x + 20, row2.cy, 3.9, 0.45);
+QK.click(tl, "#s06-cur", 4.4, null);
+ty.add("#s06-tid2", "USRQM01", 4.55, 16);
+ty.set("#s06-tnm2", "Quality Manager (ejemplo)", 5.15);
+ty.set("#s06-tml2", "qm@ejemplo.com", 5.15);
+tl.fromTo("#s06-tnm2, #s06-tml2", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 5.15);
+// risk matrix
+QK.instrSwap(tl, "#s06-t1", "#s06-t2", 5.9);
+const rkBox = { x: rk.x, y: rk.y, w: (rkEnd.x + rkEnd.w) - rk.x, h: (rkEnd.y + rkEnd.h) - rk.y };
+QK.focus(tl, "#s06-cam", rkBox.x + rkBox.w / 2, rkBox.y + rkBox.h / 2 + 40, 1.45, 6.0, 1.1, 820, 450);
+QK.place("#s06-hl2", rkBox, 8);
+QK.hl(tl, "#s06-hl2", 6.9, 8.0);
+// Repeat failure -> Yes
+gsap.set("#s06-m1", { left: rep.x, top: rep.y + rep.h, width: rep.w });
+QK.move(tl, "#s06-cur", rep.x + rep.w - 20, rep.cy, 7.6, 0.6);
+QK.click(tl, "#s06-cur", 8.25, null);
+tl.to("#s06-m1", { opacity: 1, duration: 0.1 }, 8.3);
+QK.move(tl, "#s06-cur", rep.x + 80, rep.y + rep.h + 50, 8.45, 0.35);
+QK.click(tl, "#s06-cur", 8.85, null);
+tl.to("#s06-m1", { opacity: 0, duration: 0.1 }, 8.95);
+ty.set("#s06-rk4", "[1] Yes", 8.95);
+tl.to("#s06-rlv0", { opacity: 0, duration: 0.15 }, 9.1);
+tl.fromTo("#s06-rlv1", { opacity: 0 }, { opacity: 1, duration: 0.2 }, 9.15);
+// Recall -> [2]
+gsap.set("#s06-m2", { left: rec.x, top: rec.y + rec.h, width: rec.w });
+QK.move(tl, "#s06-cur", rec.x + rec.w - 20, rec.cy, 9.6, 0.6);
+QK.click(tl, "#s06-cur", 10.25, null);
+tl.to("#s06-m2", { opacity: 1, duration: 0.1 }, 10.3);
+QK.move(tl, "#s06-cur", rec.x + 120, rec.y + rec.h + 50, 10.45, 0.35);
+QK.click(tl, "#s06-cur", 10.85, null);
+tl.to("#s06-m2", { opacity: 0, duration: 0.1 }, 10.95);
+ty.set("#s06-rk1", "[2] PSC: D-characteristic affected", 10.95);
+tl.to("#s06-rlv1", { opacity: 0, duration: 0.15 }, 11.1);
+tl.fromTo("#s06-rlv2", { opacity: 0 }, { opacity: 1, duration: 0.2 }, 11.15);
+tl.fromTo("#s06-warn", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.4, ease: "expo.out" }, 11.4);
+tl.to("#s06-msg0", { opacity: 0, duration: 0.1 }, 11.4);
+tl.to("#s06-msgsched", { opacity: 1, duration: 0.2 }, 11.45);
+QK.place("#s06-hl3", lvl, 6);
+QK.hl(tl, "#s06-hl3", 11.3, 16.4);
+gsap.set("#s06-tag", { left: lvl.x + lvl.w + 16, top: lvl.y });
+tl.fromTo("#s06-tag", { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.5, ease: "back.out(2)" }, 11.6);
+tl.to("#s06-tag", { opacity: 0, duration: 0.2 }, 16.4);
+const q = QK.quali(tl, "s06q");
+q.pop(11.8).blink([13.6]);
+q.worry(12.6, 1.4);
+q.idle(14.2, 16.6);
+q.say("#s06-b", 12.4, 16.4);
+q.leave(16.5);
+QK.instrSwap(tl, "#s06-t2", "#s06-t3", 14.0);
+// back out and head for Save
+QK.camReset(tl, "#s06-cam", 16.6, 1.0);
+QK.move(tl, "#s06-cur", save.cx, save.cy, 17.2, 1.0);
+window.__timelines["s06"] = tl;
+</script>
+</template>

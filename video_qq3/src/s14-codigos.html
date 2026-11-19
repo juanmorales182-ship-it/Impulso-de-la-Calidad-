@@ -1,0 +1,102 @@
+<template>
+<link rel="stylesheet" href="assets/css/kit.css">
+<style>
+#root{position:absolute;inset:0}
+#s14-err{position:absolute;background:#fff;border-bottom:1px solid #D6D6D6;overflow:hidden}
+#s14-err .e{display:flex;align-items:center;gap:9px;height:30px;font:15px Arial;color:#111;white-space:nowrap;padding-left:14px}
+#s14-err .e i{width:19px;height:19px;border-radius:2px;background:#C0392B;color:#fff;font:700 14px Arial;font-style:normal;display:flex;align-items:center;justify-content:center}
+#s14-q{left:1620px;top:500px;width:240px;height:288px}
+#s14-b{left:1090px;top:290px;width:600px}
+</style>
+<div id="root" data-composition-id="s14" data-width="1920" data-height="1080">
+  <div id="s14-bg" class="ground clip" data-start="0" data-duration="18" data-track-index="0"><div class="band2"></div><div class="band"></div></div>
+  <div id="s14-camclip" class="clip" data-start="0" data-duration="18" data-track-index="1" style="position:absolute;inset:0;z-index:1">
+    <div id="s14-cam" class="cam">
+      {{FORM:overview:s14:{"state":"saved","filled":true}}}
+      <div id="s14-err">
+        <div class="e" id="s14-e1"><i>!</i>'Failure Type (Code)' not maintained.</div>
+        <div class="e" id="s14-e2"><i>!</i>'Failure Location (Code)' not maintained.</div>
+        <div class="e" id="s14-e3"><i>!</i>'Cause Code' is not allowed to be empty</div>
+      </div>
+      <div class="qf-menu" id="s14-m" style="opacity:0;font:16px Arial;min-width:180px"><div class="hov">Set in Process</div><div>Complete</div><div>Reopen</div><div>Cancel</div></div>
+      <div class="hl" id="s14-hl1" style="opacity:0"></div>
+      <div class="hl" id="s14-hl2" style="opacity:0"></div>
+      <div class="ring" id="s14-ring" style="opacity:0"></div>
+      <svg class="cursor" id="s14-cur" viewBox="0 0 22 30"><path d="M2 2 L2 24 L8 18.5 L12 28 L16 26.3 L12 17 L20 17 Z" fill="#fff" stroke="#111" stroke-width="1.6" stroke-linejoin="round"/></svg>
+    </div>
+  </div>
+  <div id="s14-q" class="quali clip" data-start="0" data-duration="18" data-track-index="2">{{QUALI:s14q}}</div>
+  <div id="s14-b" class="bubble left clip" data-start="0" data-duration="18" data-track-index="3">¡Ups! Faltan códigos y QIM <b>no te deja avanzar</b>.</div>
+  <div id="s14-chap" class="chap clip" data-start="0" data-duration="3.4" data-track-index="5">
+    <div class="stripe"></div><div class="step">PASO 11</div><div class="big">Antes de avanzar: los códigos</div><div class="sub">Si falta un código, QIM no te deja pasar la queja a In Process.</div>
+  </div>
+  <div id="s14-i" class="instr clip" data-start="0" data-duration="18" data-track-index="4"><div class="num">11</div>
+    <div style="position:relative;flex:1;height:84px">
+      <div class="txt" id="s14-t1" style="position:absolute;inset:0;display:flex;align-items:center">Dale <b>&nbsp;Set Issue Status → Set in Process</b>.</div>
+      <div class="txt alt" id="s14-t2" style="position:absolute;inset:0;display:flex;align-items:center;opacity:0">Llena los <b>&nbsp;Issue Codes</b>: Failure Location y Failure Type.</div>
+      <div class="txt alt" id="s14-t3" style="position:absolute;inset:0;display:flex;align-items:center;opacity:0">Y en la pestaña <b>&nbsp;Causes</b>, el <b>&nbsp;Cause Code&nbsp;</b> de cada causa.</div>
+    </div>
+  </div>
+</div>
+<script>
+const tl = gsap.timeline({ paused: true });
+const B = (s) => QK.box(s);
+const SC = 0.78575;
+const st = B("#s14-b-status"), msg = B("#s14-msg0"), flc = B("#s14-flc"), ftc = B("#s14-ftc"), flcL = B("#s14-f-flc"), ftcL = B("#s14-f-ftc"), tab5 = B("#s14-tab5");
+const ty = QK.typing(tl);
+// error panel sits on the message line and grows downward
+gsap.set("#s14-err", { left: msg.x - 14, top: msg.y, width: 1500 - 4, height: 0 });
+gsap.set("#s14-m", { left: st.x, top: st.y + st.h + 2 });
+QK.chapter(tl, "s14", 0, 2.6);
+tl.set("#s14-cur", { x: 900, y: 600 }, 0);
+QK.instr(tl, "#s14-i", 3.2, null);
+QK.focus(tl, "#s14-cam", st.x + 200, st.cy + 70, 2.1, 3.3, 1.0, 860, 360);
+QK.move(tl, "#s14-cur", st.cx, st.cy, 3.8, 0.7);
+QK.click(tl, "#s14-cur", 4.55, null);
+tl.to("#s14-b-status", { backgroundColor: "#2F7AB0", color: "#fff", duration: 0.08 }, 4.55);
+tl.to("#s14-m", { opacity: 1, duration: 0.12 }, 4.6);
+QK.move(tl, "#s14-cur", st.x + 60, st.y + st.h + 18, 4.8, 0.4);
+QK.click(tl, "#s14-cur", 5.3, null);
+tl.to("#s14-m", { opacity: 0, duration: 0.1 }, 5.4);
+tl.to("#s14-b-status", { backgroundColor: "#F4F4F4", color: "#222", duration: 0.2 }, 5.4);
+tl.to("#s14-msg0", { opacity: 0, duration: 0.1 }, 5.5);
+tl.to("#s14-err", { height: 96, duration: 0.45, ease: "expo.out" }, 5.5);
+tl.fromTo("#s14-e1, #s14-e2, #s14-e3", { opacity: 0, x: -12 }, { opacity: 1, x: 0, duration: 0.35, stagger: 0.12, ease: "expo.out" }, 5.6);
+const q = QK.quali(tl, "s14q");
+q.pop(6.0).blink([8.6]);
+q.worry(6.8, 1.8);
+q.idle(8.8, 9.8);
+q.say("#s14-b", 6.6, 9.6);
+q.leave(9.7);
+// scroll to the codes
+QK.instrSwap(tl, "#s14-t1", "#s14-t2", 9.6);
+const dy = Math.max(0, (flc.y + flc.h) - 820);
+const flc2 = { ...flc, y: flc.y - dy, cy: flc.cy - dy }, ftc2 = { ...ftc, y: ftc.y - dy, cy: ftc.cy - dy };
+tl.to("#s14-scroll", { y: -dy / SC, duration: 0.8, ease: "power2.inOut" }, 9.7);
+QK.focus(tl, "#s14-cam", (flc2.x + ftc2.x + ftc2.w) / 2 - 60, flc2.cy - 10, 1.35, 9.7, 0.9, 960, 430);
+QK.place("#s14-hl1", { x: flcL.x, y: flc2.y, w: (flc2.x + flc2.w) - flcL.x, h: flc2.h }, 8);
+QK.hl(tl, "#s14-hl1", 10.5, 13.0);
+QK.move(tl, "#s14-cur", flc2.x + 30, flc2.cy, 10.5, 0.5); QK.click(tl, "#s14-cur", 11.05, null);
+ty.add("#s14-flc", "L-NO-FCL", 11.2, 16);
+ty.set("#s14-flg", "L-NO", 11.8); ty.set("#s14-flgd", "NoShow", 11.8);
+ty.set("#s14-flcd", "NoShow - parts from customer claim list", 11.9);
+QK.place("#s14-hl2", { x: ftcL.x, y: ftc2.y, w: (ftc2.x + ftc2.w) - ftcL.x, h: ftc2.h }, 8);
+QK.hl(tl, "#s14-hl2", 12.6, 15.2);
+QK.move(tl, "#s14-cur", ftc2.x + 30, ftc2.cy, 12.6, 0.5); QK.click(tl, "#s14-cur", 13.15, null);
+ty.add("#s14-ftc", "T-FUNC-CRA", 13.3, 16);
+ty.set("#s14-ftg", "T-FUNC", 14.0); ty.set("#s14-ftgd", "Functional Failure", 14.0);
+ty.set("#s14-ftcd", "Crash performance / safety aspect", 14.1);
+// two of the three errors are gone
+tl.to("#s14-e1, #s14-e2", { opacity: 0, duration: 0.2 }, 14.6);
+tl.to("#s14-e3", { y: -60, duration: 0.3, ease: "power2.out" }, 14.7);
+tl.to("#s14-err", { height: 34, duration: 0.3, ease: "power2.out" }, 14.7);
+QK.instrSwap(tl, "#s14-t2", "#s14-t3", 15.3);
+tl.to("#s14-scroll", { y: 0, duration: 0.8, ease: "power2.inOut" }, 15.3);
+QK.camReset(tl, "#s14-cam", 15.3, 0.8);
+QK.move(tl, "#s14-cur", tab5.cx, tab5.cy, 15.7, 0.8);
+gsap.set("#s14-ring", { left: tab5.cx, top: tab5.cy });
+QK.click(tl, "#s14-cur", 16.7, "#s14-ring");
+tl.to("#s14-cam", { x: -420, filter: "blur(14px)", opacity: 0.4, duration: 0.3, ease: "power3.in" }, 17.65);
+window.__timelines["s14"] = tl;
+</script>
+</template>

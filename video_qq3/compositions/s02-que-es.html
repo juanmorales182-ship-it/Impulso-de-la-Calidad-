@@ -96,7 +96,7 @@ for (let i = 1; i <= 7; i++) {
   tl.fromTo("#s02-t" + i + " .d, #s02-t" + i + " .l", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, t + 0.25);
 }
 const q = QK.quali(tl, "s02q");
-q.pop(8.5, -420).idle(9.4, 12.8).blink([10.3, 12.0]);
+q.pop(8.5, -700).idle(9.4, 12.8).blink([10.3, 12.0]);
 q.say("#s02-b", 9.3, null);
 q.point(10.0, 1.6, "L");
 window.__timelines["s02"] = tl;

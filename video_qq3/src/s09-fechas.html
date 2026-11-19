@@ -1,0 +1,74 @@
+<template>
+<link rel="stylesheet" href="assets/css/kit.css">
+<style>
+#root{position:absolute;inset:0}
+#s09-q{left:140px;top:520px;width:230px;height:276px}
+#s09-b{left:330px;top:330px;width:560px}
+</style>
+<div id="root" data-composition-id="s09" data-width="1920" data-height="1080">
+  <div id="s09-bg" class="ground clip" data-start="0" data-duration="14" data-track-index="0"><div class="band2"></div><div class="band"></div></div>
+  <div id="s09-camclip" class="clip" data-start="0" data-duration="14" data-track-index="1" style="position:absolute;inset:0;z-index:1">
+    <div id="s09-cam" class="cam">
+      {{FORM:overview:s09:{"state":"saved","filled":true,"dates":false}}}
+      <div class="hl" id="s09-hl1" style="opacity:0"></div>
+      <div class="hl" id="s09-hl2" style="opacity:0"></div>
+      <div class="tag acc sm" id="s09-tag" style="opacity:0">Tu compromiso de seguimiento</div>
+      <div class="ring" id="s09-ring" style="opacity:0"></div>
+      <svg class="cursor" id="s09-cur" viewBox="0 0 22 30"><path d="M2 2 L2 24 L8 18.5 L12 28 L16 26.3 L12 17 L20 17 Z" fill="#fff" stroke="#111" stroke-width="1.6" stroke-linejoin="round"/></svg>
+    </div>
+  </div>
+  <div id="s09-q" class="quali clip" data-start="0" data-duration="14" data-track-index="2">{{QUALI:s09q}}</div>
+  <div id="s09-b" class="bubble clip" data-start="0" data-duration="14" data-track-index="3">Con estas fechas se encienden los <b>semáforos</b> de cada D.</div>
+  <div id="s09-i" class="instr clip" data-start="0" data-duration="14" data-track-index="4"><div class="num">7</div>
+    <div style="position:relative;flex:1;height:84px">
+      <div class="txt" id="s09-t1" style="position:absolute;inset:0;display:flex;align-items:center">Pon las <b>&nbsp;fechas compromiso&nbsp;</b> de D3 a D8.</div>
+      <div class="txt alt" id="s09-t2" style="position:absolute;inset:0;display:flex;align-items:center;opacity:0">Revisa <b>&nbsp;Business division&nbsp;</b> y <b>&nbsp;Product group</b> (TopQ).</div>
+      <div class="txt alt" id="s09-t3" style="position:absolute;inset:0;display:flex;align-items:center;opacity:0">Lo siguiente: el análisis en la pestaña <b>&nbsp;5-WHY</b>.</div>
+    </div>
+  </div>
+</div>
+<script>
+const tl = gsap.timeline({ paused: true });
+const B = (s) => QK.box(s);
+const ids = ["D3", "D4", "D5D6", "D7", "D8"], dates = ["24.10.2026", "02.11.2026", "06.11.2026", "16.11.2026", "04.12.2026"];
+const dues = ids.map((d) => B("#s09-due" + d));
+const timing = B("#s09-timing"), bd = B("#s09-f-bd"), pg = B("#s09-f-pg"), tab4 = B("#s09-tab4");
+const ty = QK.typing(tl);
+// hold where s08 ended, then glide to the Timing column
+tl.set("#s09-cur", { x: 1100, y: 600 }, 0);
+QK.instr(tl, "#s09-i", 0.1, null);
+QK.focus(tl, "#s09-cam", timing.cx, timing.cy + 20, 1.9, 0.3, 1.1, 1180, 400);
+QK.place("#s09-hl1", timing, 8);
+QK.hl(tl, "#s09-hl1", 1.2, 6.6);
+let t = 1.6;
+dues.forEach((d, i) => {
+  QK.move(tl, "#s09-cur", d.x + 30, d.cy, t, 0.35);
+  QK.click(tl, "#s09-cur", t + 0.38, null);
+  ty.add("#s09-due" + ids[i], dates[i], t + 0.5, 30);
+  t += 0.9;
+});
+gsap.set("#s09-tag", { left: timing.x + timing.w + 14 - 60, top: timing.y - 40 });
+tl.fromTo("#s09-tag", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.4, ease: "expo.out" }, 3.0);
+tl.to("#s09-tag", { opacity: 0, duration: 0.2 }, 6.6);
+const q = QK.quali(tl, "s09q");
+q.pop(4.4).idle(5.3, 7.5).blink([6.4]);
+q.say("#s09-b", 5.0, 7.4);
+q.point(5.4, 1.8, "R");
+q.leave(7.5);
+QK.instrSwap(tl, "#s09-t1", "#s09-t2", 6.9);
+const tq = { x: bd.x, y: bd.y, w: bd.w, h: (pg.y + pg.h) - bd.y };
+QK.focus(tl, "#s09-cam", tq.cx || (tq.x + tq.w / 2), tq.y + tq.h / 2, 1.9, 6.9, 0.9, 900, 400);
+QK.place("#s09-hl2", tq, 8);
+QK.hl(tl, "#s09-hl2", 7.7, 10.6);
+// go to the 5-WHY tab
+QK.instrSwap(tl, "#s09-t2", "#s09-t3", 10.8);
+QK.camReset(tl, "#s09-cam", 10.8, 0.9);
+QK.move(tl, "#s09-cur", tab4.cx, tab4.cy, 11.2, 0.9);
+gsap.set("#s09-ring", { left: tab4.cx, top: tab4.cy });
+QK.click(tl, "#s09-cur", 12.2, "#s09-ring");
+// zoom through the tab
+QK.focus(tl, "#s09-cam", tab4.cx, tab4.cy, 7, 12.55, 0.5, 960, 540, "power3.in");
+tl.to("#s09-i", { y: 190, opacity: 0, duration: 0.35, ease: "power3.in" }, 12.4);
+window.__timelines["s09"] = tl;
+</script>
+</template>

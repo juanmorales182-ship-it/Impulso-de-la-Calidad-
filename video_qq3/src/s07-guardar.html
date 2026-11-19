@@ -1,0 +1,67 @@
+<template>
+<link rel="stylesheet" href="assets/css/kit.css">
+<style>
+#root{position:absolute;inset:0}
+#s07-card{position:absolute;left:560px;top:250px;width:800px;height:400px;background:#fff;border-radius:28px;box-shadow:0 30px 70px rgba(10,34,64,.28);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;z-index:14}
+#s07-card .k{font:700 34px Inter;color:#5B6B82}
+#s07-card .n{font:800 130px Montserrat;color:var(--brand);letter-spacing:-2px;height:150px;line-height:150px}
+#s07-card .s{font:600 34px Inter;color:var(--ink)}
+#s07-q{left:1390px;top:330px;width:240px;height:288px}
+</style>
+<div id="root" data-composition-id="s07" data-width="1920" data-height="1080">
+  <div id="s07-bg" class="ground clip" data-start="0" data-duration="9.4" data-track-index="0"><div class="band2"></div><div class="band"></div></div>
+  <div id="s07-camclip" class="clip" data-start="0" data-duration="9.4" data-track-index="1" style="position:absolute;inset:0;z-index:1">
+    <div id="s07-cam" class="cam">
+      {{FORM:risk:s07:{"empty_team":false,"level2":true,"title_after":"Quality Issue: 1000123456, QQ3 - Internal Complaint (QQ3)"}}}
+      <div class="ring" id="s07-ring" style="opacity:0"></div>
+      <svg class="cursor" id="s07-cur" viewBox="0 0 22 30"><path d="M2 2 L2 24 L8 18.5 L12 28 L16 26.3 L12 17 L20 17 Z" fill="#fff" stroke="#111" stroke-width="1.6" stroke-linejoin="round"/></svg>
+    </div>
+  </div>
+  <div id="s07-cardc" class="clip" data-start="0" data-duration="9.4" data-track-index="2" style="position:absolute;inset:0;z-index:14">
+    <div id="s07-card"><div class="k">Issue ID</div><div class="n" id="s07-num"></div><div class="s">Anótalo: con este número das seguimiento.</div></div>
+  </div>
+  <div id="s07-q" class="quali clip" data-start="0" data-duration="9.4" data-track-index="3">{{QUALI:s07q}}</div>
+  <div id="s07-i" class="instr clip" data-start="0" data-duration="9.4" data-track-index="4"><div class="num">5</div>
+    <div style="position:relative;flex:1;height:84px">
+      <div class="txt" id="s07-t1" style="position:absolute;inset:0;display:flex;align-items:center">Dale <b>&nbsp;Save</b>: el sistema asigna el número de la queja.</div>
+      <div class="txt alt" id="s07-t2" style="position:absolute;inset:0;display:flex;align-items:center;opacity:0">Regresa a <b>&nbsp;Overview&nbsp;</b> para completar la pieza y las cantidades.</div>
+    </div>
+  </div>
+</div>
+<script>
+const tl = gsap.timeline({ paused: true });
+const B = (s) => QK.box(s);
+const save = B("#s07-b-save"), title = B("#s07-title-a"), tab0 = B("#s07-tab0");
+const ty = QK.typing(tl);
+tl.set("#s07-cur", { x: save.cx, y: save.cy }, 0);
+gsap.set("#s07-ring", { left: save.cx, top: save.cy });
+QK.instr(tl, "#s07-i", 0.2, null);
+QK.focus(tl, "#s07-cam", title.x + 330, title.cy + 40, 2.1, 0.4, 1.0, 760, 330);
+QK.click(tl, "#s07-cur", 1.5, "#s07-ring");
+tl.to("#s07-b-save", { backgroundColor: "#2F7AB0", color: "#fff", duration: 0.08 }, 1.5);
+tl.to("#s07-b-save", { backgroundColor: "#F4F4F4", color: "#222", duration: 0.3 }, 1.9);
+tl.to("#s07-title-a", { opacity: 0, duration: 0.12 }, 1.85);
+tl.fromTo("#s07-title-b", { opacity: 0 }, { opacity: 1, duration: 0.2 }, 1.9);
+tl.to("#s07-msg0", { opacity: 0, duration: 0.1 }, 1.85);
+tl.fromTo("#s07-msgsaved", { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: 0.4, ease: "expo.out" }, 1.9);
+// the ID becomes a card
+tl.fromTo("#s07-card", { opacity: 0, scale: 0.3, y: -160 }, { opacity: 1, scale: 1, y: 0, duration: 0.7, ease: "back.out(1.5)" }, 2.7);
+tl.set("#s07-num", { textContent: "" }, 0);
+ty.add("#s07-num", "1000123456", 3.1, 16);
+const q = QK.quali(tl, "s07q");
+q.pop(3.6).blink([5.2]);
+q.happy(4.4);
+q.idle(5.8, 6.6);
+q.leave(6.4);
+// card carried back into the title bar
+tl.to("#s07-card", { scale: 0.18, x: (title.x + 200) - 960, y: title.cy - 450 + 40, opacity: 0, duration: 0.6, ease: "power3.in" }, 6.6);
+QK.instrSwap(tl, "#s07-t1", "#s07-t2", 7.0);
+QK.camReset(tl, "#s07-cam", 7.0, 0.9);
+QK.move(tl, "#s07-cur", tab0.cx, tab0.cy, 7.3, 0.8);
+QK.click(tl, "#s07-cur", 8.2, null);
+tl.to("#s07-i", { y: 190, opacity: 0, duration: 0.35, ease: "power3.in" }, 8.6);
+tl.to("#s07-cam", { x: 420, filter: "blur(14px)", opacity: 0.4, duration: 0.3, ease: "power3.in" }, 9.05);
+window.__timelines["s07"] = tl;
+</script>
+</template>

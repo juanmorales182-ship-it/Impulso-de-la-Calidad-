@@ -6,7 +6,7 @@
 </style>
 <div id="root" data-composition-id="s03" data-width="1920" data-height="1080">
   <div id="s03-bg" class="ground clip" data-start="0" data-duration="11" data-track-index="0"><div class="band2"></div><div class="band"></div></div>
-  <div id="s03-camclip" class="clip" data-start="0" data-duration="11" data-track-index="1" style="position:absolute;inset:0">
+  <div id="s03-camclip" class="clip" data-start="0" data-duration="11" data-track-index="1" style="position:absolute;inset:0;z-index:1">
     <div id="s03-cam" class="cam">
       <div class="win" id="s03-win" style="left:210px;top:40px;width:1500px">
         <div class="win-bar"><div class="tabdot"></div>QIM<div class="url">Quality Issue Management · Worklists</div></div>
@@ -24,14 +24,13 @@
   <div id="s03-i" class="instr clip" data-start="0" data-duration="11" data-track-index="3"><div class="num">1</div>
     <div style="position:relative;flex:1;height:84px">
       <div class="txt" id="s03-t1" style="position:absolute;inset:0;display:flex;align-items:center">Abre <b>&nbsp;QIM&nbsp;</b> — llegas a la pantalla de <b>&nbsp;Worklists</b>.</div>
-      <div class="txt" id="s03-t2" style="position:absolute;inset:0;display:flex;align-items:center;opacity:0">En el menú de la izquierda: <b>&nbsp;Create&nbsp;→&nbsp;New Issue</b>.</div>
+      <div class="txt alt" id="s03-t2" style="position:absolute;inset:0;display:flex;align-items:center;opacity:0">En el menú de la izquierda: <b>&nbsp;Create&nbsp;→&nbsp;New Issue</b>.</div>
     </div>
   </div>
-  <div id="s03-fl" class="clip" data-start="0" data-duration="11" data-track-index="4" style="position:absolute;inset:0;pointer-events:none"><div id="s03-flash"></div></div>
+  <div id="s03-fl" class="clip" data-start="0" data-duration="11" data-track-index="4" style="position:absolute;inset:0;z-index:30;pointer-events:none"><div id="s03-flash"></div></div>
 </div>
 <script>
 const tl = gsap.timeline({ paused: true });
-tl.fromTo("#s03-chap", { opacity: 1 }, { opacity: 1, duration: 0.01 }, 0);
 QK.chapter(tl, "s03", 0, 2.1);
 tl.fromTo("#s03-win", { scale: 0.92, y: 40 }, { scale: 1, y: 0, duration: 1.0, ease: "expo.out" }, 2.2);
 tl.set("#s03-hl1, #s03-hl2", { opacity: 0 }, 0);

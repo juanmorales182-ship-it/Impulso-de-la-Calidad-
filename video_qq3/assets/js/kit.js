@@ -11,7 +11,7 @@
         const p = Math.max(0, Math.min(1, (t - j.start) / j.dur));
         const n = Math.round(p * j.text.length);
         const showCaret = t >= j.start - 0.3 && t < j.start + j.dur + 0.6;
-        const s = j.text.slice(0, n);
+        const s = t < j.start - 0.3 ? j.orig : j.text.slice(0, n);
         if (j.el.__last !== s + showCaret) {
           j.el.textContent = s;
           if (showCaret) { const c = document.createElement("span"); c.className = "caret"; j.el.appendChild(c); }
@@ -20,16 +20,47 @@
       }
     };
     tl.eventCallback("onUpdate", run);
+    const sets = [];
+    const runSets = () => {
+      const t = tl.time();
+      for (const j of sets) {
+        const v = t >= j.t ? j.text : j.old;
+        if (j.el.__lastSet !== v) { j.el.innerHTML = v; j.el.__lastSet = v; }
+      }
+    };
+    tl.eventCallback("onUpdate", () => { run(); runSets(); });
     return {
+      set(sel, text, t) {
+        const el = document.querySelector(sel);
+        sets.push({ el, text, t, old: el.innerHTML });
+        runSets();
+      },
       add(sel, text, start, cps) {
         const el = document.querySelector(sel);
         const dur = Math.max(0.2, text.length / (cps || 22));
-        jobs.push({ el, text, start, dur });
+        jobs.push({ el, text, start, dur, orig: el.textContent });
         run();
         return start + dur;
       },
       run,
     };
+  };
+
+  /* ---- Measure an element in stage px (call before any tween is built) ---- */
+  QK.box = function (sel) {
+    const el = document.querySelector(sel);
+    const host = el.closest("[data-composition-id]") || document.documentElement;
+    const hr = host.getBoundingClientRect();
+    const k = 1920 / (hr.width || 1920);
+    const r = el.getBoundingClientRect();
+    const b = { x: (r.left - hr.left) * k, y: (r.top - hr.top) * k, w: r.width * k, h: r.height * k };
+    b.cx = b.x + b.w / 2; b.cy = b.y + b.h / 2;
+    return b;
+  };
+  /* place a highlight box around a measured box */
+  QK.place = function (sel, b, pad) {
+    pad = pad == null ? 8 : pad;
+    gsap.set(sel, { left: b.x - pad, top: b.y - pad, width: b.w + pad * 2, height: b.h + pad * 2 });
   };
 
   /* ---- Camera: focus stage point (px,py) at scale s, landing it at (cx,cy) ---- */
@@ -106,7 +137,8 @@
       leave(t) {
         tl.to(q("shadow"), { scale: 0, opacity: 0, duration: 0.3, ease: "power2.in", svgOrigin: "100 232" }, t + 0.12);
         tl.to(q("rig"), { scaleY: 0.85, scaleX: 1.1, duration: 0.12, ease: "power2.out", transformOrigin: "50% 100%" }, t);
-        tl.to(q("rig"), { y: 340, scaleY: 1.15, scaleX: 0.9, duration: 0.4, ease: "power3.in" }, t + 0.12);
+        tl.to(q("rig"), { y: 700, scaleY: 1.15, scaleX: 0.9, duration: 0.45, ease: "power3.in" }, t + 0.12);
+        tl.to(q("rig"), { opacity: 0, duration: 0.05 }, t + 0.57);
         return api;
       },
       idle(t0, t1) {

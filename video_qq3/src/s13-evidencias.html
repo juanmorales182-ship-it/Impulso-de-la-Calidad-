@@ -1,0 +1,82 @@
+<template>
+<link rel="stylesheet" href="assets/css/kit.css">
+<style>
+#root{position:absolute;inset:0}
+#s13-file{position:absolute;left:0;top:0;width:150px;height:170px;background:#fff;border-radius:12px;box-shadow:0 14px 30px rgba(10,34,64,.3);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;z-index:40}
+#s13-file .im{width:96px;height:76px;border-radius:6px;background:linear-gradient(160deg,#9CC3E6 0 55%,#5E8C4A 55% 100%);position:relative}
+#s13-file .im::after{content:"";position:absolute;left:58px;top:12px;width:18px;height:18px;border-radius:50%;background:#F5C04A}
+#s13-file span{font:600 15px Inter;color:#0A2240}
+#s13-q{left:1630px;top:540px;width:220px;height:264px}
+#s13-b{left:1130px;top:330px;width:560px}
+</style>
+<div id="root" data-composition-id="s13" data-width="1920" data-height="1080">
+  <div id="s13-bg" class="ground clip" data-start="0" data-duration="14" data-track-index="0"><div class="band2"></div><div class="band"></div></div>
+  <div id="s13-camclip" class="clip" data-start="0" data-duration="14" data-track-index="1" style="position:absolute;inset:0;z-index:1">
+    <div id="s13-cam" class="cam">
+      <div class="win" id="s13-win" style="left:210px;top:40px;width:1500px">
+        <div class="win-bar"><div class="tabdot" style="background:#3AA0D6"></div>SAP GUI<div class="url">QIM Record QQ3 Change</div></div>
+        <div class="win-body" style="height:824px"><div class="screen" style="transform:scale(0.78575)">{{RAW:activities:s13}}</div></div>
+      </div>
+      <div class="hl" id="s13-hl1" style="opacity:0"></div>
+      <div class="hl" id="s13-hl2" style="opacity:0"></div>
+      <div id="s13-file"><div class="im"></div><span>evidencia_D3.jpg</span></div>
+      <svg class="cursor" id="s13-cur" viewBox="0 0 22 30"><path d="M2 2 L2 24 L8 18.5 L12 28 L16 26.3 L12 17 L20 17 Z" fill="#fff" stroke="#111" stroke-width="1.6" stroke-linejoin="round"/></svg>
+    </div>
+  </div>
+  <div id="s13-q" class="quali clip" data-start="0" data-duration="14" data-track-index="2">{{QUALI:s13q}}</div>
+  <div id="s13-b" class="bubble left clip" data-start="0" data-duration="14" data-track-index="3">Sin evidencia no hay 8D: fotos, registros y análisis.</div>
+  <div id="s13-i" class="instr clip" data-start="0" data-duration="14" data-track-index="4"><div class="num">10</div>
+    <div style="position:relative;flex:1;height:84px">
+      <div class="txt" id="s13-t1" style="position:absolute;inset:0;display:flex;align-items:center">En <b>&nbsp;Q Record&nbsp;</b> ves las actividades de <b>&nbsp;D2 a D8</b>.</div>
+      <div class="txt alt" id="s13-t2" style="position:absolute;inset:0;display:flex;align-items:center;opacity:0">Arrastra tu <b>&nbsp;evidencia&nbsp;</b> y clasifícala en su <b>&nbsp;D</b>.</div>
+    </div>
+  </div>
+</div>
+<script>
+const tl = gsap.timeline({ paused: true });
+const B = (s) => QK.box(s);
+const a0 = B("#s13-act0"), a5 = B("#s13-act5"), drop = B("#s13-drop"), rd3 = B("#s13-rdD3"), ok = B("#s13-okb"), pop = B("#s13-pop");
+// arrive by blur swap
+tl.fromTo("#s13-cam", { opacity: 0, filter: "blur(12px)", scale: 1.04 }, { opacity: 1, filter: "blur(0px)", scale: 1, duration: 0.5, ease: "power2.out" }, 0);
+tl.set("#s13-cur", { x: 1000, y: 820 }, 0);
+tl.set("#s13-file", { x: 1580, y: 840, opacity: 0 }, 0);
+QK.instr(tl, "#s13-i", 0.3, null);
+const tree = { x: a0.x, y: a0.y, w: a0.w, h: (a5.y + a5.h) - a0.y };
+QK.focus(tl, "#s13-cam", tree.x + tree.w / 2, tree.cy || (tree.y + tree.h / 2), 1.7, 0.6, 1.0, 900, 420);
+QK.place("#s13-hl1", tree, 8);
+QK.hl(tl, "#s13-hl1", 1.4, 4.4);
+for (let i = 0; i < 6; i++) tl.fromTo("#s13-act" + i, { x: -30, opacity: 0 }, { x: 0, opacity: 1, duration: 0.45, ease: "expo.out" }, 1.5 + i * 0.12);
+const q = QK.quali(tl, "s13q");
+q.pop(2.4).idle(3.3, 5.6).blink([4.3]);
+q.say("#s13-b", 3.0, 5.4);
+q.leave(5.5);
+QK.instrSwap(tl, "#s13-t1", "#s13-t2", 4.6);
+QK.camReset(tl, "#s13-cam", 4.6, 0.9);
+// drag a file from the desktop into the drop zone
+tl.to("#s13-file", { opacity: 1, duration: 0.3 }, 5.4);
+QK.move(tl, "#s13-cur", 1640, 900, 5.2, 0.6);
+QK.click(tl, "#s13-cur", 5.9, null);
+tl.to("#s13-file", { x: drop.cx - 75, y: drop.cy - 85, rotation: -6, duration: 1.1, ease: "power2.inOut" }, 6.1);
+QK.move(tl, "#s13-cur", drop.cx - 15, drop.cy + 5, 6.1, 1.1, "power2.inOut");
+tl.to("#s13-drop", { borderColor: "#F5A800", backgroundColor: "#FFF7E0", duration: 0.2 }, 6.9);
+tl.to("#s13-file", { scale: 0.3, opacity: 0, rotation: 0, duration: 0.3, ease: "power3.in" }, 7.3);
+tl.to("#s13-drop", { borderColor: "#9FB0C2", backgroundColor: "#FAFBFC", duration: 0.2 }, 7.5);
+// classification popup
+tl.fromTo("#s13-pop", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.35, ease: "back.out(1.6)" }, 7.6);
+QK.focus(tl, "#s13-cam", pop.cx, pop.cy, 1.6, 7.6, 0.8, 960, 430);
+QK.place("#s13-hl2", rd3, 10);
+QK.move(tl, "#s13-cur", rd3.cx, rd3.cy, 8.4, 0.6);
+QK.hl(tl, "#s13-hl2", 8.7, 10.2);
+QK.click(tl, "#s13-cur", 9.1, null);
+tl.set("#s13-rdD1", { attr: { class: "" } }, 9.15);
+tl.set("#s13-rdD3", { attr: { class: "on" } }, 9.15);
+QK.move(tl, "#s13-cur", ok.cx, ok.cy, 9.7, 0.5);
+QK.click(tl, "#s13-cur", 10.3, null);
+tl.to("#s13-pop", { opacity: 0, scale: 0.9, duration: 0.2, ease: "power2.in" }, 10.4);
+QK.camReset(tl, "#s13-cam", 10.5, 0.8);
+tl.fromTo("#s13-newdoc", { opacity: 0, x: 30, backgroundColor: "#FFF3A0" }, { opacity: 1, x: 0, backgroundColor: "#FFFFFF", duration: 1.2, ease: "expo.out" }, 10.7);
+tl.to("#s13-i", { y: 190, opacity: 0, duration: 0.35, ease: "power3.in" }, 13.2);
+window.__timelines["s13"] = tl;
+</script>
+</template>

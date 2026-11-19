@@ -1,0 +1,69 @@
+<template>
+<link rel="stylesheet" href="assets/css/kit.css">
+<style>
+#root{position:absolute;inset:0}
+#s15-q{left:1580px;top:470px;width:260px;height:312px}
+#s15-b{left:1040px;top:250px;width:600px}
+</style>
+<div id="root" data-composition-id="s15" data-width="1920" data-height="1080">
+  <div id="s15-bg" class="ground clip" data-start="0" data-duration="13" data-track-index="0"><div class="band2"></div><div class="band"></div></div>
+  <div id="s15-camclip" class="clip" data-start="0" data-duration="13" data-track-index="1" style="position:absolute;inset:0;z-index:1">
+    <div id="s15-cam" class="cam">
+      {{FORM:overview:s15:{"state":"saved","filled":true,"codes":true,"msgs":"<div id=\"s15-msgip\" style=\"opacity:0\"><span class=\"qf-ok\">✓</span>Issue Status changed to In Process</div>"}}}
+      <div class="qf-menu" id="s15-m" style="opacity:0;font:16px Arial;min-width:180px"><div class="hov">Set in Process</div><div>Complete</div><div>Reopen</div><div>Cancel</div></div>
+      <div class="hl" id="s15-hl1" style="opacity:0"></div>
+      <div class="hl" id="s15-hl2" style="opacity:0"></div>
+      <svg class="cursor" id="s15-cur" viewBox="0 0 22 30"><path d="M2 2 L2 24 L8 18.5 L12 28 L16 26.3 L12 17 L20 17 Z" fill="#fff" stroke="#111" stroke-width="1.6" stroke-linejoin="round"/></svg>
+    </div>
+  </div>
+  <div id="s15-q" class="quali clip" data-start="0" data-duration="13" data-track-index="2">{{QUALI:s15q}}</div>
+  <div id="s15-b" class="bubble left clip" data-start="0" data-duration="13" data-track-index="3">¡Listo! Tu QQ3 está <b>In Process</b>. Ahora a cumplir las fechas.</div>
+  <div id="s15-i" class="instr clip" data-start="0" data-duration="13" data-track-index="4"><div class="num">12</div>
+    <div style="position:relative;flex:1;height:84px">
+      <div class="txt" id="s15-t1" style="position:absolute;inset:0;display:flex;align-items:center">Ahora sí: <b>&nbsp;Set Issue Status → Set in Process</b>.</div>
+      <div class="txt alt" id="s15-t2" style="position:absolute;inset:0;display:flex;align-items:center;opacity:0">Los <b>&nbsp;semáforos&nbsp;</b> de D4 a D8 se encienden en verde.</div>
+    </div>
+  </div>
+</div>
+<script>
+const tl = gsap.timeline({ paused: true });
+const B = (s) => QK.box(s);
+const st = B("#s15-b-status"), stat = B("#s15-status"), timing = B("#s15-timing"), qm = B("#s15-qm");
+gsap.set("#s15-m", { left: st.x, top: st.y + st.h + 2 });
+const ty = QK.typing(tl);
+tl.fromTo("#s15-cam", { opacity: 0, filter: "blur(12px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.45, ease: "power2.out" }, 0);
+tl.set("#s15-cur", { x: 900, y: 600 }, 0);
+QK.instr(tl, "#s15-i", 0.3, null);
+QK.focus(tl, "#s15-cam", st.x + 200, st.cy + 70, 2.1, 0.5, 0.9, 860, 360);
+QK.move(tl, "#s15-cur", st.cx, st.cy, 0.9, 0.7);
+QK.click(tl, "#s15-cur", 1.7, null);
+tl.to("#s15-m", { opacity: 1, duration: 0.12 }, 1.75);
+QK.move(tl, "#s15-cur", st.x + 60, st.y + st.h + 18, 1.95, 0.4);
+QK.click(tl, "#s15-cur", 2.45, null);
+tl.to("#s15-m", { opacity: 0, duration: 0.1 }, 2.55);
+tl.to("#s15-msg0", { opacity: 0, duration: 0.1 }, 2.6);
+tl.fromTo("#s15-msgip", { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: 0.4, ease: "expo.out" }, 2.65);
+// status and traffic lights
+QK.instrSwap(tl, "#s15-t1", "#s15-t2", 3.6);
+QK.focus(tl, "#s15-cam", (stat.x + timing.x + timing.w) / 2, (stat.cy + timing.cy) / 2, 1.15, 3.6, 1.0, 900, 430);
+ty.set("#s15-status", "In Process", 4.3);
+tl.fromTo("#s15-status", { color: "#2E9E4F", scale: 1.4 }, { color: "#111", scale: 1, duration: 0.6, ease: "back.out(2)", transformOrigin: "0% 50%" }, 4.3);
+QK.place("#s15-hl1", stat, 6);
+QK.hl(tl, "#s15-hl1", 4.3, 6.6);
+["D4", "D5D6", "D7", "D8"].forEach((d, i) => {
+  tl.fromTo("#s15-tl" + d + " i", { opacity: 0, scale: 0 }, { opacity: 1, scale: 1, duration: 0.4, ease: "back.out(3)" }, 5.0 + i * 0.22);
+});
+QK.place("#s15-hl2", timing, 8);
+QK.hl(tl, "#s15-hl2", 4.9, 8.2);
+ty.set("#s15-qm", "5000123456", 6.4);
+const q = QK.quali(tl, "s15q");
+q.pop(6.6).blink([9.6]);
+q.happy(7.4);
+q.idle(8.8, 12.6);
+q.say("#s15-b", 8.6, 12.4);
+QK.camReset(tl, "#s15-cam", 8.2, 1.0);
+tl.to("#s15-i", { y: 190, opacity: 0, duration: 0.35, ease: "power3.in" }, 12.2);
+q.leave(12.3);
+window.__timelines["s15"] = tl;
+</script>
+</template>

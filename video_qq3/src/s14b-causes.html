@@ -1,0 +1,50 @@
+<template>
+<link rel="stylesheet" href="assets/css/kit.css">
+<style>#root{position:absolute;inset:0}</style>
+<div id="root" data-composition-id="s14b" data-width="1920" data-height="1080">
+  <div id="s14b-bg" class="ground clip" data-start="0" data-duration="10" data-track-index="0"><div class="band2"></div><div class="band"></div></div>
+  <div id="s14b-camclip" class="clip" data-start="0" data-duration="10" data-track-index="1" style="position:absolute;inset:0;z-index:1">
+    <div id="s14b-cam" class="cam">
+      {{FORM:causes:s14b}}
+      <div class="hl" id="s14b-hl1" style="opacity:0"></div>
+      <div class="hl" id="s14b-hl2" style="opacity:0"></div>
+      <div class="tag acc sm" id="s14b-tag" style="opacity:0">Uno por cada causa</div>
+      <svg class="cursor" id="s14b-cur" viewBox="0 0 22 30"><path d="M2 2 L2 24 L8 18.5 L12 28 L16 26.3 L12 17 L20 17 Z" fill="#fff" stroke="#111" stroke-width="1.6" stroke-linejoin="round"/></svg>
+    </div>
+  </div>
+  <div id="s14b-i" class="instr clip" data-start="0" data-duration="10" data-track-index="4"><div class="num">11</div>
+    <div style="position:relative;flex:1;height:84px">
+      <div class="txt" id="s14b-t1" style="position:absolute;inset:0;display:flex;align-items:center">Elige la causa y llena <b>&nbsp;Cause Code Group&nbsp;</b> y <b>&nbsp;Cause Code</b>.</div>
+    </div>
+  </div>
+</div>
+<script>
+const tl = gsap.timeline({ paused: true });
+const B = (s) => QK.box(s);
+const dcg = B("#s14b-dcg"), dcd = B("#s14b-dcd"), dcgL = B("#s14b-f-dcg"), dcdL = B("#s14b-f-dcd"), tbl = B("#s14b-body table"), cg0 = B("#s14b-cg0");
+const ty = QK.typing(tl);
+tl.fromTo("#s14b-cam", { x: 420, filter: "blur(14px)" }, { x: 0, filter: "blur(0px)", duration: 0.45, ease: "power3.out" }, 0);
+tl.set("#s14b-cur", { x: 700, y: 300 }, 0);
+QK.instr(tl, "#s14b-i", 0.3, null);
+const code = { x: dcgL.x, y: dcg.y, w: (dcg.x + dcg.w + 380) - dcgL.x, h: (dcd.y + dcd.h) - dcg.y };
+QK.focus(tl, "#s14b-cam", code.x + code.w / 2, code.y + code.h / 2, 2.0, 0.7, 0.9, 960, 430);
+QK.place("#s14b-hl1", code, 8);
+QK.hl(tl, "#s14b-hl1", 1.5, 5.4);
+QK.move(tl, "#s14b-cur", dcg.x + 30, dcg.cy, 1.5, 0.5); QK.click(tl, "#s14b-cur", 2.05, null);
+ty.add("#s14b-dcg", "WSC01", 2.2, 12); ty.set("#s14b-dcgd", "Transporte (ejemplo)", 2.75);
+QK.move(tl, "#s14b-cur", dcd.x + 30, dcd.cy, 3.0, 0.5); QK.click(tl, "#s14b-cur", 3.55, null);
+ty.add("#s14b-dcd", "0212", 3.7, 12); ty.set("#s14b-dcdd", "Material de empaque (ejemplo)", 4.15);
+// the table row picks it up
+QK.focus(tl, "#s14b-cam", tbl.cx + 120, tbl.cy, 1.3, 5.6, 0.9, 960, 430);
+ty.set("#s14b-cg0", "WSC01", 6.3); ty.set("#s14b-cgt0", "Transporte", 6.3);
+ty.set("#s14b-cd0", "0212", 6.4); ty.set("#s14b-cdt0", "Material de empaque", 6.4);
+tl.fromTo("#s14b-cg0, #s14b-cgt0, #s14b-cd0, #s14b-cdt0", { backgroundColor: "#FFF3A0" }, { backgroundColor: "#ffffff", duration: 1.4 }, 6.3);
+QK.place("#s14b-hl2", { x: cg0.x, y: tbl.y + 40, w: 720, h: tbl.h - 40 }, 6);
+QK.hl(tl, "#s14b-hl2", 7.0, 9.4);
+gsap.set("#s14b-tag", { left: cg0.x + 120, top: tbl.y - 40 });
+tl.fromTo("#s14b-tag", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.4, ease: "expo.out" }, 7.2);
+tl.to("#s14b-i", { y: 190, opacity: 0, duration: 0.35, ease: "power3.in" }, 9.4);
+tl.to("#s14b-cam", { opacity: 0, filter: "blur(10px)", duration: 0.25, ease: "power2.in" }, 9.7);
+window.__timelines["s14b"] = tl;
+</script>
+</template>
