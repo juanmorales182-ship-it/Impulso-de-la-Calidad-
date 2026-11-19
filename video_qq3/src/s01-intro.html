@@ -1,0 +1,41 @@
+<template>
+<link rel="stylesheet" href="assets/css/kit.css">
+<style>
+#root{position:absolute;inset:0}
+#s01-l1{position:absolute;left:150px;top:250px;font:800 118px Montserrat;color:var(--ink);letter-spacing:-3px;white-space:nowrap}
+#s01-l2{position:absolute;left:146px;top:380px;font:800 210px Montserrat;color:var(--ink);letter-spacing:-6px;white-space:nowrap;line-height:1}
+#s01-l2 .q{color:var(--brand)}
+#s01-l1 .w,#s01-l2 .w{display:inline-block}
+#s01-sub{position:absolute;left:156px;top:640px;font:500 42px Inter;color:#3D5170;white-space:nowrap}
+#s01-rule{position:absolute;left:156px;top:722px;width:520px;height:10px;border-radius:5px;background:var(--accent);transform-origin:0 50%}
+#s01-q{left:1340px;top:470px;width:400px;height:480px}
+#s01-b{left:1000px;top:200px;width:600px}
+</style>
+<div id="root" data-composition-id="s01" data-width="1920" data-height="1080">
+  <div id="s01-bg" class="ground clip" data-start="0" data-duration="9" data-track-index="0"><div class="band2"></div><div class="band"></div></div>
+  <div id="s01-wrap" class="clip" data-start="0" data-duration="9" data-track-index="1" style="position:absolute;inset:0">
+    <div id="s01-l1"><span class="w">Cómo</span> <span class="w">levantar</span></div>
+    <div id="s01-l2"><span class="w">una</span> <span class="w q">QQ3</span></div>
+    <div id="s01-sub">Queja interna de calidad, paso a paso en QIM</div>
+    <div id="s01-rule"></div>
+  </div>
+  <div id="s01-q" class="quali clip" data-start="0" data-duration="9" data-track-index="2">{{QUALI:s01q}}</div>
+  <div id="s01-b" class="bubble left clip" data-start="0" data-duration="9" data-track-index="3">¡Hola! Soy <b>Quali</b>. Hoy levantamos una QQ3 juntos.</div>
+</div>
+<script>
+const tl = gsap.timeline({ paused: true });
+tl.fromTo("#s01-l1 .w", { opacity: 0, filter: "blur(10px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, stagger: 0.09, ease: "power2.out" }, 0.15);
+tl.fromTo("#s01-l2 .w:first-child", { opacity: 0, filter: "blur(10px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power2.out" }, 0.4);
+tl.fromTo("#s01-l2 .q", { scale: 1.35, y: -20 }, { scale: 1, y: 0, duration: 0.7, ease: "expo.out", transformOrigin: "0% 60%" }, 0.0);
+tl.fromTo("#s01-sub", { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.7, ease: "expo.out" }, 0.8);
+tl.fromTo("#s01-rule", { scaleX: 0 }, { scaleX: 1, duration: 0.8, ease: "expo.out" }, 0.95);
+const q = QK.quali(tl, "s01q");
+q.pop(1.5, 520).idle(2.4, 8.2).blink([3.2, 5.6, 7.4]);
+q.say("#s01-b", 2.3, 6.9);
+q.happy(6.0);
+// exit: whip left with blur
+tl.to("#s01-wrap", { x: -260, opacity: 0, filter: "blur(14px)", duration: 0.4, ease: "power3.in" }, 8.45);
+q.leave(8.3);
+window.__timelines["s01"] = tl;
+</script>
+</template>

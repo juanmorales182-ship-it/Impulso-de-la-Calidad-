@@ -1,0 +1,83 @@
+<template>
+<link rel="stylesheet" href="assets/css/kit.css">
+<style>
+#root{position:absolute;inset:0}
+.s10-c{position:absolute;background:#fff;border-radius:16px;box-shadow:0 10px 26px rgba(10,34,64,.12);border-left:10px solid var(--brand);
+  padding:18px 26px;font:600 31px Inter;color:var(--ink);line-height:1.25;display:flex;align-items:center}
+.s10-c.root{border-left-color:var(--accent);box-shadow:0 0 0 4px var(--accent),0 10px 26px rgba(10,34,64,.12)}
+.s10-c.sys{border-left-color:#5B6B82;background:#F7F9FC}
+#s10-p{left:430px;top:96px;width:700px;height:96px;background:var(--ink);color:#fff;border-left-color:var(--err);justify-content:center;font:700 36px Inter}
+.s10-h{position:absolute;font:800 34px Montserrat;color:var(--brand);white-space:nowrap}
+.s10-v{position:absolute;width:5px;background:#9FB2CC;transform-origin:50% 0}
+.s10-w{position:absolute;background:var(--accent);color:var(--ink);font:700 26px Inter;padding:4px 14px;border-radius:8px;white-space:nowrap}
+.s10-lab{position:absolute;font:700 28px Inter;color:#5B6B82;white-space:nowrap}
+#s10-q{left:1530px;top:590px;width:220px;height:264px}
+#s10-b{left:1470px;top:250px;width:400px}
+</style>
+<div id="root" data-composition-id="s10" data-width="1920" data-height="1080">
+  <div id="s10-bg" class="ground clip" data-start="0" data-duration="20" data-track-index="0"><div class="band2"></div><div class="band"></div></div>
+  <div id="s10-board" class="clip" data-start="0" data-duration="20" data-track-index="1" style="position:absolute;inset:0;z-index:1">
+    <div class="s10-c" id="s10-p">Material caído al suelo</div>
+    <div class="s10-v" id="s10-v0a" style="left:438px;top:192px;height:58px"></div>
+    <div class="s10-v" id="s10-v0b" style="left:1118px;top:192px;height:58px"></div>
+    <div class="s10-h" id="s10-h1" style="left:140px;top:254px">¿Por qué ocurrió?</div>
+    <div class="s10-h" id="s10-h2" style="left:820px;top:254px">¿Por qué no lo detectamos?</div>
+    <div class="s10-c" id="s10-a1" style="left:140px;top:316px;width:600px;height:110px">El operador no aseguró la carga antes de subir las uñas</div>
+    <div class="s10-c" id="s10-b1" style="left:820px;top:316px;width:600px;height:110px">El operador no aseguró la carga antes de subir las uñas</div>
+    <div class="s10-v" id="s10-va1" style="left:438px;top:426px;height:70px"></div>
+    <div class="s10-v" id="s10-vb1" style="left:1118px;top:426px;height:70px"></div>
+    <div class="s10-w" id="s10-wa1" style="left:460px;top:442px">¿Por qué?</div>
+    <div class="s10-w" id="s10-wb1" style="left:1140px;top:442px">¿Por qué?</div>
+    <div class="s10-c root" id="s10-a2" style="left:140px;top:496px;width:600px;height:110px">Se distrajo por paros de línea durante el día</div>
+    <div class="s10-c root" id="s10-b2" style="left:820px;top:496px;width:600px;height:110px">No hay alarma que avise que la carga no está asegurada</div>
+    <div class="s10-lab" id="s10-la" style="left:150px;top:614px">Causa de ocurrencia</div>
+    <div class="s10-lab" id="s10-lb" style="left:830px;top:614px">Causa de no detección</div>
+    <div class="s10-v" id="s10-va2" style="left:438px;top:652px;height:46px"></div>
+    <div class="s10-v" id="s10-vb2" style="left:1118px;top:652px;height:46px"></div>
+    <div class="s10-c sys" id="s10-a3" style="left:140px;top:698px;width:600px;height:110px">Sistémica: el tiempo extra de línea no se avisa a logística</div>
+    <div class="s10-c sys" id="s10-b3" style="left:820px;top:698px;width:600px;height:110px">Sistémica: no hay revisión anual del proceso de carga</div>
+  </div>
+  <div id="s10-q" class="quali clip" data-start="0" data-duration="20" data-track-index="2">{{QUALI:s10q}}</div>
+  <div id="s10-b" class="bubble clip" data-start="0" data-duration="20" data-track-index="3">Pregunta <b>¿por qué?</b> hasta llegar a algo que puedas corregir.</div>
+  <div id="s10-chap" class="chap clip" data-start="0" data-duration="3.2" data-track-index="4">
+    <div class="stripe"></div><div class="step">PASO 8</div><div class="big">Encuentra la causa raíz</div><div class="sub">Con los 5 porqués: por qué ocurrió y por qué no lo detectamos.</div>
+  </div>
+  <div id="s10-i" class="instr clip" data-start="0" data-duration="20" data-track-index="5"><div class="num">8</div>
+    <div style="position:relative;flex:1;height:84px">
+      <div class="txt" id="s10-t1" style="position:absolute;inset:0;display:flex;align-items:center">Parte del problema y pregunta <b>&nbsp;¿por qué?&nbsp;</b> en dos caminos.</div>
+      <div class="txt alt" id="s10-t2" style="position:absolute;inset:0;display:flex;align-items:center;opacity:0">Al final, busca la <b>&nbsp;causa sistémica</b>: qué falla en el sistema.</div>
+    </div>
+  </div>
+</div>
+<script>
+const tl = gsap.timeline({ paused: true });
+QK.chapter(tl, "s10", 0, 2.4);
+const pop = (sel, t) => tl.fromTo(sel, { opacity: 0, scale: 0.85, y: 24 }, { opacity: 1, scale: 1, y: 0, duration: 0.6, ease: "back.out(1.6)" }, t);
+const grow = (sel, t) => tl.fromTo(sel, { scaleY: 0 }, { scaleY: 1, duration: 0.4, ease: "power2.out" }, t);
+const fade = (sel, t) => tl.fromTo(sel, { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.3, ease: "power2.out" }, t);
+tl.set("#s10-board > *", { opacity: 0 }, 0);
+tl.set(".s10-v", { opacity: 1 }, 0);
+pop("#s10-p", 3.0);
+QK.instr(tl, "#s10-i", 3.3, null);
+grow("#s10-v0a", 4.0); grow("#s10-v0b", 4.1);
+fade("#s10-h1", 4.3); fade("#s10-h2", 4.5);
+pop("#s10-a1", 4.9); pop("#s10-b1", 5.15);
+grow("#s10-va1", 6.2); grow("#s10-vb1", 6.3);
+pop("#s10-wa1", 6.4); pop("#s10-wb1", 6.5);
+pop("#s10-a2", 7.0); fade("#s10-la", 7.4);
+pop("#s10-b2", 8.0); fade("#s10-lb", 8.4);
+const q = QK.quali(tl, "s10q");
+q.pop(9.0).idle(9.9, 19.6).blink([10.6, 13.2, 16.4]);
+q.say("#s10-b", 9.6, 13.6);
+q.point(10.2, 2.0, "L");
+QK.instrSwap(tl, "#s10-t1", "#s10-t2", 12.2);
+grow("#s10-va2", 12.6); grow("#s10-vb2", 12.7);
+pop("#s10-a3", 13.0); pop("#s10-b3", 13.3);
+q.happy(15.2);
+// leave: the board slides up like a page turn
+tl.to("#s10-board", { y: -120, opacity: 0, filter: "blur(10px)", duration: 0.45, ease: "power3.in" }, 19.0);
+tl.to("#s10-i", { y: 190, opacity: 0, duration: 0.4, ease: "power3.in" }, 19.0);
+q.leave(18.9);
+window.__timelines["s10"] = tl;
+</script>
+</template>

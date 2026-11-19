@@ -1,0 +1,59 @@
+<template>
+<link rel="stylesheet" href="assets/css/kit.css">
+<style>
+#root{position:absolute;inset:0}
+#s04-flash{position:absolute;inset:0;background:#F2F2F2}
+#s04-q{left:1450px;top:430px;width:240px;height:288px}
+#s04-b{left:1090px;top:200px;width:560px}
+#s04-tag{left:470px;top:330px}
+#s04-iris{position:absolute;inset:0;background:#F2F2F2}
+</style>
+<div id="root" data-composition-id="s04" data-width="1920" data-height="1080">
+  <div id="s04-bg" class="ground clip" data-start="0" data-duration="8" data-track-index="0"><div class="band2"></div><div class="band"></div></div>
+  <div id="s04-camclip" class="clip" data-start="0" data-duration="8" data-track-index="1" style="position:absolute;inset:0;z-index:1">
+    <div id="s04-cam" class="cam">
+      <div class="win" id="s04-win" style="left:210px;top:40px;width:1500px">
+        <div class="win-bar"><div class="tabdot"></div>QIM<div class="url">Quality Issue Management · Create · New Issue</div></div>
+        <div class="win-body" style="height:807px"><div class="screen" style="transform:scale(0.78247)"><img src="assets/shots/tipos.png" width="1917" height="1031"></div></div>
+      </div>
+      <div class="hl" id="s04-hl1" style="left:224px;top:166px;width:322px;height:236px"></div>
+      <div class="hl" id="s04-hl2" style="left:228px;top:342px;width:216px;height:32px"></div>
+      <div class="tag acc" id="s04-tag">QQ3 = queja interna</div>
+      <div class="ring" id="s04-ring" style="left:335px;top:357px;opacity:0"></div>
+      <svg class="cursor" id="s04-cur" viewBox="0 0 22 30"><path d="M2 2 L2 24 L8 18.5 L12 28 L16 26.3 L12 17 L20 17 Z" fill="#fff" stroke="#111" stroke-width="1.6" stroke-linejoin="round"/></svg>
+    </div>
+  </div>
+  <div id="s04-q" class="quali clip" data-start="0" data-duration="8" data-track-index="2">{{QUALI:s04q}}</div>
+  <div id="s04-b" class="bubble left clip" data-start="0" data-duration="8" data-track-index="3">Hay un tipo para cada queja. La interna es la <b>QQ3</b>.</div>
+  <div id="s04-i" class="instr clip" data-start="0" data-duration="8" data-track-index="4"><div class="num">2</div>
+    <div style="position:relative;flex:1;height:84px">
+      <div class="txt" id="s04-t1" style="position:absolute;inset:0;display:flex;align-items:center">Elige el tipo de issue que quieres levantar.</div>
+      <div class="txt alt" id="s04-t2" style="position:absolute;inset:0;display:flex;align-items:center;opacity:0">Dale <b>&nbsp;doble clic&nbsp;</b> a <b>&nbsp;QQ3 – Internal Complaint</b>.</div>
+    </div>
+  </div>
+  <div id="s04-fl" class="clip" data-start="0" data-duration="8" data-track-index="5" style="position:absolute;inset:0;z-index:30"><div id="s04-flash"></div><div id="s04-iris"></div></div>
+</div>
+<script>
+const tl = gsap.timeline({ paused: true });
+tl.fromTo("#s04-flash", { opacity: 1 }, { opacity: 0, duration: 0.35, ease: "power2.out" }, 0.05);
+tl.fromTo("#s04-cam", { scale: 1.12, x: -115, y: -50 }, { scale: 1, x: 0, y: 0, duration: 0.9, ease: "expo.out" }, 0);
+tl.set("#s04-hl1, #s04-hl2, #s04-tag", { opacity: 0 }, 0);
+tl.set("#s04-cur", { x: 700, y: 640 }, 0);
+tl.set("#s04-iris", { clipPath: "circle(0px at 335px 357px)" }, 0);
+QK.instr(tl, "#s04-i", 0.5, 7.0);
+QK.hl(tl, "#s04-hl1", 1.0, 3.2);
+const q = QK.quali(tl, "s04q");
+q.pop(1.4).idle(2.3, 6.4).blink([3.1, 5.2]);
+q.say("#s04-b", 2.1, 5.3);
+q.point(2.6, 2.2, "L");
+QK.hl(tl, "#s04-hl2", 3.3, null);
+tl.fromTo("#s04-tag", { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: 0.5, ease: "expo.out" }, 3.6);
+QK.instrSwap(tl, "#s04-t1", "#s04-t2", 4.0);
+QK.move(tl, "#s04-cur", 330, 352, 4.3, 1.0);
+q.leave(5.5);
+QK.dblclick(tl, "#s04-cur", 5.6, "#s04-ring");
+// iris opens from the clicked point onto the new form
+tl.to("#s04-iris", { clipPath: "circle(2300px at 335px 357px)", duration: 0.75, ease: "power3.in" }, 6.3);
+window.__timelines["s04"] = tl;
+</script>
+</template>

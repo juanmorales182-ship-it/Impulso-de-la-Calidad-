@@ -1,0 +1,70 @@
+<template>
+<link rel="stylesheet" href="assets/css/kit.css">
+<style>
+#root{position:absolute;inset:0}
+#s01-l1{position:absolute;left:150px;top:250px;font:800 118px Montserrat;color:var(--ink);letter-spacing:-3px;white-space:nowrap}
+#s01-l2{position:absolute;left:146px;top:380px;font:800 210px Montserrat;color:var(--ink);letter-spacing:-6px;white-space:nowrap;line-height:1}
+#s01-l2 .q{color:var(--brand)}
+#s01-l1 .w,#s01-l2 .w{display:inline-block}
+#s01-sub{position:absolute;left:156px;top:640px;font:500 42px Inter;color:#3D5170;white-space:nowrap}
+#s01-rule{position:absolute;left:156px;top:722px;width:520px;height:10px;border-radius:5px;background:var(--accent);transform-origin:0 50%}
+#s01-q{left:1340px;top:470px;width:400px;height:480px}
+#s01-b{left:1000px;top:200px;width:600px}
+</style>
+<div id="root" data-composition-id="s01" data-width="1920" data-height="1080">
+  <div id="s01-bg" class="ground clip" data-start="0" data-duration="9" data-track-index="0"><div class="band2"></div><div class="band"></div></div>
+  <div id="s01-wrap" class="clip" data-start="0" data-duration="9" data-track-index="1" style="position:absolute;inset:0">
+    <div id="s01-l1"><span class="w">Cómo</span> <span class="w">levantar</span></div>
+    <div id="s01-l2"><span class="w">una</span> <span class="w q">QQ3</span></div>
+    <div id="s01-sub">Queja interna de calidad, paso a paso en QIM</div>
+    <div id="s01-rule"></div>
+  </div>
+  <div id="s01-q" class="quali clip" data-start="0" data-duration="9" data-track-index="2"><svg viewBox="0 0 200 240" xmlns="http://www.w3.org/2000/svg">
+  <ellipse id="s01q-shadow" cx="100" cy="232" rx="62" ry="9" fill="#0A2240" opacity=".16"/>
+  <g id="s01q-rig">
+    <g id="s01q-body">
+      <rect x="74" y="200" width="18" height="26" rx="8" fill="#0A2240"/>
+      <rect x="108" y="200" width="18" height="26" rx="8" fill="#0A2240"/>
+      <rect x="62" y="144" width="76" height="66" rx="26" fill="#00539B"/>
+      <rect x="78" y="158" width="44" height="36" rx="14" fill="#fff"/>
+      <path d="M90 176 l7 7 l14 -15" stroke="#F5A800" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <g id="s01q-armL"><rect x="22" y="151" width="34" height="15" rx="7.5" fill="#00539B"/><circle cx="22" cy="158.5" r="11" fill="#fff" stroke="#00539B" stroke-width="4"/></g>
+      <g id="s01q-armR"><rect x="144" y="151" width="34" height="15" rx="7.5" fill="#00539B"/><circle cx="178" cy="158.5" r="11" fill="#fff" stroke="#00539B" stroke-width="4"/></g>
+    </g>
+    <g id="s01q-headbob"><g id="s01q-head">
+      <line x1="100" y1="44" x2="100" y2="22" stroke="#00539B" stroke-width="6" stroke-linecap="round"/>
+      <g id="s01q-bulb"><circle cx="100" cy="16" r="15" fill="#F5A800"/><path d="M93 16 l5 5 l9 -10" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>
+      <rect x="20" y="78" width="16" height="40" rx="8" fill="#00539B"/>
+      <rect x="164" y="78" width="16" height="40" rx="8" fill="#00539B"/>
+      <rect x="30" y="40" width="140" height="112" rx="50" fill="#fff" stroke="#00539B" stroke-width="7"/>
+      <rect x="48" y="62" width="104" height="66" rx="30" fill="#0A2240"/>
+      <g id="s01q-eyes"><ellipse cx="80" cy="94" rx="9" ry="13" fill="#7FD4FF"/><ellipse cx="120" cy="94" rx="9" ry="13" fill="#7FD4FF"/>
+        <circle cx="83" cy="89" r="3" fill="#fff"/><circle cx="123" cy="89" r="3" fill="#fff"/></g>
+      <g id="s01q-eyesHappy" opacity="0"><path d="M70 98 q10 -16 20 0" stroke="#7FD4FF" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M110 98 q10 -16 20 0" stroke="#7FD4FF" stroke-width="6" fill="none" stroke-linecap="round"/></g>
+      <path id="s01q-mouth" d="M90 113 q10 8 20 0" stroke="#7FD4FF" stroke-width="5" fill="none" stroke-linecap="round"/>
+      <ellipse id="s01q-mouthOh" cx="100" cy="115" rx="6" ry="7" fill="#7FD4FF" opacity="0"/>
+      <ellipse cx="60" cy="118" rx="7" ry="4" fill="#F5A800" opacity=".55"/><ellipse cx="140" cy="118" rx="7" ry="4" fill="#F5A800" opacity=".55"/>
+      <path id="s01q-sweat" d="M160 52 q8 12 0 18 q-8 -6 0 -18z" fill="#7FD4FF" opacity="0"/>
+    </g></g>
+  </g>
+</svg>
+</div>
+  <div id="s01-b" class="bubble left clip" data-start="0" data-duration="9" data-track-index="3">¡Hola! Soy <b>Quali</b>. Hoy levantamos una QQ3 juntos.</div>
+</div>
+<script>
+const tl = gsap.timeline({ paused: true });
+tl.fromTo("#s01-l1 .w", { opacity: 0, filter: "blur(10px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, stagger: 0.09, ease: "power2.out" }, 0.15);
+tl.fromTo("#s01-l2 .w:first-child", { opacity: 0, filter: "blur(10px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power2.out" }, 0.4);
+tl.fromTo("#s01-l2 .q", { scale: 1.35, y: -20 }, { scale: 1, y: 0, duration: 0.7, ease: "expo.out", transformOrigin: "0% 60%" }, 0.0);
+tl.fromTo("#s01-sub", { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.7, ease: "expo.out" }, 0.8);
+tl.fromTo("#s01-rule", { scaleX: 0 }, { scaleX: 1, duration: 0.8, ease: "expo.out" }, 0.95);
+const q = QK.quali(tl, "s01q");
+q.pop(1.5, 520).idle(2.4, 8.2).blink([3.2, 5.6, 7.4]);
+q.say("#s01-b", 2.3, 6.9);
+q.happy(6.0);
+// exit: whip left with blur
+tl.to("#s01-wrap", { x: -260, opacity: 0, filter: "blur(14px)", duration: 0.4, ease: "power3.in" }, 8.45);
+q.leave(8.3);
+window.__timelines["s01"] = tl;
+</script>
+</template>
