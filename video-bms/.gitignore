@@ -7,3 +7,4 @@ series/*/node_modules/
 v2/renders/
 v2/*/.hyperframes/
 v2/*/node_modules/
+tools/__pycache__/
