@@ -1,0 +1,36 @@
+<template>
+  <style>
+#root{position:absolute;inset:0;font-family:'Outfit',sans-serif;color:#1E2833;}
+.win{position:absolute;left:128px;top:72px;width:1664px;height:936px;border-radius:18px;background:#fff;
+ box-shadow:0 30px 80px rgba(20,30,45,.18),0 2px 6px rgba(20,30,45,.08);overflow:hidden;}
+.bar{position:absolute;left:0;top:0;width:1664px;height:60px;background:#F5F6F8;border-bottom:1px solid #E2E5EA;}
+.nav{position:absolute;top:18px;left:24px;width:110px;height:24px;}
+.url{position:absolute;left:150px;top:11px;width:1180px;height:38px;border-radius:19px;background:#fff;border:1px solid #DFE3E8;
+ font-family:'Inter',sans-serif;font-size:19px;color:#3A4450;line-height:36px;padding-left:46px;white-space:nowrap;overflow:hidden;}
+.url svg{position:absolute;left:16px;top:9px;}
+.url .host{color:#1E2833;}
+.vp{position:absolute;left:0;top:60px;width:1664px;height:876px;overflow:hidden;}
+.page{position:absolute;left:0;top:0;transform-origin:0 0;overflow:hidden;}
+.shot{position:absolute;left:0;display:block;}
+.hl{position:absolute;border-style:solid;border-color:#CE003A;border-radius:10px;opacity:0;box-sizing:border-box;}
+.cover{position:absolute;background:#fff;}
+.tip{position:absolute;background:#1E2833;color:#fff;border-radius:20px;padding:22px 30px;font-size:31px;line-height:1.3;
+ font-weight:500;max-width:620px;box-shadow:0 18px 40px rgba(15,25,40,.28);opacity:0;transform-origin:50% 50%;z-index:40;}
+.tip b{font-weight:700;text-decoration:underline;text-decoration-color:#CE003A;text-decoration-thickness:4px;text-underline-offset:6px;}
+.cursor{position:absolute;left:0;top:0;width:40px;height:40px;opacity:0;transform-origin:6px 4px;z-index:50;
+ filter:drop-shadow(0 3px 4px rgba(0,0,0,.3));}
+.typed{position:absolute;font-family:'Inter',sans-serif;white-space:nowrap;}
+.typed span{opacity:0;}
+.w{display:inline-block;}
+</style>
+  <div id="root" data-composition-id="e4-intro" data-width="1920" data-height="1080" data-duration="2.4">
+<div style="position:absolute;left:200px;top:330px;font-size:40px;font-weight:600;color:#6B7480;letter-spacing:.01em">BMS en un clic · <span style="color:#1E2833">capítulo 4 de 6</span></div><div id="e4-intro-title" style="position:absolute;left:192px;top:400px;width:1560px;font-size:156px;font-weight:700;line-height:1.04;letter-spacing:-0.025em"><span class="w">Cómo</span> <span class="w">se</span> <span class="w" id="e4-intro-key">nombran</span> <span class="w">los</span> <span class="w">procesos</span></div>
+  </div>
+  <script>
+  (function(){
+    const tl = gsap.timeline({ paused: true });
+    tl.to('#e4-intro-key',{color:'#CE003A',duration:.25,ease:'power1.out'},.7);
+    window.__timelines["e4-intro"] = tl;
+  })();
+  </script>
+</template>

@@ -1,3 +1,6 @@
 film/renders/
 film/.hyperframes/
 film/node_modules/
+series/renders/
+series/*/.hyperframes/
+series/*/node_modules/

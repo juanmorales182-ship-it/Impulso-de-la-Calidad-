@@ -1,0 +1,64 @@
+<template>
+  <style>
+#root{position:absolute;inset:0;font-family:'Outfit',sans-serif;color:#1E2833;}
+.win{position:absolute;left:128px;top:72px;width:1664px;height:936px;border-radius:18px;background:#fff;
+ box-shadow:0 30px 80px rgba(20,30,45,.18),0 2px 6px rgba(20,30,45,.08);overflow:hidden;}
+.bar{position:absolute;left:0;top:0;width:1664px;height:60px;background:#F5F6F8;border-bottom:1px solid #E2E5EA;}
+.nav{position:absolute;top:18px;left:24px;width:110px;height:24px;}
+.url{position:absolute;left:150px;top:11px;width:1180px;height:38px;border-radius:19px;background:#fff;border:1px solid #DFE3E8;
+ font-family:'Inter',sans-serif;font-size:19px;color:#3A4450;line-height:36px;padding-left:46px;white-space:nowrap;overflow:hidden;}
+.url svg{position:absolute;left:16px;top:9px;}
+.url .host{color:#1E2833;}
+.vp{position:absolute;left:0;top:60px;width:1664px;height:876px;overflow:hidden;}
+.page{position:absolute;left:0;top:0;transform-origin:0 0;overflow:hidden;}
+.shot{position:absolute;left:0;display:block;}
+.hl{position:absolute;border-style:solid;border-color:#CE003A;border-radius:10px;opacity:0;box-sizing:border-box;}
+.cover{position:absolute;background:#fff;}
+.tip{position:absolute;background:#1E2833;color:#fff;border-radius:20px;padding:22px 30px;font-size:31px;line-height:1.3;
+ font-weight:500;max-width:620px;box-shadow:0 18px 40px rgba(15,25,40,.28);opacity:0;transform-origin:50% 50%;z-index:40;}
+.tip b{font-weight:700;text-decoration:underline;text-decoration-color:#CE003A;text-decoration-thickness:4px;text-underline-offset:6px;}
+.cursor{position:absolute;left:0;top:0;width:40px;height:40px;opacity:0;transform-origin:6px 4px;z-index:50;
+ filter:drop-shadow(0 3px 4px rgba(0,0,0,.3));}
+.typed{position:absolute;font-family:'Inter',sans-serif;white-space:nowrap;}
+.typed span{opacity:0;}
+.w{display:inline-block;}
+</style>
+  <div id="root" data-composition-id="e3-tools" data-width="1920" data-height="1080" data-duration="27.95">
+<div class="win" id="e3-tools-win"><div class="bar"><svg class="nav" viewBox="0 0 110 24" fill="none" stroke="#6B7480" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4 6 12l8 8M6 12h16"/><path d="M48 4l8 8-8 8M56 12H40"/><path d="M100 7a8 8 0 1 0 2 7"/><path d="M101 2v6h-6"/></svg><div class="url" data-layout-ignore><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6B7480" stroke-width="2.4" stroke-linecap="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><span class="host">editor.signavio.com</span>/p/hub/home</div></div><div class="vp" style="background:#fff"><div class="page" id="e3-tools-page" style="width:1914px;height:1063px;background:#fff"><img class="shot" src="assets/img/signavio-home.png" style="top:-32px;width:1914px;height:1095px" alt=""><div class="hl" id="e3-tools-b2" style="left:195.4px;top:288.4px;width:289.2px;height:79.2px;border-width:4.03px"></div><div class="hl" id="e3-tools-b4" style="left:505.4px;top:288.4px;width:249.2px;height:79.2px;border-width:4.03px"></div><div class="hl" id="e3-tools-b6" style="left:813.4px;top:288.4px;width:269.2px;height:79.2px;border-width:4.03px"></div><div class="hl" id="e3-tools-b8" style="left:1123.4px;top:288.4px;width:264.2px;height:79.2px;border-width:4.03px"></div><div class="hl" id="e3-tools-b10" style="left:1435.4px;top:288.4px;width:224.2px;height:79.2px;border-width:4.03px"></div><div class="hl" id="e3-tools-b12" style="left:1333.4px;top:391.4px;width:433.2px;height:389.2px;border-width:4.03px"></div></div></div></div><div class="tip" data-hold id="e3-tools-t1" style="left:160px;top:560px"><b>BMS Cockpit</b>: la página del BMS en la BBC</div><div class="tip" data-hold id="e3-tools-t3" style="left:376px;top:560px"><b>BMS Trainings</b>: todo sobre las capacitaciones</div><div class="tip" data-hold id="e3-tools-t5" style="left:652px;top:560px"><b>Process System Handbook</b>: acceso rápido a roles y procesos</div><div class="tip" data-hold id="e3-tools-t7" style="left:920px;top:560px"><b>Transfer Matrix</b>: de la lógica anterior a la nueva</div><div class="tip" data-hold id="e3-tools-t9" style="left:1150px;top:560px"><b>Process Role Catalogue</b>: todos los roles de proceso</div><div class="tip" data-hold id="e3-tools-t11" style="left:300px;top:600px"><b>Vistas específicas</b>: sistemas de gestión, funcionales, por tema y por planta</div><div class="tip" data-hold id="e3-tools-t13" style="left:300px;top:640px">También hay vistas por <b>proyecto de cliente</b></div>
+  </div>
+  <script>
+  (function(){
+    const tl = gsap.timeline({ paused: true });
+    tl.set('#e3-tools-page',{x:0.0,y:0.0,scale:0.8694},0);
+    tl.fromTo('#e3-tools-page',{opacity:0,filter:'blur(8px)'},{opacity:1,filter:'blur(0px)',duration:.2,ease:'power2.out'},0);
+    tl.fromTo('#e3-tools-t1',{opacity:0,filter:'blur(8px)',scale:.96},{opacity:1,filter:'blur(0px)',scale:1,duration:.25,ease:'power4.out'},0.35);
+    tl.to('#e3-tools-t1',{opacity:0,filter:'blur(8px)',duration:.15,ease:'power2.in'},4.10);
+    tl.fromTo('#e3-tools-b2',{opacity:0,scale:1.06},{opacity:1,scale:1,duration:.3,ease:'expo.out'},0.30);
+    tl.to('#e3-tools-b2',{opacity:0,duration:.15},4.10);
+    tl.fromTo('#e3-tools-t3',{opacity:0,filter:'blur(8px)',scale:.96},{opacity:1,filter:'blur(0px)',scale:1,duration:.25,ease:'power4.out'},4.40);
+    tl.to('#e3-tools-t3',{opacity:0,filter:'blur(8px)',duration:.15,ease:'power2.in'},7.25);
+    tl.fromTo('#e3-tools-b4',{opacity:0,scale:1.06},{opacity:1,scale:1,duration:.3,ease:'expo.out'},4.35);
+    tl.to('#e3-tools-b4',{opacity:0,duration:.15},7.25);
+    tl.fromTo('#e3-tools-t5',{opacity:0,filter:'blur(8px)',scale:.96},{opacity:1,filter:'blur(0px)',scale:1,duration:.25,ease:'power4.out'},7.55);
+    tl.to('#e3-tools-t5',{opacity:0,filter:'blur(8px)',duration:.15,ease:'power2.in'},11.30);
+    tl.fromTo('#e3-tools-b6',{opacity:0,scale:1.06},{opacity:1,scale:1,duration:.3,ease:'expo.out'},7.50);
+    tl.to('#e3-tools-b6',{opacity:0,duration:.15},11.30);
+    tl.fromTo('#e3-tools-t7',{opacity:0,filter:'blur(8px)',scale:.96},{opacity:1,filter:'blur(0px)',scale:1,duration:.25,ease:'power4.out'},11.60);
+    tl.to('#e3-tools-t7',{opacity:0,filter:'blur(8px)',duration:.15,ease:'power2.in'},15.35);
+    tl.fromTo('#e3-tools-b8',{opacity:0,scale:1.06},{opacity:1,scale:1,duration:.3,ease:'expo.out'},11.55);
+    tl.to('#e3-tools-b8',{opacity:0,duration:.15},15.35);
+    tl.fromTo('#e3-tools-t9',{opacity:0,filter:'blur(8px)',scale:.96},{opacity:1,filter:'blur(0px)',scale:1,duration:.25,ease:'power4.out'},15.65);
+    tl.to('#e3-tools-t9',{opacity:0,filter:'blur(8px)',duration:.15,ease:'power2.in'},19.10);
+    tl.fromTo('#e3-tools-b10',{opacity:0,scale:1.06},{opacity:1,scale:1,duration:.3,ease:'expo.out'},15.60);
+    tl.to('#e3-tools-b10',{opacity:0,duration:.15},19.10);
+    tl.fromTo('#e3-tools-t11',{opacity:0,filter:'blur(8px)',scale:.96},{opacity:1,filter:'blur(0px)',scale:1,duration:.25,ease:'power4.out'},19.40);
+    tl.to('#e3-tools-t11',{opacity:0,filter:'blur(8px)',duration:.15,ease:'power2.in'},23.75);
+    tl.fromTo('#e3-tools-b12',{opacity:0,scale:1.06},{opacity:1,scale:1,duration:.3,ease:'expo.out'},19.35);
+    tl.to('#e3-tools-b12',{opacity:0,duration:.15},23.75);
+    tl.fromTo('#e3-tools-t13',{opacity:0,filter:'blur(8px)',scale:.96},{opacity:1,filter:'blur(0px)',scale:1,duration:.25,ease:'power4.out'},24.05);
+    tl.to('#e3-tools-t13',{opacity:0,filter:'blur(8px)',duration:.15,ease:'power2.in'},26.90);
+    tl.to('#e3-tools-win',{y:760,scale:.82,opacity:0,duration:.7,ease:'power3.in'},27.15);
+    window.__timelines["e3-tools"] = tl;
+  })();
+  </script>
+</template>
