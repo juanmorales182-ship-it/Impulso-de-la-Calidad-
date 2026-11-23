@@ -61,6 +61,231 @@ def sample():
 
 
 VIDEOS = {"sample": ("sample", "BMS en un clic — muestra", sample)}
+
+
+# ====================================================================== full videos
+import v2_gfx as G
+
+PROC = Screen("process-page.png", 1893, 887, url=("editor.signavio.com", "/p/hub/model/GR_00168_00"))
+SEARCH = Screen("search-results.png", 1895, 778, url=("editor.signavio.com", "/p/hub/search?q=GR_00168"))
+RECENT = Screen("recent.png", 1898, 1040, url=("editor.signavio.com", "/p/hub/recent"))
+PORTAL = Screen("knowledge-portal.png", 1858, 1050, url=("brosecloud.sharepoint.com", "/sites/bms/knowledge-portal"))
+GR542 = Screen("gr00542.jpg", 1242, 414, url=("editor.signavio.com", "/p/hub/model/GR_00542_00"))
+DIAG = Screen("process-diagram.png", 1651, 638, url=("editor.signavio.com", "/p/hub/model/GR_00168_00"))
+
+
+def gfx(c, fn, dur):
+    html, js = fn()
+    c.graphic(html, js, max(dur, c.step_min - c.t + .3))
+
+
+def ch_moverte():
+    c = Chapter("v1-mover", "Moverte en Signavio", 5)
+    c.show(HOME, cam=(1, None, 0))
+    c.step("Vuelve al inicio", "El logo <b>BMS</b> o la <b>casita</b> del menú te regresan siempre a la página de inicio.")
+    c.wait(.8)
+    b = c.box((60, 6, 150, 44))
+    c.loupe((20, 0, 420, 60), w=600, h=110, pos=(1060, 300), hold=2.2)
+    c.unbox(b)
+    c.box((14, 56, 34, 34))
+    c.point(31, 73)
+    c.loupe((0, 40, 300, 120), w=420, h=170, pos=(1060, 300), hold=2.0)
+    c.unbox()
+    c.cursor_off()
+    c.hold()
+
+    c.step("Published y Preview", "<b>Published</b> es la vista normal. <b>Preview</b> pide autorización y muestra procesos sin publicar o archivados.")
+    c.box((298, 12, 94, 30))
+    c.loupe((200, 0, 300, 60), w=520, h=120, pos=(1100, 300), hold=1.8)
+    c.unbox()
+    gfx(c, G.pills, 5.4)
+    c.hold()
+
+    c.step("Cambia el idioma", "En tu perfil: <b>Manage Account</b> cambia el idioma del sistema y <b>Content Language</b> el del contenido.")
+    c.box((1864, 8, 38, 36))
+    c.click(1882, 25)
+    c.unbox()
+    c.cursor_off()
+    gfx(c, G.profile_menu, 6.4)
+    c.hold()
+
+    c.step("Guarda tus procesos", "Marca la <b>estrella</b> en cualquier proceso y lo encuentras en <b>Favoritos</b>.")
+    c.show(PROC, cam=(1, None, 0))
+    c.wait(.4)
+    c.click(1652, 121)
+    c.star(1652, 121, 26)
+    c.loupe((1540, 90, 320, 70), w=500, h=130, pos=(1180, 330), hold=1.8)
+    c.cursor_off()
+    c.box((14, 144, 38, 36))
+    c.loupe((0, 60, 260, 230), w=300, h=260, pos=(800, 560), hold=2.0)
+    c.unbox()
+    c.hold()
+
+    c.step("Vuelve a lo reciente", "En <b>Recientes</b> encuentras lo último que abriste.")
+    c.show(RECENT, cam=(1, None, 0))
+    c.wait(.4)
+    c.loupe((0, 60, 560, 320), w=560, h=320, pos=(1180, 520), hold=2.6)
+    c.hold()
+    return c
+
+
+def video1():
+    return [title_card("v1-title", 1, "Entrar y moverte en el BMS", ["BMS"], "Cómo entrar a Signavio, ubicarte y guardar lo que más usas"),
+            ch_entrar(), ch_moverte(),
+            end_card("v1-end", "Ya estás dentro.", ["dentro."], "El mapa de procesos y sus nombres")]
+
+
+def ch_mapa():
+    c = Chapter("v2-mapa", "El mapa de procesos", 5)
+    c.show(HOME, cam=(1, None, 0))
+    c.step("Tu página de inicio", "Al entrar ves el <b>mapa de procesos de Brose</b>: reúne los 14 procesos principales.")
+    c.wait(.6)
+    c.point(740, 700)
+    c.cursor_off()
+    c.hold()
+
+    c.step("Tres grupos", "<b>Gestión</b> define y controla el negocio. <b>Realización</b> genera el volumen de negocio. <b>Soporte</b> mantiene todo en marcha.")
+    for r in [(302, 396, 892, 151), (302, 545, 892, 150), (302, 693, 892, 370)]:
+        c.box(r, until=c.t + 2.0)
+        c.wait(2.2)
+    c.hold()
+
+    c.step("Los 14 procesos", "Cada uno reúne los procesos de un área: de la estrategia a la comunicación.")
+    gfx(c, G.fourteen, 9.0)
+    c.hold()
+
+    c.step("Accesos rápidos", "Arriba del mapa: <b>BMS Cockpit</b>, <b>Trainings</b>, <b>Process System Handbook</b>, <b>Transfer Matrix</b> y <b>Process Role Catalogue</b>.")
+    c.box((195, 285, 1490, 95))
+    c.loupe((195, 285, 1490, 95), w=1060, h=90, pos=(760, 640), mag=.7, hold=4.0)
+    c.unbox()
+    c.hold()
+
+    c.step("Vistas específicas", "Mapas por <b>sistema de gestión</b>, <b>función</b>, <b>tema</b>, <b>planta</b> y <b>proyecto de cliente</b>.")
+    c.box((1338, 396, 424, 380))
+    c.loupe((1338, 396, 424, 380), w=440, h=400, pos=(1000, 380), hold=3.2)
+    c.unbox()
+    c.hold()
+    return c
+
+
+def ch_nombres():
+    c = Chapter("v2-nombres", "Cómo se nombran", 4)
+    c.show(GR542, cam=(1, None, 0))
+    c.step("Del mapa al proceso", "Cada proceso principal tiene su mapa; esos mapas contienen otros mapas o procesos, hasta el <b>proceso de grupo</b>.")
+    gfx(c, G.hierarchy, 6.0)
+    c.hold()
+
+    c.step("Nombre y número", "Cada proceso tiene nombre y número. <b>GR</b> = proceso de grupo, válido en todo Brose.")
+    c.box((425, 2, 500, 38))
+    c.wait(1.0)
+    c.unbox()
+    gfx(c, G.code_decode, 4.6)
+    c.hold()
+
+    c.step("Un proceso, varios mapas", "El mismo <b>GR_00266_00</b> aparece en el mapa de compras y en el de producción, con otro nombre de lugar.")
+    gfx(c, G.two_maps, 6.4)
+    c.hold()
+
+    c.step("Instrucciones y anexos", "Llevan el nombre de su proceso: <b>WI_</b> para instrucciones de trabajo y <b>AT_</b> para anexos.")
+    gfx(c, G.names, 5.0)
+    c.hold()
+    return c
+
+
+def video2():
+    return [title_card("v2-title", 2, "El mapa de procesos y sus nombres", ["mapa"], "Cómo está organizado el BMS y cómo leer el nombre de cada proceso"),
+            ch_mapa(), ch_nombres(),
+            end_card("v2-end", "14 procesos, un solo mapa.", ["mapa."], "Leer un proceso y encontrar ayuda")]
+
+
+def ch_leer():
+    c = Chapter("v3-leer", "Leer un proceso", 6)
+    c.show(HOME, cam=(1, None, 0))
+    c.step("Busca tu proceso", "Escribe el <b>nombre</b>, el <b>número</b> o una <b>cláusula IATF</b> en el buscador.")
+    c.cam_to(1.74, 1480, 40)
+    c.box((1300, 6, 364, 42))
+    c.click(1520, 26)
+    c.type_text("GR_00168", 1434, 15, 15, cover=(1428, 12, 200, 28))
+    c.click(1645, 26)
+    c.unbox()
+    c.hold()
+
+    c.step("Elige el resultado", "Verás procesos <b>(GR)</b> e instrucciones de trabajo <b>(WI)</b>.")
+    c.show(SEARCH, cam=(1.72, 900, 470))
+    c.wait(.4)
+    c.box((428, 478, 1410, 108))
+    c.click(700, 505)
+    c.wait(.6)
+    c.unbox()
+    c.cursor_off()
+    c.hold()
+
+    c.step("Lee la descripción", "Arriba ves su <b>ruta</b> en el mapa; abajo, qué hace el proceso y qué normas aplica.")
+    c.show(PROC, cam=(1, None, 0))
+    c.wait(.4)
+    c.box((114, 72, 838, 30), until=c.t + 2.4)
+    c.loupe((114, 62, 640, 90), w=640, h=90, pos=(1000, 300), hold=2.2)
+    c.box((116, 232, 1731, 491))
+    c.loupe((130, 300, 760, 200), w=760, h=200, pos=(1020, 660), hold=3.2)
+    c.unbox()
+    c.hold()
+
+    c.step("Información clave", "En cada proceso también encuentras <b>riesgos y oportunidades</b>, cláusulas <b>IATF</b>, <b>ISO 45001</b> y el <b>alcance</b>.")
+    gfx(c, G.info_grid, 5.6)
+    c.hold()
+
+    c.step("Sigue el flujo", "El diagrama muestra quién hace qué y en qué orden.")
+    c.show(DIAG, cam=(1, None, 0))
+    c.wait(1.2)
+    c.cam_to(1.45, 1000, 330, d=1.2)
+    c.wait(1.2)
+    c.hold()
+
+    c.step("Los íconos de cada tarea", "Abren procesos <b>antes y después</b>, transacciones <b>SAP</b>, documentos y normas. Sus colores te dicen qué son.")
+    gfx(c, G.icon_legend, 6.4)
+    c.hold()
+    return c
+
+
+def ch_ayuda():
+    c = Chapter("v3-ayuda", "Encontrar ayuda", 4)
+    c.show(PORTAL, cam=(1, None, 0))
+    c.step("Repository", "Aquí están todos los <b>modelos</b>: mapas, diagramas, instrucciones de trabajo, roles y mapas por planta.")
+    gfx(c, G.repository, 5.4)
+    c.hold()
+
+    c.step("Dictionary", "Aquí están todos los <b>objetos</b>: roles, documentos, usuarios, riesgos, controles y sistemas de TI.")
+    gfx(c, G.dictionary, 5.4)
+    c.hold()
+
+    c.step("BMS Knowledge Portal", "Guías paso a paso: cómo navegar, cómo leer un proceso y sus objetos.")
+    c.wait(.6)
+    c.box((276, 728, 1340, 255))
+    c.loupe((276, 728, 700, 260), w=700, h=260, pos=(1000, 300), hold=3.0)
+    c.unbox()
+    c.hold()
+
+    c.step("Capacitaciones y contactos", "En <b>BMS Trainings</b>: webinar con instructor y curso autodidacta. ¿Dudas? Busca a tus <b>contactos del BMS</b> en el portal.")
+    c.show(HOME, cam=(1, None, 0))
+    c.wait(.4)
+    c.box((510, 293, 240, 70))
+    c.loupe((470, 280, 330, 100), w=500, h=150, pos=(1100, 620), hold=3.4)
+    c.unbox()
+    c.hold()
+    return c
+
+
+def video3():
+    return [title_card("v3-title", 3, "Leer un proceso y encontrar ayuda", ["proceso"], "Busca, entiende cada parte de un proceso y sabe a dónde acudir"),
+            ch_leer(), ch_ayuda(),
+            end_card("v3-end", "Tu proceso, a un clic.", ["a", "un", "clic."])]
+
+
+VIDEOS.update({"v1": ("video-1-entrar-y-moverte", "BMS en un clic 1 — Entrar y moverte", video1),
+               "v2": ("video-2-mapa-y-nombres", "BMS en un clic 2 — El mapa y los nombres", video2),
+               "v3": ("video-3-leer-y-ayuda", "BMS en un clic 3 — Leer un proceso y ayuda", video3)})
+
+
 if __name__ == "__main__":
     for k in (sys.argv[1:] or ["sample"]):
         slug, title, fn = VIDEOS[k]

@@ -1,0 +1,150 @@
+<template>
+  <style>
+#root{position:absolute;inset:0;font-family:'Outfit',sans-serif;color:#1E2833;background:#fff;}
+.panel{position:absolute;left:676px;top:0;width:1244px;height:1080px;background:#F3F4F6;}
+.mock{position:absolute;left:740px;top:136px;width:1100px;height:808px;border-radius:16px;background:#fff;overflow:hidden;
+ box-shadow:0 40px 90px rgba(20,30,45,.16),0 2px 8px rgba(20,30,45,.08);}
+.bar{position:absolute;left:0;top:0;width:1100px;height:50px;background:#F7F8FA;border-bottom:1px solid #E4E7EC;}
+.dots{position:absolute;left:20px;top:19px;}
+.dots i{display:inline-block;width:12px;height:12px;border-radius:6px;background:#D5D9DF;margin-right:8px;}
+.url{position:absolute;left:96px;top:10px;width:820px;height:30px;border-radius:15px;background:#fff;border:1px solid #E1E4E9;
+ font-family:'Inter',sans-serif;font-size:15px;color:#5B6572;line-height:28px;padding-left:36px;white-space:nowrap;overflow:hidden;}
+.url svg{position:absolute;left:13px;top:7px;}
+.url b{color:#1E2833;font-weight:500;}
+.vp{position:absolute;left:0;top:50px;width:1100px;height:758px;overflow:hidden;background:#fff;}
+.scr{position:absolute;left:0;top:0;transform-origin:0 0;overflow:hidden;opacity:0;}
+.scr img{position:absolute;left:0;display:block;}
+.hl{position:absolute;border:3px solid #CE003A;border-radius:10px;opacity:0;box-sizing:border-box;z-index:30;}
+.loupe{position:absolute;overflow:hidden;border-radius:18px;border:3px solid #CE003A;background:#fff;opacity:0;z-index:35;
+ box-shadow:0 24px 50px rgba(20,30,45,.25);}
+.loupe img{position:absolute;display:block;}
+.cursor{position:absolute;left:0;top:0;width:34px;height:34px;opacity:0;transform-origin:5px 3px;z-index:50;filter:drop-shadow(0 3px 4px rgba(0,0,0,.28));}
+.typed{position:absolute;font-family:'Inter',sans-serif;white-space:nowrap;color:#1E2833;}
+.typed span{opacity:0;}
+.cover{position:absolute;background:#fff;}
+.chap{position:absolute;left:110px;top:230px;font-size:30px;font-weight:600;color:#CE003A;}
+.stepn{position:absolute;left:110px;top:280px;font-size:28px;font-weight:500;color:#5B6572;}
+.head{position:absolute;left:110px;top:342px;width:540px;font-size:66px;font-weight:700;line-height:1.08;letter-spacing:-0.015em;opacity:0;}
+.body{position:absolute;left:110px;width:520px;font-size:33px;font-weight:400;line-height:1.36;color:#4B5563;opacity:0;}
+.body b{color:#1E2833;font-weight:600;}
+.prog{position:absolute;left:110px;top:950px;width:520px;height:6px;border-radius:3px;background:#E5E7EB;overflow:hidden;}
+.prog i{position:absolute;left:0;top:0;height:6px;width:520px;background:#CE003A;transform-origin:0 0;}
+.w{display:inline-block;}
+.gfx{position:absolute;left:676px;top:0;width:1244px;height:1080px;overflow:hidden;}
+</style>
+  <div id="root" data-composition-id="v1-mover" data-width="1920" data-height="1080" data-duration="35.79">
+<div class="panel" id="v1-mover-panel"></div><div id="v1-mover-left"><div class="chap">Moverte en Signavio</div><div class="stepn" id="v1-mover-n1" style="opacity:0">Paso 1 de 5</div><div class="head" data-hold id="v1-mover-h3"><span class="w">Vuelve</span> <span class="w">al</span> <span class="w">inicio</span> </div><div class="body" id="v1-mover-b4" style="top:450px">El logo <b>BMS</b> o la <b>casita</b> del menú te regresan siempre a la página de inicio.</div><div class="stepn" id="v1-mover-n2" style="opacity:0">Paso 2 de 5</div><div class="head" data-hold id="v1-mover-h9"><span class="w">Published</span> <span class="w">y</span> <span class="w">Preview</span> </div><div class="body" id="v1-mover-b10" style="top:522px"><b>Published</b> es la vista normal. <b>Preview</b> pide autorización y muestra procesos sin publicar o archivados.</div><div class="stepn" id="v1-mover-n3" style="opacity:0">Paso 3 de 5</div><div class="head" data-hold id="v1-mover-h14"><span class="w">Cambia</span> <span class="w">el</span> <span class="w">idioma</span> </div><div class="body" id="v1-mover-b15" style="top:450px">En tu perfil: <b>Manage Account</b> cambia el idioma del sistema y <b>Content Language</b> el del contenido.</div><div class="stepn" id="v1-mover-n4" style="opacity:0">Paso 4 de 5</div><div class="head" data-hold id="v1-mover-h18"><span class="w">Guarda</span> <span class="w">tus</span> <span class="w">procesos</span> </div><div class="body" id="v1-mover-b19" style="top:522px">Marca la <b>estrella</b> en cualquier proceso y lo encuentras en <b>Favoritos</b>.</div><div class="stepn" id="v1-mover-n5" style="opacity:0">Paso 5 de 5</div><div class="head" data-hold id="v1-mover-h26"><span class="w">Vuelve</span> <span class="w">a</span> <span class="w">lo</span> <span class="w">reciente</span> </div><div class="body" id="v1-mover-b27" style="top:522px">En <b>Recientes</b> encuentras lo último que abriste.</div><div class="prog"><i id="v1-mover-prog"></i></div></div><div class="mock" id="v1-mover-mock"><div class="bar"><div class="dots"><i></i><i></i><i></i></div><div class="url" data-layout-ignore><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7A8390" stroke-width="2.6" stroke-linecap="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><div id="v1-mover-u2" style="position:absolute;left:36px;top:0;opacity:0"><b style="color:#1E2833;font-weight:500">editor.signavio.com</b>/p/hub/home</div><div id="v1-mover-u21" style="position:absolute;left:36px;top:0;opacity:0"><b style="color:#1E2833;font-weight:500">editor.signavio.com</b>/p/hub/model/GR_00168_00</div><div id="v1-mover-u29" style="position:absolute;left:36px;top:0;opacity:0"><b style="color:#1E2833;font-weight:500">editor.signavio.com</b>/p/hub/recent</div></div></div><div class="vp"><div class="scr" id="v1-mover-s1" style="width:1914px;height:1063px;background:#fff"><img src="assets/img/signavio-home.png" style="top:-32px;width:1914px;height:1095px" alt=""><div class="hl" id="v1-mover-x5" style="left:51.3px;top:-2.7px;width:167.4px;height:61.4px;border-width:5.22px;border-radius:13.9px"></div><div class="hl" id="v1-mover-x7" style="left:5.3px;top:47.3px;width:51.4px;height:51.4px;border-width:5.22px;border-radius:13.9px"></div><div class="hl" id="v1-mover-x11" style="left:289.3px;top:3.3px;width:111.4px;height:47.4px;border-width:5.22px;border-radius:13.9px"></div><div class="hl" id="v1-mover-x16" style="left:1855.3px;top:-0.7px;width:55.4px;height:53.4px;border-width:5.22px;border-radius:13.9px"></div><!--v1-mover-s1--></div><div class="scr" id="v1-mover-s20" style="width:1893px;height:887px;background:#fff"><img src="assets/img/process-page.png" style="top:0px;width:1893px;height:887px" alt=""><div id="v1-mover-st22" style="position:absolute;left:1639.0px;top:108.0px;width:26px;height:26px;opacity:0"><svg viewBox="0 0 24 24" width="100%" height="100%"><path d="M12 2.8l2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.2l-5.7 3.1 1.2-6.4L2.8 9.5l6.4-.8z" fill="#F5B301" stroke="#E0A000" stroke-width="1.6" stroke-linejoin="round"/></svg></div><div class="hl" id="v1-mover-x24" style="left:5.4px;top:135.4px;width:55.2px;height:53.2px;border-width:5.16px;border-radius:13.8px"></div><!--v1-mover-s20--></div><div class="scr" id="v1-mover-s28" style="width:1898px;height:1040px;background:#fff"><img src="assets/img/recent.png" style="top:0px;width:1898px;height:1040px" alt=""><!--v1-mover-s28--></div></div></div><div class="loupe" id="v1-mover-l6" style="left:1060px;top:300px;width:600px;height:110px"><img src="assets/img/signavio-home.png" style="left:70.0px;top:-7.0px;width:1914.0px;height:1095.0px" alt=""></div><div class="loupe" id="v1-mover-l8" style="left:1060px;top:300px;width:420px;height:170px"><img src="assets/img/signavio-home.png" style="left:60.0px;top:-47.0px;width:1914.0px;height:1095.0px" alt=""></div><div class="loupe" id="v1-mover-l12" style="left:1100px;top:300px;width:520px;height:120px"><img src="assets/img/signavio-home.png" style="left:-90.0px;top:-2.0px;width:1914.0px;height:1095.0px" alt=""></div><div class="gfx" data-hold id="v1-mover-g13" style="opacity:0;z-index:25"><div style="position:absolute;inset:0;background:#F3F4F6"></div>
+<div class="p1" style="position:absolute;left:150px;top:250px;width:940px;height:230px;background:#fff;border-radius:18px;box-shadow:0 18px 40px rgba(20,30,45,.10),0 1px 3px rgba(20,30,45,.08);">
+  <div style="position:absolute;left:56px;top:62px;padding:0 34px;height:96px;border-radius:24px;border:3px solid #C9CED6;font-size:54px;font-weight:600;line-height:90px;color:#1E2833">Published &#8964;</div>
+  <div style="position:absolute;left:470px;top:56px;width:420px;font-size:32px;line-height:1.3;color:#1E2833"><b>Vista normal</b><br><span style="color:#5B6572">todos ven los procesos publicados</span></div>
+</div>
+<div class="p1" style="position:absolute;left:150px;top:540px;width:940px;height:230px;background:#fff;border-radius:18px;box-shadow:0 18px 40px rgba(20,30,45,.10),0 1px 3px rgba(20,30,45,.08);">
+  <div style="position:absolute;left:56px;top:62px;padding:0 34px;height:96px;border-radius:24px;border:3px solid #F2D35B;background:#FFF2B8;font-size:54px;font-weight:600;line-height:90px;color:#B45309">Preview &#8964;</div>
+  <div style="position:absolute;left:470px;top:56px;width:420px;font-size:32px;line-height:1.3;color:#1E2833"><b>Requiere autorización</b><br><span style="color:#5B6572">procesos sin publicar o archivados</span></div>
+</div></div><div class="gfx" data-hold id="v1-mover-g17" style="opacity:0;z-index:25"><div style="position:absolute;inset:0;background:#F3F4F6"></div>
+<div style="position:absolute;left:330px;top:110px;width:540px;height:840px;background:#fff;border-radius:18px;box-shadow:0 18px 40px rgba(20,30,45,.10),0 1px 3px rgba(20,30,45,.08);">
+  <div style="position:absolute;left:210px;top:44px;width:120px;height:120px;border-radius:60px;background:#D9EBFF;color:#1A6BD8;font-size:46px;font-weight:600;text-align:center;line-height:120px">Tú</div>
+  <div id="pm-ma" style="position:absolute;left:150px;top:196px;width:240px;height:52px;border-radius:12px;border:2px solid #9DB6D8;font-size:24px;line-height:48px;text-align:center;color:#1A6BD8">Manage Account</div>
+  <div style="position:absolute;left:40px;top:300px;width:460px;height:56px"><div style="font-size:28px;color:#1E2833">Settings</div></div><div style="position:absolute;left:40px;top:362px;width:460px;height:56px"><div style="font-size:28px;color:#1E2833">My Subscriptions</div></div><div style="position:absolute;left:40px;top:424px;width:460px;height:70px"><div style="font-size:28px;color:#1E2833">Audiences</div><div style="font-size:26px;color:#5B6572">General Audience</div></div><div id="pm-cl" style="position:absolute;left:40px;top:504px;width:460px;height:70px"><div style="font-size:28px;color:#1E2833">Content Language</div><div style="font-size:26px;color:#5B6572">English</div></div><div style="position:absolute;left:40px;top:584px;width:460px;height:56px"><div style="font-size:28px;color:#1E2833">Legal information</div></div><div style="position:absolute;left:40px;top:646px;width:460px;height:56px"><div style="font-size:28px;color:#1E2833">About</div></div>
+  <div style="position:absolute;left:390px;top:780px;font-size:24px;color:#1A6BD8">Sign Out</div>
+</div>
+<div class="hlg" id="pm-b1" style="position:absolute;left:470px;top:296px;width:260px;height:72px;border:4px solid #CE003A;border-radius:14px;opacity:0"></div>
+<div class="hlg" id="pm-b2" style="position:absolute;left:358px;top:606px;width:484px;height:86px;border:4px solid #CE003A;border-radius:14px;opacity:0"></div>
+</div><div class="loupe" id="v1-mover-l23" style="left:1180px;top:330px;width:500px;height:130px"><img src="assets/img/process-page.png" style="left:-1450.0px;top:-60.0px;width:1893.0px;height:887.0px" alt=""></div><div class="loupe" id="v1-mover-l25" style="left:800px;top:560px;width:300px;height:260px"><img src="assets/img/process-page.png" style="left:20.0px;top:-45.0px;width:1893.0px;height:887.0px" alt=""></div><div class="loupe" id="v1-mover-l30" style="left:1180px;top:520px;width:560px;height:320px"><img src="assets/img/recent.png" style="left:0.0px;top:-60.0px;width:1898.0px;height:1040.0px" alt=""></div><div class="cursor" id="v1-mover-cur"><svg viewBox="0 0 40 40"><path d="M6 4 L6 32 L13 25 L18 36 L23 34 L18 23 L28 23 Z" fill="#fff" stroke="#1E2833" stroke-width="2.4" stroke-linejoin="round"/></svg></div>
+  </div>
+  <script>
+  (function(){
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo('#v1-mover-panel',{xPercent:100},{xPercent:0,duration:.8,ease:'expo.out'},0);
+    tl.fromTo('#v1-mover-mock',{y:900,opacity:0},{y:0,opacity:1,duration:.9,ease:'expo.out'},0);
+    tl.set('#v1-mover-prog',{scaleX:0},0);
+    tl.set('#v1-mover-s1',{x:0.0,y:0.0,scale:0.5747},0);
+    tl.fromTo('#v1-mover-s1',{opacity:0},{opacity:1,duration:.01},0.00);
+    tl.set('#v1-mover-u2',{opacity:1},0.12);
+    tl.fromTo('#v1-mover-n1',{opacity:0},{opacity:1,duration:.2},0.00);
+    tl.set('#v1-mover-h3',{opacity:1},0.00);
+    tl.fromTo('#v1-mover-h3 .w',{opacity:0,filter:'blur(6px)'},{opacity:1,filter:'blur(0px)',duration:.14,stagger:.07,ease:'power2.out'},0.00);
+    tl.fromTo('#v1-mover-b4',{opacity:0,filter:'blur(6px)'},{opacity:1,filter:'blur(0px)',duration:.25,ease:'power2.out'},0.35);
+    tl.to('#v1-mover-prog',{scaleX:0.200,duration:.6,ease:'power2.inOut'},0.00);
+    tl.fromTo('#v1-mover-x5',{opacity:0,scale:1.08},{opacity:1,scale:1,duration:.3,ease:'expo.out'},1.30);
+    tl.fromTo('#v1-mover-l6',{opacity:0,scale:.2,transformOrigin:'-31% -88%'},{opacity:1,scale:1,duration:.5,ease:'expo.out'},1.30);
+    tl.to('#v1-mover-l6',{opacity:0,scale:.9,duration:.2,ease:'power2.in'},3.50);
+    tl.to('#v1-mover-x5',{opacity:0,duration:.15},3.75);
+    tl.fromTo('#v1-mover-x7',{opacity:0,scale:1.08},{opacity:1,scale:1,duration:.3,ease:'expo.out'},3.75);
+    tl.fromTo('#v1-mover-cur',{opacity:0,x:938,y:388},{opacity:1,duration:.2},3.75);
+    tl.to('#v1-mover-cur',{x:753,y:225,duration:0.8,ease:'power2.inOut'},3.90);
+    tl.fromTo('#v1-mover-l8',{opacity:0,scale:.2,transformOrigin:'-56% -33%'},{opacity:1,scale:1,duration:.5,ease:'expo.out'},4.80);
+    tl.to('#v1-mover-l8',{opacity:0,scale:.9,duration:.2,ease:'power2.in'},6.80);
+    tl.to('#v1-mover-x7',{opacity:0,duration:.15},7.05);
+    tl.to('#v1-mover-cur',{opacity:0,duration:.15},7.05);
+    tl.to('#v1-mover-h3, #v1-mover-b4, #v1-mover-n1',{opacity:0,filter:'blur(8px)',duration:.18,ease:'power2.in'},7.05);
+    tl.fromTo('#v1-mover-n2',{opacity:0},{opacity:1,duration:.2},7.25);
+    tl.set('#v1-mover-h9',{opacity:1},7.25);
+    tl.fromTo('#v1-mover-h9 .w',{opacity:0,filter:'blur(6px)'},{opacity:1,filter:'blur(0px)',duration:.14,stagger:.07,ease:'power2.out'},7.25);
+    tl.fromTo('#v1-mover-b10',{opacity:0,filter:'blur(6px)'},{opacity:1,filter:'blur(0px)',duration:.25,ease:'power2.out'},7.60);
+    tl.to('#v1-mover-prog',{scaleX:0.400,duration:.6,ease:'power2.inOut'},7.25);
+    tl.fromTo('#v1-mover-x11',{opacity:0,scale:1.08},{opacity:1,scale:1,duration:.3,ease:'expo.out'},7.75);
+    tl.fromTo('#v1-mover-l12',{opacity:0,scale:.2,transformOrigin:'-31% -81%'},{opacity:1,scale:1,duration:.5,ease:'expo.out'},7.75);
+    tl.to('#v1-mover-l12',{opacity:0,scale:.9,duration:.2,ease:'power2.in'},9.55);
+    tl.to('#v1-mover-x11',{opacity:0,duration:.15},9.80);
+    tl.fromTo('#v1-mover-g13',{opacity:0},{opacity:1,duration:.25},9.80);
+    tl.fromTo('#v1-mover-g13 .p1',{opacity:0,y:30},{opacity:1,y:0,x:0,duration:0.45,stagger:0.5,ease:'expo.out'},9.80+0.1);
+    tl.to('#v1-mover-g13',{opacity:0,filter:'blur(8px)',duration:.2},15.20);
+    tl.to('#v1-mover-h9, #v1-mover-b10, #v1-mover-n2',{opacity:0,filter:'blur(8px)',duration:.18,ease:'power2.in'},15.45);
+    tl.fromTo('#v1-mover-n3',{opacity:0},{opacity:1,duration:.2},15.65);
+    tl.set('#v1-mover-h14',{opacity:1},15.65);
+    tl.fromTo('#v1-mover-h14 .w',{opacity:0,filter:'blur(6px)'},{opacity:1,filter:'blur(0px)',duration:.14,stagger:.07,ease:'power2.out'},15.65);
+    tl.fromTo('#v1-mover-b15',{opacity:0,filter:'blur(6px)'},{opacity:1,filter:'blur(0px)',duration:.25,ease:'power2.out'},16.00);
+    tl.to('#v1-mover-prog',{scaleX:0.600,duration:.6,ease:'power2.inOut'},15.65);
+    tl.fromTo('#v1-mover-x16',{opacity:0,scale:1.08},{opacity:1,scale:1,duration:.3,ease:'expo.out'},16.15);
+    tl.fromTo('#v1-mover-cur',{opacity:0,x:2002,y:360},{opacity:1,duration:.2},16.15);
+    tl.to('#v1-mover-cur',{x:1817,y:197,duration:0.7,ease:'power2.inOut'},16.30);
+    tl.to('#v1-mover-cur',{scale:.82,duration:.08},17.12);tl.to('#v1-mover-cur',{scale:1,duration:.12},17.20);
+    tl.to('#v1-mover-x16',{opacity:0,duration:.15},17.42);
+    tl.to('#v1-mover-cur',{opacity:0,duration:.15},17.42);
+    tl.fromTo('#v1-mover-g17',{opacity:0},{opacity:1,duration:.25},17.42);
+    tl.fromTo('#v1-mover-g17 #pm-b1',{opacity:0,scale:1.08},{opacity:1,scale:1,duration:.3,ease:'expo.out'},17.42+.6);
+    tl.to('#v1-mover-g17 #pm-b1',{opacity:0,duration:.15},17.42+3.4);
+    tl.fromTo('#v1-mover-g17 #pm-b2',{opacity:0,scale:1.08},{opacity:1,scale:1,duration:.3,ease:'expo.out'},17.42+3.6);
+    tl.to('#v1-mover-g17',{opacity:0,filter:'blur(8px)',duration:.2},23.82);
+    tl.to('#v1-mover-h14, #v1-mover-b15, #v1-mover-n3',{opacity:0,filter:'blur(8px)',duration:.18,ease:'power2.in'},24.07);
+    tl.fromTo('#v1-mover-n4',{opacity:0},{opacity:1,duration:.2},24.27);
+    tl.set('#v1-mover-h18',{opacity:1},24.27);
+    tl.fromTo('#v1-mover-h18 .w',{opacity:0,filter:'blur(6px)'},{opacity:1,filter:'blur(0px)',duration:.14,stagger:.07,ease:'power2.out'},24.27);
+    tl.fromTo('#v1-mover-b19',{opacity:0,filter:'blur(6px)'},{opacity:1,filter:'blur(0px)',duration:.25,ease:'power2.out'},24.62);
+    tl.to('#v1-mover-prog',{scaleX:0.800,duration:.6,ease:'power2.inOut'},24.27);
+    tl.set('#v1-mover-s20',{x:0.0,y:0.0,scale:0.5811},0);
+    tl.to('#v1-mover-s1',{opacity:0,filter:'blur(6px)',duration:.18,ease:'power2.in'},24.77);
+    tl.fromTo('#v1-mover-s20',{opacity:0,filter:'blur(6px)'},{opacity:1,filter:'blur(0px)',duration:.22,ease:'power2.out'},24.89);
+    tl.set('#v1-mover-u21',{opacity:1},24.89);
+    tl.set('#v1-mover-u2',{opacity:0},24.89);
+    tl.fromTo('#v1-mover-cur',{opacity:0,x:1880,y:416},{opacity:1,duration:.2},25.17);
+    tl.to('#v1-mover-cur',{x:1695,y:253,duration:0.7,ease:'power2.inOut'},25.32);
+    tl.to('#v1-mover-cur',{scale:.82,duration:.08},26.14);tl.to('#v1-mover-cur',{scale:1,duration:.12},26.22);
+    tl.fromTo('#v1-mover-st22',{opacity:0,scale:.3},{opacity:1,scale:1,duration:.45,ease:'back.out(2.2)'},26.24);
+    tl.fromTo('#v1-mover-l23',{opacity:0,scale:.2,transformOrigin:'110% -55%'},{opacity:1,scale:1,duration:.5,ease:'expo.out'},26.44);
+    tl.to('#v1-mover-l23',{opacity:0,scale:.9,duration:.2,ease:'power2.in'},28.24);
+    tl.to('#v1-mover-cur',{opacity:0,duration:.15},28.49);
+    tl.fromTo('#v1-mover-x24',{opacity:0,scale:1.08},{opacity:1,scale:1,duration:.3,ease:'expo.out'},28.49);
+    tl.fromTo('#v1-mover-l25',{opacity:0,scale:.2,transformOrigin:'5% -105%'},{opacity:1,scale:1,duration:.5,ease:'expo.out'},28.49);
+    tl.to('#v1-mover-l25',{opacity:0,scale:.9,duration:.2,ease:'power2.in'},30.49);
+    tl.to('#v1-mover-x24',{opacity:0,duration:.15},30.74);
+    tl.to('#v1-mover-h18, #v1-mover-b19, #v1-mover-n4',{opacity:0,filter:'blur(8px)',duration:.18,ease:'power2.in'},30.74);
+    tl.fromTo('#v1-mover-n5',{opacity:0},{opacity:1,duration:.2},30.94);
+    tl.set('#v1-mover-h26',{opacity:1},30.94);
+    tl.fromTo('#v1-mover-h26 .w',{opacity:0,filter:'blur(6px)'},{opacity:1,filter:'blur(0px)',duration:.14,stagger:.07,ease:'power2.out'},30.94);
+    tl.fromTo('#v1-mover-b27',{opacity:0,filter:'blur(6px)'},{opacity:1,filter:'blur(0px)',duration:.25,ease:'power2.out'},31.29);
+    tl.to('#v1-mover-prog',{scaleX:1.000,duration:.6,ease:'power2.inOut'},30.94);
+    tl.set('#v1-mover-s28',{x:0.0,y:0.0,scale:0.5796},0);
+    tl.to('#v1-mover-s20',{opacity:0,filter:'blur(6px)',duration:.18,ease:'power2.in'},31.44);
+    tl.fromTo('#v1-mover-s28',{opacity:0,filter:'blur(6px)'},{opacity:1,filter:'blur(0px)',duration:.22,ease:'power2.out'},31.56);
+    tl.set('#v1-mover-u29',{opacity:1},31.56);
+    tl.set('#v1-mover-u21',{opacity:0},31.56);
+    tl.fromTo('#v1-mover-l30',{opacity:0,scale:.2,transformOrigin:'-50% -65%'},{opacity:1,scale:1,duration:.5,ease:'expo.out'},31.84);
+    tl.to('#v1-mover-l30',{opacity:0,scale:.9,duration:.2,ease:'power2.in'},34.44);
+    tl.to('#v1-mover-mock',{y:900,opacity:0,duration:.6,ease:'power3.in'},35.14);
+    tl.to('#v1-mover-left',{opacity:0,filter:'blur(8px)',duration:.25},35.14);
+    window.__timelines["v1-mover"] = tl;
+  })();
+  </script>
+</template>

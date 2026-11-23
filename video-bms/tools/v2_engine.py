@@ -42,7 +42,7 @@ CSS = """
 .prog{position:absolute;left:110px;top:950px;width:520px;height:6px;border-radius:3px;background:#E5E7EB;overflow:hidden;}
 .prog i{position:absolute;left:0;top:0;height:6px;width:520px;background:#CE003A;transform-origin:0 0;}
 .w{display:inline-block;}
-.gfx{position:absolute;inset:0;}
+.gfx{position:absolute;left:676px;top:0;width:1244px;height:1080px;overflow:hidden;}
 """
 
 DOTS = '<div class="dots"><i></i><i></i><i></i></div>'
@@ -158,7 +158,7 @@ class Chapter:
         hid, bid = self._id("h"), self._id("b")
         words = "".join(f'<span class="w">{w}</span> ' for w in head.split())
         self.html.append(f'<div class="stepn" id="{self.cid}-n{self.k}" style="opacity:0">Paso {self.k} de {self.total}</div>')
-        self.html.append(f'<div class="head" id="{hid}">{words}</div>')
+        self.html.append(f'<div class="head" data-hold id="{hid}">{words}</div>')
         self.html.append(f'<div class="body" id="{bid}" style="top:{body_top(head)}px">{body}</div>')
         self.js.append(f"tl.fromTo('#{self.cid}-n{self.k}',{{opacity:0}},{{opacity:1,duration:.2}},{t:.2f});")
         self.js.append(f"tl.set('#{hid}',{{opacity:1}},{t:.2f});")
@@ -292,7 +292,7 @@ class Chapter:
         """Full-panel designed graphic (vector) over the right side; js uses {t} for its start."""
         t = self.t if at is None else at
         gid = self._id("g")
-        self.over.append(f'<div class="gfx" id="{gid}" style="opacity:0;z-index:25">{html}</div>')
+        self.over.append(f'<div class="gfx" data-hold id="{gid}" style="opacity:0;z-index:25">{html}</div>')
         self.js.append(f"tl.fromTo('#{gid}',{{opacity:0}},{{opacity:1,duration:.25}},{t:.2f});")
         for line in js:
             self.js.append(line.replace("{t}", f"{t:.2f}").replace("{gid}", gid))
@@ -419,8 +419,8 @@ def title_card(cid, number, title, accent, subtitle):
             f'<div id="{cid}-s" style="position:absolute;left:156px;top:690px;width:1400px;font-size:38px;font-weight:400;color:#4B5563">{subtitle}</div>')
     js = [f"tl.fromTo('#{cid}-bar',{{scaleY:0}},{{scaleY:1,duration:.7,ease:'expo.out'}},0);",
           f"tl.fromTo('#{cid}-s',{{opacity:0,filter:'blur(6px)'}},{{opacity:1,filter:'blur(0px)',duration:.3}},.5);",
-          f"tl.to('#{cid}-t, #{cid}-s, #{cid}-bar',{{opacity:0,filter:'blur(10px)',duration:.25,ease:'power2.in'}},3.3);"]
-    return Card(cid, body, js, 3.6, sfx=[(0, "whoosh.mp3", .57, .5, False)])
+          f"tl.to('#{cid}-t, #{cid}-s, #{cid}-bar',{{opacity:0,filter:'blur(10px)',duration:.25,ease:'power2.in'}},4.2);"]
+    return Card(cid, body, js, 4.5, sfx=[(0, "whoosh.mp3", .57, .5, False)])
 
 
 def end_card(cid, claim, accent, next_title=None):
