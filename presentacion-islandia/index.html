@@ -36,6 +36,8 @@ h1,h2,h3,h4,p,figure{margin:0}
 .scene.live{visibility:visible}
 .media{position:absolute;inset:0;overflow:hidden;will-change:transform,clip-path}
 .media video,.media img.poster{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.scene.live .media img.poster{animation:kb 24s ease-in-out infinite alternate}
+@keyframes kb{from{transform:scale(1.02) translate(0,0)}to{transform:scale(1.14) translate(-2%,-1%)}}
 .grade{position:absolute;inset:0;pointer-events:none}
 .grain{position:absolute;inset:0;pointer-events:none;opacity:.06;mix-blend-mode:overlay;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")}
@@ -60,12 +62,12 @@ h1,h2,h3,h4,p,figure{margin:0}
 #speaker b{color:var(--ink);font-weight:500}
 #speaker i{width:8px;height:8px;border-radius:50%;background:var(--glacier);box-shadow:0 0 0 4px rgba(147,201,221,.18)}
 .credit{position:absolute;left:80px;bottom:34px;font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;color:var(--ink-faint);z-index:3}
-#hint{position:fixed;right:max(12px,env(safe-area-inset-right,0px));bottom:calc(8px + env(safe-area-inset-bottom,0px));z-index:30;font-family:var(--f-mono);font-size:11px;color:rgba(243,240,234,.4);letter-spacing:.08em}
+#hint{transition:opacity 1s;position:fixed;right:max(12px,env(safe-area-inset-right,0px));bottom:calc(8px + env(safe-area-inset-bottom,0px));z-index:30;font-family:var(--f-mono);font-size:11px;color:rgba(243,240,234,.4);letter-spacing:.08em}
 #hint button{all:unset;cursor:pointer;padding:6px 10px;border:1px solid rgba(243,240,234,.25);border-radius:4px;margin-left:6px;color:rgba(243,240,234,.75)}
 #hint button:focus-visible{outline:2px solid var(--glacier);outline-offset:2px}
 
 /* ---------- INTRO ---------- */
-#intro .grade{background:linear-gradient(180deg,rgba(9,13,17,.55) 0%,rgba(9,13,17,.25) 40%,rgba(9,13,17,.85) 100%)}
+#intro .grade{background:linear-gradient(180deg,rgba(9,13,17,.7) 0%,rgba(9,13,17,.45) 40%,rgba(9,13,17,.85) 100%)}
 #intro .center{position:absolute;left:0;right:0;top:250px;text-align:center}
 #intro h1{font-family:var(--f-display);font-weight:400;font-size:150px;line-height:.95;letter-spacing:-.01em;margin:26px 0 30px}
 #intro h1 em{color:var(--glacier)}
@@ -189,7 +191,7 @@ h1,h2,h3,h4,p,figure{margin:0}
 .verdict h4{font-family:var(--f-mono);font-weight:500;font-size:12px;letter-spacing:.26em;text-transform:uppercase;margin-bottom:10px}
 .verdict .a h4{color:var(--aurora)}.verdict .b h4{color:#f0b49a}.verdict .c h4{color:var(--glacier)}
 .verdict p{font-size:18px;line-height:1.55;color:var(--ink-dim);font-weight:300}
-#s3 .thanks{position:absolute;right:80px;bottom:30px;font-family:var(--f-display);font-style:italic;font-size:26px;color:var(--ink-dim)}
+#s3 .thanks{position:absolute;right:80px;top:560px;font-family:var(--f-display);font-style:italic;font-size:26px;color:var(--ink-dim)}
 
 @media (prefers-reduced-motion:reduce){*{transition-duration:.01s!important}}
 </style>
@@ -199,7 +201,7 @@ h1,h2,h3,h4,p,figure{margin:0}
 <div id="frame">
   <!-- ========== INTRO: departing Mexico ========== -->
   <section class="scene live" id="intro">
-    <div class="media"><img class="poster" src="media/bellas.jpg" alt=""><video src="media/mexico.mp4" muted loop playsinline preload="auto"></video></div>
+    <div class="media"><img class="poster" src="media/bellas.jpg" alt=""></div>
     <div class="grade"></div><div class="grain"></div>
     <div class="type">
       <div class="center">
@@ -210,7 +212,7 @@ h1,h2,h3,h4,p,figure{margin:0}
       <div class="coords mono rv">Departure · Mexico City (MEX)<br>19.43° N · 99.13° W</div>
       <div class="press mono rv">Start the journey <span class="k">→</span></div>
     </div>
-    <div class="credit">Iztaccíhuatl and Popocatépetl from a plane · Wikimedia Commons, CC BY-SA 4.0</div>
+    <div class="credit">Palacio de Bellas Artes, Mexico City · Diego Delso, CC BY-SA 4.0</div>
   </section>
 
   <!-- ========== FLIGHT MAP ========== -->
@@ -242,7 +244,7 @@ h1,h2,h3,h4,p,figure{margin:0}
 
   <!-- ========== SLIDE 1: DESTINATION ========== -->
   <section class="scene" id="s1">
-    <div class="media"><img class="poster" src="media/kirkjufell.jpg" alt=""><video src="media/iceland.mp4" muted loop playsinline preload="auto"></video></div>
+    <div class="media"><img class="poster" src="media/iceland.jpg" alt=""><video src="media/iceland.mp4" muted loop playsinline preload="auto"></video></div>
     <div class="grade"></div><div class="grain"></div>
     <div class="type">
       <div class="copy">
@@ -252,8 +254,8 @@ h1,h2,h3,h4,p,figure{margin:0}
         <p class="lead rv">A small Nordic island of glaciers, volcanoes and waterfalls, and one of the highest standards of living in the world.</p>
       </div>
       <div class="tiles">
-        <figure class="tile rv"><img src="media/fire.jpg" alt=""><video src="media/fire.mp4" muted loop playsinline preload="auto"></video><span>Fire · Volcanoes</span></figure>
-        <figure class="tile rv"><img src="media/ice.jpg" alt=""><video src="media/ice.mp4" muted loop playsinline preload="auto"></video><span>Ice · Waterfalls</span></figure>
+        <figure class="tile rv"><img src="media/reykjavik.jpg" alt="Reykjavík"><span>Reykjavík · Capital</span></figure>
+        <figure class="tile rv"><img src="media/aurora.jpg" alt="Northern lights"><span>Northern lights</span></figure>
       </div>
       <article class="pass rv" aria-label="Iceland facts">
         <div class="hd"><span class="mono">Boarding pass</span><span class="mono">Gate 2 · Unit 2</span></div>
@@ -275,12 +277,12 @@ h1,h2,h3,h4,p,figure{margin:0}
         </div>
       </article>
     </div>
-    <div class="credit">Brúarfoss by drone (Polfux, CC BY-SA 4.0) · Litli-Hrútur eruption (Giles Laurent, CC BY-SA 4.0) · Skógafoss (A. Grebenkov, CC BY 3.0)</div>
+    <div class="credit">Skógafoss video (A. Grebenkov, CC BY 3.0) · Photos: Wikimedia Commons (CC BY-SA 4.0; Mývatn by Giles Laurent)</div>
   </section>
 
   <!-- ========== SLIDE 2: COMPARISON ========== -->
   <section class="scene" id="s2">
-    <div class="media"><img class="poster" src="media/reykjavik.jpg" alt=""><video src="media/city.mp4" muted loop playsinline preload="auto"></video></div>
+    <div class="media"><img class="poster" src="media/reykjavik.jpg" alt=""></div>
     <div class="grade"></div>
     <div class="type">
       <div class="board rv">
@@ -302,7 +304,7 @@ h1,h2,h3,h4,p,figure{margin:0}
 
   <!-- ========== SLIDE 3: RECOMMENDATION ========== -->
   <section class="scene" id="s3">
-    <div class="media"><img class="poster" src="media/aurora.jpg" alt=""><video src="media/aurora.mp4" muted loop playsinline preload="auto"></video></div>
+    <div class="media"><img class="poster" src="media/aurora.jpg" alt=""></div>
     <div class="grade"></div><div class="grain"></div>
     <div class="type">
       <div class="copy">
@@ -326,7 +328,7 @@ h1,h2,h3,h4,p,figure{margin:0}
       </div>
     </div>
     <div class="thanks rv">Takk fyrir · Thank you</div>
-    <div class="credit">Aurora timelapse, Iceland · Wikimedia Commons (G. Edward Johnson, CC BY 4.0)</div>
+    <div class="credit">Northern lights over Mývatn · Giles Laurent, CC BY-SA 4.0</div>
   </section>
 
   <!-- chrome -->
@@ -516,7 +518,7 @@ let tx=null;addEventListener('touchstart',e=>tx=e.touches[0].clientX,{passive:tr
 addEventListener('touchend',e=>{if(tx===null)return;const dx=e.changedTouches[0].clientX-tx;if(Math.abs(dx)>40)dx<0?next():prev();tx=null});
 
 /* opening */
-setChrome('intro');play('intro');
+setChrome('intro');play('intro');setTimeout(()=>{const h=document.getElementById('hint');h.style.opacity=.25},7000);
 if(G)enter('intro');
 window.__deck={next,prev,state:()=>({cur:order[cur],build,busy})};
 })();
