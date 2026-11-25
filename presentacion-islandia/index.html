@@ -95,35 +95,31 @@ h1,h2,h3,h4,p,figure{margin:0}
 #map .readout .n small{font-size:44px;color:var(--ink-dim);margin-left:10px}
 #map .readout .mono{color:var(--glacier);margin-bottom:8px}
 
-/* ---------- SLIDE 1 ---------- */
-#s1 .grade{background:linear-gradient(90deg,rgba(9,13,17,.86) 0%,rgba(9,13,17,.55) 45%,rgba(9,13,17,.1) 75%),linear-gradient(0deg,rgba(9,13,17,.6),transparent 35%)}
-#s1 .copy{position:absolute;left:80px;top:150px;width:720px}
-#s1 h2{font-family:var(--f-display);font-weight:400;font-size:230px;line-height:.82;letter-spacing:-.02em;margin:22px 0 18px}
-#s1 .tag{font-family:var(--f-display);font-style:italic;font-size:42px;color:var(--glacier)}
-#s1 .lead{font-size:21px;line-height:1.65;font-weight:300;color:var(--ink-dim);max-width:560px;margin-top:24px}
-.tiles{position:absolute;left:80px;bottom:96px;display:flex;gap:18px}
-.tile{position:relative;width:250px;height:150px;border-radius:6px;overflow:hidden;box-shadow:0 18px 40px rgba(0,0,0,.45)}
-.tile video,.tile img{width:100%;height:100%;object-fit:cover;display:block}
-.tile span{position:absolute;left:12px;bottom:10px;font-family:var(--f-mono);font-size:11px;letter-spacing:.24em;text-transform:uppercase;text-shadow:0 1px 6px rgba(0,0,0,.7)}
-/* boarding pass */
-.pass{position:absolute;right:80px;top:170px;width:470px;background:#f3f0ea;color:#14191e;border-radius:14px;box-shadow:0 40px 80px rgba(0,0,0,.5);overflow:hidden}
-.pass .hd{display:flex;justify-content:space-between;align-items:center;padding:18px 26px;background:#14191e;color:#f3f0ea}
-.pass .hd .mono{font-size:11px;letter-spacing:.26em}
-.pass .route{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:24px 26px 10px}
-.pass .code{font-family:var(--f-display);font-size:74px;line-height:1}
-.pass .city{font-family:var(--f-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#5b6670;margin-top:6px}
-.pass .route .r{text-align:right}
-.pass .route svg{width:70px;height:24px}
-.pass dl{display:grid;grid-template-columns:1fr 1fr;gap:18px 20px;margin:0;padding:16px 26px 22px}
-.pass dt{font-family:var(--f-mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#7a848d}
-.pass dd{margin:4px 0 0;font-size:20px;font-weight:600;font-variant-numeric:tabular-nums}
-.pass .perf{position:relative;border-top:2px dashed #c9c4ba;margin:0 18px}
-.pass .perf::before,.pass .perf::after{content:"";position:absolute;top:-13px;width:24px;height:24px;border-radius:50%;background:#0d1318}
-.pass .perf::before{left:-31px}.pass .perf::after{right:-31px}
-.pass .stub{display:flex;justify-content:space-between;align-items:center;padding:16px 26px 20px}
-.pass .stub .mono{font-size:11px;letter-spacing:.2em;color:#5b6670}
-.pass .stub .pax{font-size:15px;font-weight:600}
-.pass .bars{height:38px;width:150px;background:repeating-linear-gradient(90deg,#14191e 0 2px,transparent 2px 4px,#14191e 4px 7px,transparent 7px 9px,#14191e 9px 10px,transparent 10px 13px)}
+/* ---------- SLIDE 1: boarding pass ---------- */
+#s1 .grade{background:linear-gradient(90deg,rgba(9,13,17,.82) 0%,rgba(9,13,17,.55) 55%,rgba(9,13,17,.25) 100%)}
+#s1 .eyebrow{position:absolute;left:80px;top:118px}
+.bp{position:absolute;left:80px;top:160px;width:1060px;background:#f3f0ea;color:#14191e;border-radius:18px;box-shadow:0 40px 90px rgba(0,0,0,.55);overflow:hidden}
+.bp .hd{display:flex;justify-content:space-between;align-items:center;padding:20px 40px;background:#14191e;color:#f3f0ea}
+.bp .hd .mono{font-size:13px;letter-spacing:.3em}
+.bp .body{padding:28px 40px 26px}
+.bp .route{display:grid;grid-template-columns:1fr 120px 1fr;align-items:end}
+.bp .lbl{font-family:var(--f-mono);font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:#7a848d}
+.bp .place{font-family:var(--f-display);font-size:96px;line-height:.95;margin-top:6px}
+.bp .place small{display:block;font-family:var(--f-mono);font-size:13px;letter-spacing:.2em;color:#5b6670;margin-top:8px}
+.bp .route svg{width:110px;height:40px;margin-bottom:46px}
+.bp h3{font-family:var(--f-display);font-weight:400;font-style:italic;font-size:52px;line-height:1;color:#1F72A8;margin:30px 0 12px}
+.bp .sell{font-size:24px;line-height:1.5;max-width:900px}
+.bp .perf{position:relative;border-top:2px dashed #c9c4ba;margin:0 22px}
+.bp .perf::before,.bp .perf::after{content:"";position:absolute;top:-15px;width:28px;height:28px;border-radius:50%;background:#0d1318}
+.bp .perf::before{left:-37px}.bp .perf::after{right:-37px}
+.bp .stub{display:flex;justify-content:space-between;align-items:center;padding:20px 40px 24px}
+.bp .stub .lbl{margin-bottom:6px}
+.bp .pax{font-size:19px;font-weight:600}
+.bp .bars{height:44px;width:180px;background:repeating-linear-gradient(90deg,#14191e 0 2px,transparent 2px 4px,#14191e 4px 7px,transparent 7px 9px,#14191e 9px 10px,transparent 10px 13px)}
+.tiles{position:absolute;right:80px;top:160px;display:flex;flex-direction:column;gap:20px}
+.tile{position:relative;width:300px;height:190px;border-radius:8px;overflow:hidden;box-shadow:0 18px 40px rgba(0,0,0,.45)}
+.tile img{width:100%;height:100%;object-fit:cover;display:block}
+.tile span{position:absolute;left:14px;bottom:12px;font-family:var(--f-mono);font-size:11px;letter-spacing:.24em;text-transform:uppercase;text-shadow:0 1px 6px rgba(0,0,0,.8)}
 
 /* ---------- SLIDE 2 ---------- */
 #s2 .grade{background:rgba(9,13,17,.55)}
@@ -135,14 +131,14 @@ h1,h2,h3,h4,p,figure{margin:0}
 .legend{display:flex;gap:24px;font-family:var(--f-mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase}
 .legend span{display:flex;align-items:center;gap:10px}
 .legend i{width:22px;height:10px;border-radius:2px}
-.rows{display:grid;grid-template-columns:150px 250px 1fr 140px;column-gap:28px}
+.rows{display:grid;grid-template-columns:160px 260px 1fr 250px;column-gap:28px}
 .colh{font-family:var(--f-mono);font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--ink-faint);padding:12px 0 4px}
 .grp{display:contents}
 .who,.cat,.plot,.ratio{border-top:1px solid var(--line);transition:opacity .6s ease}
-.who{grid-row:span 2;padding-top:16px}
+.who{padding-top:18px}
 .who b{display:block;font-size:17px;font-weight:600}
 .who span{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint)}
-.cat,.plot,.ratio{height:78px;display:flex;flex-direction:column;justify-content:center}
+.cat,.plot,.ratio{height:94px;display:flex;flex-direction:column;justify-content:center}
 .sub2{border-top-style:dashed;border-top-color:rgba(243,240,234,.08)}
 .cat b{font-size:19px;font-weight:600}
 .cat span{font-size:13px;color:var(--ink-dim);margin-top:3px}
@@ -151,48 +147,36 @@ h1,h2,h3,h4,p,figure{margin:0}
 .bar.mx{background:var(--mx)}.bar.is{background:var(--is)}
 .bv{font-family:var(--f-mono);font-size:14px;color:var(--ink);font-variant-numeric:tabular-nums;white-space:nowrap}
 .ratio{align-items:flex-end;text-align:right}
-.ratio b{font-family:var(--f-display);font-weight:400;font-size:40px;line-height:1}
-.ratio span{font-family:var(--f-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);margin-top:4px}
+.ratio b{display:flex;align-items:center;gap:8px;font-family:var(--f-mono);font-weight:500;font-size:13px;letter-spacing:.2em;text-transform:uppercase}
+.ratio b i{width:10px;height:10px;border-radius:50%}
+.ratio span{font-family:var(--f-display);font-size:26px;line-height:1.1;color:var(--ink);margin-top:6px}
 .scale{position:relative;height:46px;margin-right:40px}
 .scale .ln{position:absolute;left:0;right:0;top:22px;height:2px;background:linear-gradient(90deg,var(--aurora),rgba(243,240,234,.25) 50%,var(--mx))}
 .scale .ends{position:absolute;left:0;right:0;top:30px;display:flex;justify-content:space-between;font-family:var(--f-mono);font-size:10px;letter-spacing:.12em;color:var(--ink-faint)}
 .mk{position:absolute;top:15px;left:0;width:16px;height:16px;border-radius:50%;border:3px solid #0b1015;transform:translateX(-50%)}
 .mk.mx{background:var(--mx)}.mk.is{background:var(--is)}
 .mk em{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);font-style:normal;font-family:var(--f-mono);font-size:12px;white-space:nowrap;color:var(--ink)}
-.rows.focus .dim{opacity:.18}
+.rows.focus .dim,.reasons.focus .dim{opacity:.18!important}
 .board .ft{display:flex;justify-content:space-between;align-items:center;margin-top:12px;padding-top:14px;border-top:1px solid var(--line)}
 .board .ft .k{font-size:18px}
 .board .ft .k b{color:var(--glacier);font-weight:600}
 .board .ft .src{font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;color:var(--ink-faint)}
 #tip{position:absolute;z-index:40;pointer-events:none;background:#f3f0ea;color:#14191e;font-size:13px;font-weight:600;padding:7px 11px;border-radius:5px;opacity:0;white-space:nowrap}
 
-/* ---------- SLIDE 3 ---------- */
-#s3 .grade{background:linear-gradient(180deg,rgba(9,13,17,.2) 0%,rgba(9,13,17,.45) 50%,rgba(9,13,17,.9) 100%),linear-gradient(90deg,rgba(9,13,17,.7),transparent 60%)}
-#s3 .copy{position:absolute;left:80px;top:140px;width:800px}
+/* ---------- SLIDE 3: recommendation ---------- */
+#s3 .grade{background:linear-gradient(90deg,rgba(9,13,17,.85) 0%,rgba(9,13,17,.6) 45%,rgba(9,13,17,.35) 100%)}
+#s3 .copy{position:absolute;left:80px;top:150px;width:560px}
 #s3 .eyebrow{color:var(--aurora)}
-#s3 h2{font-family:var(--f-display);font-weight:400;font-size:132px;line-height:.92;letter-spacing:-.015em;margin:22px 0 26px}
+#s3 h2{font-family:var(--f-display);font-weight:400;font-size:118px;line-height:.95;letter-spacing:-.015em;margin:22px 0 26px}
 #s3 h2 em{color:var(--aurora)}
-#s3 .lead{font-size:21px;line-height:1.65;font-weight:300;color:var(--ink-dim);max-width:640px}
-.gauge{position:absolute;right:80px;top:140px;width:520px;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:26px 30px 22px}
-.gauge .mono{color:var(--aurora);font-size:11px;letter-spacing:.24em}
-.gauge h3{font-family:var(--f-display);font-weight:400;font-size:30px;line-height:1.15;margin:10px 0 16px}
-.gauge .pair{display:flex;justify-content:space-around}
-.dial{position:relative;text-align:center}
-.dial svg{width:180px;height:180px;transform:rotate(-90deg)}
-.dial circle{fill:none;stroke-width:12}
-.dial .tr{stroke:rgba(243,240,234,.1)}
-.dial .fg{stroke-linecap:round;stroke-dasharray:452.4;stroke-dashoffset:452.4}
-.dial .v{position:absolute;left:0;right:0;top:0;height:180px;display:flex;align-items:center;justify-content:center;font-family:var(--f-display);font-size:52px;font-variant-numeric:tabular-nums}
-.dial .l{font-family:var(--f-mono);font-size:12px;letter-spacing:.22em;text-transform:uppercase;margin-top:8px;display:flex;align-items:center;justify-content:center;gap:8px}
-.dial .l i{width:16px;height:8px;border-radius:2px}
-.gauge .note{font-size:12.5px;line-height:1.5;color:var(--ink-faint);margin-top:14px}
-.verdict{position:absolute;left:80px;right:80px;bottom:96px;display:grid;grid-template-columns:repeat(3,1fr);gap:48px}
-.verdict div{border-top:1px solid rgba(243,240,234,.35);padding-top:16px}
-.verdict h4{font-family:var(--f-mono);font-weight:500;font-size:12px;letter-spacing:.26em;text-transform:uppercase;margin-bottom:10px}
-.verdict .a h4{color:var(--aurora)}.verdict .b h4{color:#f0b49a}.verdict .c h4{color:var(--glacier)}
-.verdict p{font-size:18px;line-height:1.55;color:var(--ink-dim);font-weight:300}
-#s3 .thanks{position:absolute;right:80px;top:560px;font-family:var(--f-display);font-style:italic;font-size:26px;color:var(--ink-dim)}
-
+#s3 .lead{font-size:19px;line-height:1.6;font-weight:300;color:var(--ink-dim)}
+.reasons{position:absolute;right:80px;top:140px;width:820px;display:flex;flex-direction:column;gap:18px}
+.reason{display:grid;grid-template-columns:84px 1fr;gap:22px;align-items:start;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:24px 30px;transition:opacity .6s ease}
+.reason .n{font-family:var(--f-display);font-size:78px;line-height:.85;color:var(--aurora)}
+.reason .who{border:0;padding:0;font-family:var(--f-mono);font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:8px}
+.reason p{font-size:21px;line-height:1.5;color:var(--ink)}
+.reason p b{color:var(--aurora);font-weight:600}
+#s3 .thanks{position:absolute;left:80px;bottom:90px;font-family:var(--f-display);font-style:italic;font-size:30px;color:var(--ink-dim)}
 
 /* ---------- speaker notes drawer (press N) ---------- */
 #notes{position:absolute;left:0;right:0;bottom:0;z-index:35;background:rgba(9,13,17,.95);border-top:1px solid var(--line);padding:22px 80px 26px;transform:translateY(102%);transition:transform .6s cubic-bezier(.2,.7,.2,1)}
@@ -256,40 +240,33 @@ h1,h2,h3,h4,p,figure{margin:0}
     </div>
   </section>
 
-  <!-- ========== SLIDE 1: DESTINATION ========== -->
+  <!-- ========== SLIDE 1: BOARDING PASS ========== -->
   <section class="scene" id="s1">
     <div class="media"><img class="poster" src="media/iceland.jpg" alt=""><video src="media/iceland.mp4" muted loop playsinline preload="auto"></video></div>
     <div class="grade"></div><div class="grain"></div>
     <div class="type">
-      <div class="copy">
-        <div class="eyebrow rv">Now arriving · Our destination</div>
-        <h2 class="split-me">Iceland</h2>
-        <div class="tag rv">The land of fire and ice</div>
-        <p class="lead rv">A small Nordic island of glaciers, volcanoes and waterfalls, and one of the highest standards of living in the world.</p>
-      </div>
+      <div class="eyebrow rv">Move-Abroad Pitch</div>
+      <article class="bp rv" aria-label="Boarding pass">
+        <div class="hd"><span class="mono">Boarding pass · One way</span><span class="mono">English VI · Unit 2</span></div>
+        <div class="body">
+          <div class="route">
+            <div><div class="lbl">From</div><div class="place">Mexico<small>MEX</small></div></div>
+            <svg viewBox="0 0 110 40"><path d="M4 20h88" stroke="#14191e" stroke-width="2" stroke-dasharray="4 6"/><path d="M106 20l-14-8v16z" fill="#C2502F"/></svg>
+            <div><div class="lbl">To</div><div class="place">Iceland<small>KEF · Reykjavík</small></div></div>
+          </div>
+          <h3>Why should we live there?</h3>
+          <p class="sell">It is a lot safer than Mexico, salaries are much higher, and it has the best nature in Europe: volcanoes, glaciers and the northern lights.</p>
+        </div>
+        <div class="perf"></div>
+        <div class="stub">
+          <div><div class="lbl">Passengers</div><div class="pax">Areli Olvera · Elizabeth Tirado · Juan Pablo Morales</div></div>
+          <div class="bars" aria-hidden="true"></div>
+        </div>
+      </article>
       <div class="tiles">
         <figure class="tile rv"><img src="media/reykjavik.jpg" alt="Reykjavík"><span>Reykjavík · Capital</span></figure>
         <figure class="tile rv"><img src="media/aurora.jpg" alt="Northern lights"><span>Northern lights</span></figure>
       </div>
-      <article class="pass rv" aria-label="Iceland facts">
-        <div class="hd"><span class="mono">Boarding pass</span><span class="mono">Gate 2 · Unit 2</span></div>
-        <div class="route">
-          <div><div class="code">MEX</div><div class="city">Mexico City</div></div>
-          <svg viewBox="0 0 70 24"><path d="M2 12h56" stroke="#14191e" stroke-width="1.5" stroke-dasharray="3 4"/><path d="M68 12l-10-6v12z" fill="#14191e"/></svg>
-          <div class="r"><div class="code">KEF</div><div class="city">Reykjavík</div></div>
-        </div>
-        <dl>
-          <div><dt>Capital</dt><dd>Reykjavík</dd></div>
-          <div><dt>Population</dt><dd>≈ <span class="count" data-to="390000">390,000</span></dd></div>
-          <div><dt>Currency</dt><dd>Króna (ISK)</dd></div>
-          <div><dt>Languages</dt><dd>Icelandic, English</dd></div>
-        </dl>
-        <div class="perf"></div>
-        <div class="stub">
-          <div><div class="mono">Passengers</div><div class="pax">Areli · Elizabeth · Juan Pablo</div></div>
-          <div class="bars" aria-hidden="true"></div>
-        </div>
-      </article>
     </div>
     <div class="credit">Skógafoss video (A. Grebenkov, CC BY 3.0) · Photos: Wikimedia Commons (CC BY-SA 4.0; Mývatn by Giles Laurent)</div>
   </section>
@@ -301,15 +278,14 @@ h1,h2,h3,h4,p,figure{margin:0}
     <div class="type">
       <div class="board rv">
         <div class="hd">
-          <div><h2>Mexico <em>vs</em> Iceland: the cost of living</h2><div class="sub">Average monthly costs in US dollars · approximate values, 2025</div></div>
+          <div><h2>The <em>numbers</em></h2><div class="sub">Main difference: Mexico is cheaper than Iceland, but salaries in Iceland are almost 7 times higher</div></div>
           <div class="legend"><span><i style="background:var(--mx)"></i>Mexico</span><span><i style="background:var(--is)"></i>Iceland</span></div>
         </div>
         <div class="rows" id="rows">
-          <div class="colh">Speaker</div><div class="colh">Category</div><div class="colh">Comparison</div><div class="colh" style="text-align:right">Iceland vs Mexico</div>
+          <div class="colh">Speaker</div><div class="colh">Topic</div><div class="colh">Mexico vs Iceland</div><div class="colh" style="text-align:right">Who wins?</div>
         </div>
         <div class="ft">
-          <div class="k">Key insight: prices are <b>about 3× higher</b> in Iceland, but salaries are <b>almost 7× higher</b>.</div>
-          <div class="src">Numbeo Cost of Living 2025 · Global Peace Index 2025 (163 countries)</div>
+          <div class="src">Prices in US dollars, approximate (2025). Sources: Numbeo Cost of Living 2025 · Global Peace Index 2025 (163 countries)</div>
         </div>
       </div>
     </div>
@@ -323,25 +299,16 @@ h1,h2,h3,h4,p,figure{margin:0}
     <div class="type">
       <div class="copy">
         <div class="eyebrow rv">Our recommendation</div>
-        <h2 class="split-me">Move to <em>Iceland</em>, with a plan.</h2>
-        <p class="lead rv">Iceland is more expensive than Mexico, but salaries are much higher, so people can afford a better standard of living. It is also the safest country in the world.</p>
+        <h2 class="split-me">Move there: <em>Iceland!</em></h2>
+        <p class="lead rv">Three reasons, one from each of us.</p>
       </div>
-      <div class="gauge rv">
-        <div class="mono">The most important difference</div>
-        <h3>How much of the average salary goes to rent?</h3>
-        <div class="pair">
-          <div class="dial"><svg viewBox="0 0 180 180"><circle class="tr" cx="90" cy="90" r="72"/><circle class="fg" data-p="86" cx="90" cy="90" r="72" style="stroke:var(--mx)"/></svg><div class="v"><span class="pc" data-to="86">86</span>%</div><div class="l"><i style="background:var(--mx)"></i>Mexico</div></div>
-          <div class="dial"><svg viewBox="0 0 180 180"><circle class="tr" cx="90" cy="90" r="72"/><circle class="fg" data-p="44" cx="90" cy="90" r="72" style="stroke:var(--is)"/></svg><div class="v"><span class="pc" data-to="44">44</span>%</div><div class="l"><i style="background:var(--is)"></i>Iceland</div></div>
-        </div>
-        <p class="note">1-bedroom rent in the city centre ÷ average monthly salary: $600 ÷ $700 in Mexico; $2,100 ÷ $4,800 in Iceland.</p>
-      </div>
-      <div class="verdict">
-        <div class="a rv"><h4>Why yes</h4><p>A much higher income, the best safety in the world, free public healthcare and incredible nature.</p></div>
-        <div class="b rv"><h4>Be careful</h4><p>Basic things cost about three times more, and winters are long, dark and a lot colder than in Mexico.</p></div>
-        <div class="c rv"><h4>Best for</h4><p>People with a job offer and savings for the first months, who love nature more than sunny beaches.</p></div>
+      <div class="reasons" id="reasons">
+        <div class="reason g0 rv"><div class="n">1</div><div><div class="who">Areli Olvera</div><p><b>The main reason is housing:</b> rent is more expensive, but people can afford it because it uses only 44% of a salary in Iceland (86% in Mexico).</p></div></div>
+        <div class="reason g1 rv"><div class="n">2</div><div><div class="who">Elizabeth Tirado</div><p>Iceland is <b>a lot safer</b> than Mexico: it is number 1 in the world, and Mexico is number 135.</p></div></div>
+        <div class="reason g2 rv"><div class="n">3</div><div><div class="who">Juan Pablo Morales</div><p><b>The biggest advantage</b> is the salary (almost 7 times higher). <b>The biggest problem</b> is the long, cold and dark winter.</p></div></div>
       </div>
     </div>
-    <div class="thanks rv">Takk fyrir · Thank you</div>
+    <div class="thanks rv">Takk fyrir · Thank you!</div>
     <div class="credit">Northern lights over Mývatn · Giles Laurent, CC BY-SA 4.0</div>
   </section>
 
@@ -349,8 +316,8 @@ h1,h2,h3,h4,p,figure{margin:0}
   <div id="route" aria-hidden="true">
     <div class="end">MEX<small>Mexico</small></div>
     <div class="track"><div class="done" id="done"></div>
-      <div class="stop" style="left:16%"><span>Destination</span></div>
-      <div class="stop" style="left:50%"><span>Comparison</span></div>
+      <div class="stop" style="left:16%"><span>Boarding pass</span></div>
+      <div class="stop" style="left:50%"><span>The numbers</span></div>
       <div class="stop" style="left:84%"><span>Recommendation</span></div>
       <svg class="jet" id="jet" viewBox="-12 -12 24 24"><path d="M10 0 L-6 -7 L-3 0 L-6 7 Z" fill="#f3f0ea"/></svg>
     </div>
@@ -386,19 +353,18 @@ $$('.split-me').forEach(h=>{
 /* comparison data */
 const groups=[
  {who:"Areli",topic:"Housing & food",rows:[
-  {cat:"Housing",m:"Rent, 1-bedroom flat (city centre)",mx:600,is:2100,r:"3.5×",rs:"more expensive"},
-  {cat:"Food",m:"Cheap meal in a restaurant",mx:10,is:28,r:"2.8×",rs:"more expensive"}]},
+  {cat:"Housing",m:"Monthly rent, 1-bedroom (city centre)",mx:600,is:2100,f:v=>"$"+v.toLocaleString("en-US")+" / month",w:"mx",r:"much cheaper than Iceland"},
+  {cat:"Food and shopping",m:"One meal in a cheap restaurant",mx:10,is:28,f:v=>"$"+v+" / meal",w:"mx",r:"cheaper than Iceland"}]},
  {who:"Elizabeth",topic:"Transport & safety",rows:[
-  {cat:"Transport",m:"Monthly transport pass",mx:25,is:90,r:"3.6×",rs:"more expensive"},
-  {cat:"Safety",m:"Global Peace Index rank (1 = safest)",mx:135,is:1,rank:true,r:"#1",rs:"safest country"}]},
- {who:"Juan Pablo",topic:"Salary & leisure",rows:[
-  {cat:"Salary",m:"Average monthly salary, after tax",mx:700,is:4800,r:"6.9×",rs:"higher income"},
-  {cat:"Leisure",m:"One cinema ticket",mx:5,is:17,r:"3.4×",rs:"more expensive"}]}];
+  {cat:"Transport",m:"Monthly transport pass",mx:25,is:90,f:v=>"$"+v+" / month",w:"mx",r:"a lot cheaper than Iceland"},
+  {cat:"Safety and health",m:"Global Peace Index rank (1 = safest)",mx:135,is:1,rank:true,w:"is",r:"the safest country"}]},
+ {who:"Juan Pablo",topic:"Jobs & salary",rows:[
+  {cat:"Jobs and salary",m:"Average monthly income, after tax",mx:700,is:4800,f:v=>"$"+v.toLocaleString("en-US")+" / month",w:"is",r:"much higher than Mexico"}]}];
 const money=v=>'$'+Math.round(v).toLocaleString('en-US');
 const rowsEl=$('#rows');
 groups.forEach((g,gi)=>{
   const add=(h)=>rowsEl.insertAdjacentHTML('beforeend',h);
-  add(`<div class="who g${gi}"><b>${g.who}</b><span>${g.topic}</span></div>`);
+  add(`<div class="who g${gi}" style="grid-row:span ${g.rows.length}"><b>${g.who}</b><span>${g.topic}</span></div>`);
   g.rows.forEach((r,k)=>{const s=k?' sub2':'';
     add(`<div class="cat g${gi}${s}"><b>${r.cat}</b><span>${r.m}</span></div>`);
     if(r.rank){add(`<div class="plot g${gi}${s}"><div class="scale"><div class="ln"></div>
@@ -407,9 +373,9 @@ groups.forEach((g,gi)=>{
       <div class="ends"><span>#1 safest</span><span>#163 least safe</span></div></div></div>`)}
     else{const max=Math.max(r.mx,r.is);
       add(`<div class="plot g${gi}${s}">
-       <div class="brow hit" data-tip="Mexico · ${r.cat}: ${money(r.mx)}"><div class="bar mx" data-w="${r.mx/max*86}"></div><span class="bv" data-to="${r.mx}">$0</span></div>
-       <div class="brow hit" data-tip="Iceland · ${r.cat}: ${money(r.is)}"><div class="bar is" data-w="${r.is/max*86}"></div><span class="bv" data-to="${r.is}">$0</span></div></div>`)}
-    add(`<div class="ratio g${gi}${s}"><b>${r.r}</b><span>${r.rs}</span></div>`);
+       <div class="brow hit" data-tip="Mexico · ${r.cat}: ${r.f(r.mx)}"><div class="bar mx" data-w="${r.mx/max*86}"></div><span class="bv" data-to="${r.mx}" data-unit="${r.f(1).replace(/^\$1/,"")}">$0</span></div>
+       <div class="brow hit" data-tip="Iceland · ${r.cat}: ${r.f(r.is)}"><div class="bar is" data-w="${r.is/max*86}"></div><span class="bv" data-to="${r.is}" data-unit="${r.f(1).replace(/^\$1/,"")}">$0</span></div></div>`)}
+    add(`<div class="ratio g${gi}${s}"><b><i style="background:var(--${r.w})"></i>${r.w==="mx"?"Mexico":"Iceland"}</b><span>${r.r}</span></div>`);
   });
 });
 const tip=$('#tip');
@@ -420,7 +386,7 @@ $$('.hit').forEach(h=>{
 
 /* ---------- presentation engine ---------- */
 const order=['intro','s1','s2','s3'];
-const speakers={intro:'Areli',s1:'Areli',s2:['Areli','Elizabeth','Juan Pablo'],s3:'Juan Pablo'};
+const speakers={intro:'Areli',s1:'Areli',s2:['Areli · Elizabeth · Juan Pablo','Areli','Elizabeth','Juan Pablo'],s3:['Juan Pablo','Areli','Elizabeth','Juan Pablo']};
 const routePos={intro:0,s1:16,s2:50,s3:84};
 let cur=0,build=0,busy=false;
 const G=window.gsap;
@@ -434,7 +400,7 @@ function setChrome(id){
   if(G){G.to('#route',{opacity:id==='intro'?0:1,duration:.8});G.to('#done',{width:p+'%',duration:2.2,ease:'power2.inOut'});G.to('#jet',{left:p+'%',duration:2.2,ease:'power2.inOut'});}
   $$('#route .stop').forEach((s,k)=>s.classList.toggle('on',(k+1)<=order.indexOf(id)));
   setTimeout(()=>typeof updateNotes==='function'&&updateNotes(),0);
-  const sp=speakers[id];$('#spk').textContent=Array.isArray(sp)?(build?sp[build-1]:sp.join(' · ')):sp;
+  const sp=speakers[id];$('#spk').textContent=Array.isArray(sp)?sp[build]:sp;
 }
 function enter(id){
   const sc=$('#'+id),tl=G.timeline();
@@ -445,13 +411,9 @@ function enter(id){
   }
   if(id==='s2'){
     $$('.bar',sc).forEach((b,i)=>tl.fromTo(b,{width:0},{width:b.dataset.w+'%',duration:1.4,ease:'power3.out'},.6+Math.floor(i/2)*.12));
-    $$('.bv',sc).forEach((b,i)=>{const o={v:0};tl.to(o,{v:+b.dataset.to,duration:1.4,ease:'power3.out',onUpdate:()=>b.textContent=money(o.v)},.6+Math.floor(i/2)*.12)});
+    $$('.bv',sc).forEach((b,i)=>{const o={v:0};tl.to(o,{v:+b.dataset.to,duration:1.4,ease:'power3.out',onUpdate:()=>b.textContent=money(o.v)+(b.dataset.unit||'')},.6+Math.floor(i/2)*.12)});
     $$('.mk',sc).forEach(m=>tl.fromTo(m,{left:'50%',opacity:0},{left:m.dataset.x+'%',opacity:1,duration:1.6,ease:'power3.out'},1));
-    tl.fromTo($$('.ratio b',sc),{opacity:0,scale:.7},{opacity:1,scale:1,duration:.6,ease:'back.out(2)',stagger:.1},1.4);
-  }
-  if(id==='s3'){
-    $$('.dial .fg',sc).forEach(c=>tl.fromTo(c,{strokeDashoffset:452.4},{strokeDashoffset:452.4*(1-c.dataset.p/100),duration:2,ease:'power3.inOut'},.8));
-    $$('.pc',sc).forEach(c=>{const o={v:0};tl.to(o,{v:+c.dataset.to,duration:2,ease:'power3.inOut',onUpdate:()=>c.textContent=Math.round(o.v)},.8)});
+    tl.fromTo($$('.ratio',sc),{opacity:0,x:20},{opacity:1,x:0,duration:.7,ease:'power3.out',stagger:.1},1.4);
   }
   return tl;
 }
@@ -504,28 +466,30 @@ function transition(from,to,back){
   tl.add(()=>G.set(mA,{clearProps:'transform'}));
 }
 
+const BOX={s2:'#rows',s3:'#reasons'};
 function setBuild(n){
-  build=n;const rows=$('#rows');
-  rows.classList.toggle('focus',n>0);
-  [0,1,2].forEach(g=>$$('.g'+g,rows).forEach(el=>el.classList.toggle('dim',n>0&&g!==n-1)));
-  setChrome('s2');
+  build=n;const id=order[cur],box=BOX[id];
+  if(box){const el=$(box);el.classList.toggle('focus',n>0);
+    [0,1,2].forEach(g=>$$('.g'+g,el).forEach(x=>x.classList.toggle('dim',n>0&&g!==n-1)));}
+  setChrome(id);
 }
+function clearBuild(id){const el=$(BOX[id]);if(!el)return;el.classList.remove('focus');$$('.dim',el).forEach(x=>x.classList.remove('dim'))}
 function next(){
   if(busy||!G)return;
   if(t0===null)t0=Date.now();
   const id=order[cur];
-  if(id==='s2'&&build<3){setBuild(build+1);return}
+  if(BOX[id]&&build<3){setBuild(build+1);return}
   if(cur>=order.length-1)return;
-  if(id==='s2')setBuild(0);
-  const to=order[cur+1];cur++;transition(id,to,false);
+  if(BOX[id])clearBuild(id);
+  build=0;const to=order[cur+1];cur++;transition(id,to,false);
 }
 function prev(){
   if(busy||!G)return;
   const id=order[cur];
-  if(id==='s2'&&build>0){setBuild(build-1);return}
+  if(BOX[id]&&build>0){setBuild(build-1);return}
   if(cur<=1)return;
-  const to=order[cur-1];cur--;transition(id,to,true);
-  if(to==='s2')setBuild(0);
+  if(BOX[id])clearBuild(id);
+  build=0;const to=order[cur-1];cur--;transition(id,to,true);
 }
 addEventListener('keydown',e=>{
   if(['ArrowRight','PageDown',' ','Enter'].includes(e.key)){e.preventDefault();next()}
@@ -542,42 +506,45 @@ addEventListener('touchend',e=>{if(tx===null)return;const dx=e.changedTouches[0]
 
 /* ---------- A1-A2 scripts as speaker notes ---------- */
 const S={
- A:["Hello, everyone! We want to move to Iceland, a small island in the north of Europe.",
-    "Iceland is a beautiful country with volcanoes, waterfalls and the northern lights.",
+ A:["Hello, everyone! We are Areli, Elizabeth and Juan Pablo, and we want to move from Mexico to Iceland.",
+    "Iceland is a small island in the north of Europe, and it has a very high standard of living.",
+    "We should live there because it is a lot safer than Mexico, salaries are much higher, and it has the best nature in Europe.",
     "I am going to talk about housing and food, the most basic things for a family.",
     "In Mexico, rent is about 600 dollars a month, but in Iceland it is 2,100 dollars, so it is much more expensive.",
-    "Food is a lot more expensive too: a cheap meal costs 10 dollars in Mexico and 28 dollars in Iceland.",
-    "It is more expensive, but people in Iceland have a higher income, so they can afford it.",
-    "The main reason is that rent uses only 44 percent of a salary in Iceland, but 86 percent in Mexico.",
-    "So, Iceland has a better standard of living, and now Elizabeth will talk about transport and safety."],
+    "Food is more expensive too: a meal in a cheap restaurant costs 10 dollars in Mexico and 28 dollars in Iceland.",
+    "Now, Elizabeth will tell you about transport and safety.",
+    "The main reason is housing: rent is more expensive, but people can afford it, because it uses only 44 percent of the average income in Iceland and 86 percent in Mexico."],
  E:["Thank you, Areli. I am going to talk about transport and safety.",
-    "A monthly transport pass costs 25 dollars in Mexico, but it costs 90 dollars in Iceland.",
-    "So, transport in Iceland is a lot more expensive than in Mexico.",
+    "A monthly bus pass costs 25 dollars in Mexico, but it costs 90 dollars in Iceland.",
+    "So, transport is much more expensive in Iceland, and Mexico wins here.",
     "It is more expensive, but people can afford it because their income is higher.",
-    "Iceland has only 390,000 people, so its cities are much smaller and less crowded than Mexican cities.",
-    "Safety is the biggest difference: Iceland is the safest country in the world, number 1, and Mexico is number 135.",
-    "The main reason is that there is very little crime, so you can leave your possessions in your car.",
-    "A safe country is basic for a good standard of living, and now Juan Pablo will talk about salary and leisure."],
- J:["Thank you, Elizabeth. I am going to talk about salary, leisure and our recommendation.",
-    "The average salary in Mexico is about 700 dollars a month, but in Iceland it is 4,800 dollars.",
-    "So, salaries in Iceland are almost seven times higher, and people have a better financial situation.",
-    "Leisure is a lot more expensive too: a cinema ticket is 5 dollars in Mexico and 17 dollars in Iceland.",
-    "Look at the chart: prices are about three times higher, but salaries are much higher.",
-    "The main reason we recommend Iceland is that it has the best safety and a higher standard of living.",
-    "It is colder and more expensive than Mexico, but people with a job can afford a good life there.",
-    "Our recommendation is: move to Iceland, with a plan! Thank you very much!"]};
+    "In safety, Iceland wins: it is the safest country in the world, number 1, and Mexico is number 135.",
+    "The main reason is that there is very little crime, so people can leave their possessions in the car.",
+    "Now, Juan Pablo will tell you about jobs and salaries.",
+    "Our second reason is safety: Iceland is a lot safer than Mexico, and a safe life is basic for a good standard of living."],
+ J:["Thank you, Elizabeth. I am going to talk about jobs and salaries, and our recommendation.",
+    "The average income in Mexico is about 700 dollars a month, but in Iceland it is 4,800 dollars.",
+    "So, salaries in Iceland are almost seven times higher, and people have a much better financial situation.",
+    "Look at the table: Mexico is cheaper than Iceland, but the standard of living in Iceland is higher.",
+    "So, our recommendation is: move there, to Iceland!",
+    "The biggest advantage is the salary: it is almost seven times higher, so we can afford a good life.",
+    "The biggest problem is the weather, because Iceland is a lot colder and darker than Mexico in winter.",
+    "The main reason is simple: with a job and a plan, Iceland is the best place for us. Thank you very much!"]};
 const NAMES={A:'Areli',E:'Elizabeth',J:'Juan Pablo'};
 function noteFor(){
   const id=order[cur];
   if(id==='intro')return{w:'A',from:0,to:1,tip:'Open the pitch. Press → to start the flight.'};
-  if(id==='s1')return{w:'A',from:1,to:3,tip:'Point to the boarding pass. Press → for the chart.'};
+  if(id==='s1')return{w:'A',from:1,to:3,tip:'Read the boarding pass with the class. Press → for the numbers.'};
   if(id==='s2'){
     if(build===0)return{w:'A',from:3,to:3,tip:'Press → to highlight your rows, Areli.',empty:true};
-    if(build===1)return{w:'A',from:3,to:8,tip:'Point to Housing and Food. Pass the turn to Elizabeth.'};
-    if(build===2)return{w:'E',from:0,to:8,tip:'Point to Transport and Safety. Pass the turn to Juan Pablo.'};
-    return{w:'J',from:0,to:5,tip:'Point to Salary and Leisure. Press → for the recommendation.'};
+    if(build===1)return{w:'A',from:3,to:7,tip:'Point to Housing and Food. Pass the turn to Elizabeth.'};
+    if(build===2)return{w:'E',from:0,to:7,tip:'Point to Transport and Safety. Pass the turn to Juan Pablo.'};
+    return{w:'J',from:0,to:4,tip:'Point to Jobs and salary. Press → for the recommendation.'};
   }
-  return{w:'J',from:5,to:8,tip:'Point to the rings: 86% vs 44%. Close the pitch.'};
+  if(build===0)return{w:'J',from:4,to:5,tip:'Say the decision. Press → for reason 1 (Areli).'};
+  if(build===1)return{w:'A',from:7,to:8,tip:'Reason 1. Press → for reason 2 (Elizabeth).'};
+  if(build===2)return{w:'E',from:7,to:8,tip:'Reason 2. Press → for reason 3 (Juan Pablo).'};
+  return{w:'J',from:5,to:8,tip:'Reason 3 and close the pitch.'};
 }
 function updateNotes(){
   const n=noteFor(),ol=document.getElementById('nlines');
