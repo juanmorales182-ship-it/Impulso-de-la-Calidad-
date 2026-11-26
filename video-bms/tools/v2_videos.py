@@ -208,7 +208,7 @@ def video2():
 
 
 def ch_leer():
-    c = Chapter("v3-leer", "Leer un proceso", 6)
+    c = Chapter("v3-leer", "Leer un proceso", 7)
     c.show(HOME, cam=(1, None, 0))
     c.step("Busca tu proceso", "Escribe el <b>nombre</b>, el <b>número</b> o una <b>cláusula IATF</b> en el buscador.")
     c.cam_to(1.74, 1480, 40)
@@ -239,7 +239,7 @@ def ch_leer():
     c.unbox()
     c.hold()
 
-    c.step("Información clave", "Cada proceso se divide en: <b>1</b> descripción, <b>2</b> flujo y <b>3</b> información crítica, cada una con su ícono.")
+    c.step("Información clave", "Cada proceso se divide en: <b>1</b> descripción, <b>2</b> flujo y <b>3</b> información crítica.")
     gfx(c, G.page_sections, 10.6)
     c.hold()
 
@@ -250,8 +250,12 @@ def ch_leer():
     c.wait(1.2)
     c.hold()
 
-    c.step("Los íconos de cada tarea", "Abren procesos <b>antes y después</b>, transacciones <b>SAP</b>, documentos y normas. Sus colores te dicen qué son.")
-    gfx(c, G.icon_legend, 6.4)
+    c.step("Los íconos de cada tarea", "Arriba de cada tarea: antecesores, transacciones <b>SAP</b>, documentos y normas.")
+    gfx(c, G.task_icon_list, 6.4)
+    c.hold()
+
+    c.step("Íconos del BMS", "En el BMS también verás estos íconos: <b>riesgos</b>, <b>controles</b>, <b>sistemas de TI</b> y <b>documentos</b>.")
+    gfx(c, G.icon_legend, 4.8)
     c.hold()
     return c
 
@@ -363,12 +367,12 @@ def ch_g_explorar():
     c.cursor_off()
     c.hold()
 
-    c.step("Todo en secciones", "Cada proceso se divide en: <b>1</b> descripción, <b>2</b> flujo y <b>3</b> información crítica, cada una con su ícono.")
+    c.step("Todo en secciones", "Cada proceso se divide en: <b>1</b> descripción, <b>2</b> flujo y <b>3</b> información crítica.")
     c.show(PROC, cam=(1, None, 0))
     gfx(c, G.page_sections, 10.6)
     c.hold()
 
-    c.step("Íconos nuevos", "Cada tarea te lleva a procesos anteriores, transacciones <b>SAP</b>, documentos y normas.")
+    c.step("Íconos nuevos", "Arriba de cada tarea: antecesores, transacciones <b>SAP</b>, documentos y normas.")
     gfx(c, G.task_icon_list, 6.4)
     c.hold()
 

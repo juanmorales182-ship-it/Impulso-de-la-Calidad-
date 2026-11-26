@@ -357,3 +357,87 @@ def page_sections():
           + show(3, 6.2)
           + ["tl.fromTo('#{gid} .ps-chip',{opacity:0,y:16},{opacity:1,y:0,duration:.4,stagger:.18,ease:'expo.out'},{t}+6.6);"])
     return html, js
+
+
+# ---- real Signavio icons only (cropped from the source screenshots); later definitions win
+REAL = {"antecesor": ("ic-antecesor.png", 49, 48), "sap": ("ic-sap.png", 44, 49), "doctarea": ("ic-doc-tarea.png", 44, 49),
+        "norma": ("ic-norma.png", 44, 49), "riesgo": ("ic-riesgo.png", 90, 88), "control": ("ic-control.png", 90, 88),
+        "ti": ("ic-ti.png", 85, 82), "documento": ("ic-documento.png", 86, 108)}
+
+
+def real_icon(key, h):
+    f, w0, h0 = REAL[key]
+    w = round(w0 * h / h0)
+    return f'<img src="assets/img/{f}" alt="" style="display:block;width:{w}px;height:{h}px">'
+
+
+def _bullet(color="#9AA3AF", size=18):
+    return f'<i style="display:block;width:{size}px;height:{size}px;border-radius:{size // 2}px;background:{color}"></i>'
+
+
+def task_icon_list():
+    rows = [("antecesor", "Procedimientos antecesores o predecesores", (100, 160, 50, 52)),
+            ("sap", "Transacciones de SAP para realizar la tarea", (287, 108, 44, 50)),
+            ("doctarea", "Documentos relacionados a la tarea o attachments", (339, 108, 44, 50)),
+            ("norma", "Normas, CSR o regulaciones legales", (389, 108, 44, 50))]
+    X0, Y0 = 70, 90
+    html = _bg() + (f'<div class="tl0" style="position:absolute;left:{X0}px;top:{Y0}px;width:1102px;height:380px;{CARD}overflow:hidden">'
+                    f'<img src="assets/img/task-icons.png" style="position:absolute;left:0;top:0;width:1102px;height:380px" alt=""></div>')
+    js = ["tl.fromTo('#{gid} .tl0',{opacity:0,y:30},{opacity:1,y:0,duration:.5,ease:'expo.out'},{t}+.1);"]
+    for i, (k, label, (x, y, w, h)) in enumerate(rows):
+        html += (f'<div id="tlr{i}" style="position:absolute;left:{X0 + x - 7}px;top:{Y0 + y - 7}px;width:{w + 14}px;height:{h + 14}px;'
+                 f'border:4px solid {RED};border-radius:50%;opacity:0"></div>')
+        html += (f'<div class="tr" id="tlrow{i}" style="position:absolute;left:{X0}px;top:{520 + i * 118}px;width:1102px;height:100px;{CARD}opacity:0">'
+                 f'<div style="position:absolute;left:28px;top:24px">{real_icon(k, 52)}</div>'
+                 f'<div style="position:absolute;left:112px;top:30px;font-size:32px;font-weight:600;color:#1E2833">{label}</div></div>')
+        at = .9 + i * 1.3
+        js += [f"tl.fromTo('#{{gid}} #tlrow{i}',{{opacity:0,x:-30}},{{opacity:1,x:0,duration:.45,ease:'expo.out'}},{{t}}+{at:.2f});",
+               f"tl.fromTo('#{{gid}} #tlr{i}',{{opacity:0,scale:1.4}},{{opacity:1,scale:1,duration:.35,ease:'expo.out'}},{{t}}+{at:.2f});",
+               f"tl.to('#{{gid}} #tlr{i}',{{opacity:0,duration:.2}},{{t}}+{at + 1.2:.2f});"]
+    return html, js
+
+
+def icon_legend():
+    items = [("riesgo", "Riesgos"), ("control", "Controles"), ("ti", "Sistemas de TI"), ("documento", "Documentos")]
+    html = _bg() + '<div style="position:absolute;left:90px;top:170px;font-size:40px;font-weight:700;color:#1E2833">Íconos del BMS y su significado</div>'
+    for i, (k, a) in enumerate(items):
+        col, row = i % 2, i // 2
+        x, y = 90 + col * 540, 260 + row * 330
+        html += (f'<div class="il" style="position:absolute;left:{x}px;top:{y}px;width:510px;height:300px;{CARD}">'
+                 f'<div style="position:absolute;left:0;top:50px;width:510px;display:flex;justify-content:center">{real_icon(k, 110)}</div>'
+                 f'<div style="position:absolute;left:0;top:200px;width:510px;text-align:center;font-size:36px;font-weight:600;color:#1E2833">{a}</div></div>')
+    return html, [_stagger(".il", .2, .3, .45)]
+
+
+def dictionary():
+    items = [(None, "Roles de proceso"), ("documento", "Documentos"), (None, "Usuarios"), (None, "Alcances"),
+             (None, "Objetos de proceso"), ("riesgo", "Riesgos"), ("control", "Controles"), ("ti", "Sistemas de TI")]
+    html = _bg() + '<div style="position:absolute;left:90px;top:110px;font-size:40px;font-weight:700;color:#1E2833">Dictionary · categorías</div>'
+    for i, (k, a) in enumerate(items):
+        col, row = i % 2, i // 2
+        x, y = 90 + col * 540, 200 + row * 190
+        ico = real_icon(k, 64) if k else f'<div style="padding:23px">{_bullet()}</div>'
+        html += (f'<div class="dc" style="position:absolute;left:{x}px;top:{y}px;width:510px;height:160px;{CARD}">'
+                 f'<div style="position:absolute;left:36px;top:48px">{ico}</div>'
+                 f'<div style="position:absolute;left:130px;top:58px;font-size:34px;font-weight:600;color:#1E2833">{a}</div></div>')
+    return html, [_stagger(".dc", .2, .12, .45)]
+
+
+_page_sections_v1 = page_sections
+
+
+def page_sections():
+    html, js = _page_sections_v1()
+    import re as _re
+    # section tags: number only, no drawn icons
+    html = _re.sub(r'<span style="display:inline-block;vertical-align:-12px;margin-right:12px">.*?</div></span>', '', html, flags=_re.S)
+    # info chips: real icon for risks and documents, a plain bullet for the rest
+    repl = {"Riesgos y oportunidades": real_icon("riesgo", 56), "Documentos relacionados": real_icon("documento", 56)}
+
+    def chip(m):
+        label = m.group(2)
+        ico = repl.get(label, f'<div style="padding:19px">{_bullet(RED if label.startswith("Cláusulas") else "#9AA3AF")}</div>')
+        return f'<div style="position:absolute;left:14px;top:14px">{ico}</div>' + m.group(1)
+    html = _re.sub(r'<div style="position:absolute;left:14px;top:12px">.*?</div></div>(<div style="position:absolute;left:90px;top:24px;[^>]*>([^<]*)</div>)',
+                   chip, html, flags=_re.S)
+    return html, js
