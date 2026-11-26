@@ -1,0 +1,47 @@
+<template>
+  <style>
+#root{position:absolute;inset:0;font-family:'Outfit',sans-serif;color:#1E2833;background:#fff;}
+.panel{position:absolute;left:676px;top:0;width:1244px;height:1080px;background:#F3F4F6;}
+.mock{position:absolute;left:740px;top:136px;width:1100px;height:808px;border-radius:16px;background:#fff;overflow:hidden;
+ box-shadow:0 40px 90px rgba(20,30,45,.16),0 2px 8px rgba(20,30,45,.08);}
+.bar{position:absolute;left:0;top:0;width:1100px;height:50px;background:#F7F8FA;border-bottom:1px solid #E4E7EC;}
+.dots{position:absolute;left:20px;top:19px;}
+.dots i{display:inline-block;width:12px;height:12px;border-radius:6px;background:#D5D9DF;margin-right:8px;}
+.url{position:absolute;left:96px;top:10px;width:820px;height:30px;border-radius:15px;background:#fff;border:1px solid #E1E4E9;
+ font-family:'Inter',sans-serif;font-size:15px;color:#5B6572;line-height:28px;padding-left:36px;white-space:nowrap;overflow:hidden;}
+.url svg{position:absolute;left:13px;top:7px;}
+.url b{color:#1E2833;font-weight:500;}
+.vp{position:absolute;left:0;top:50px;width:1100px;height:758px;overflow:hidden;background:#fff;}
+.scr{position:absolute;left:0;top:0;transform-origin:0 0;overflow:hidden;opacity:0;}
+.scr img{position:absolute;left:0;display:block;}
+.hl{position:absolute;border:3px solid #CE003A;border-radius:10px;opacity:0;box-sizing:border-box;z-index:30;}
+.loupe{position:absolute;overflow:hidden;border-radius:18px;border:3px solid #CE003A;background:#fff;opacity:0;z-index:35;
+ box-shadow:0 24px 50px rgba(20,30,45,.25);}
+.loupe img{position:absolute;display:block;}
+.cursor{position:absolute;left:0;top:0;width:34px;height:34px;opacity:0;transform-origin:5px 3px;z-index:50;filter:drop-shadow(0 3px 4px rgba(0,0,0,.28));}
+.typed{position:absolute;font-family:'Inter',sans-serif;white-space:nowrap;color:#1E2833;}
+.typed span{opacity:0;}
+.cover{position:absolute;background:#fff;}
+.chap{position:absolute;left:110px;top:230px;font-size:30px;font-weight:600;color:#CE003A;}
+.stepn{position:absolute;left:110px;top:280px;font-size:28px;font-weight:500;color:#5B6572;}
+.head{position:absolute;left:110px;top:342px;width:540px;font-size:66px;font-weight:700;line-height:1.08;letter-spacing:-0.015em;opacity:0;}
+.body{position:absolute;left:110px;width:520px;font-size:33px;font-weight:400;line-height:1.36;color:#4B5563;opacity:0;}
+.body b{color:#1E2833;font-weight:600;}
+.prog{position:absolute;left:110px;top:950px;width:520px;height:6px;border-radius:3px;background:#E5E7EB;overflow:hidden;}
+.prog i{position:absolute;left:0;top:0;height:6px;width:520px;background:#CE003A;transform-origin:0 0;}
+.w{display:inline-block;}
+.gfx{position:absolute;left:676px;top:0;width:1244px;height:1080px;overflow:hidden;}
+</style>
+  <div id="root" data-composition-id="v2-title" data-width="1920" data-height="1080" data-duration="4.5">
+<div style="position:absolute;left:0;top:0;width:1920px;height:1080px;background:#fff"></div><div id="v2-title-bar" style="position:absolute;left:110px;top:330px;width:10px;height:300px;background:#CE003A;border-radius:5px;transform-origin:50% 0"></div><img src="assets/img/brose-logo.png" alt="Brose" style="position:absolute;left:150px;top:120px;width:250px;height:88px"><div style="position:absolute;left:156px;top:330px;font-size:34px;font-weight:600;color:#5B6572">BMS en un clic · video 3 de 4</div><div id="v2-title-t" data-hold style="position:absolute;left:150px;top:390px;width:1600px;font-size:128px;font-weight:700;line-height:1.04;letter-spacing:-0.025em"><span class="w">El</span> <span class="w" style="color:#CE003A">mapa</span> <span class="w">de</span> <span class="w">procesos</span> <span class="w">y</span> <span class="w">sus</span> <span class="w">nombres</span></div><div id="v2-title-s" style="position:absolute;left:156px;top:690px;width:1400px;font-size:38px;font-weight:400;color:#4B5563">Cómo está organizado el BMS y cómo leer el nombre de cada proceso</div>
+  </div>
+  <script>
+  (function(){
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo('#v2-title-bar',{scaleY:0},{scaleY:1,duration:.7,ease:'expo.out'},0);
+    tl.fromTo('#v2-title-s',{opacity:0,filter:'blur(6px)'},{opacity:1,filter:'blur(0px)',duration:.3},.5);
+    tl.to('#v2-title-t, #v2-title-s, #v2-title-bar',{opacity:0,filter:'blur(10px)',duration:.25,ease:'power2.in'},4.2);
+    window.__timelines["v2-title"] = tl;
+  })();
+  </script>
+</template>

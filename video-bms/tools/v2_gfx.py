@@ -230,3 +230,62 @@ def code_decode():
   <div style="position:absolute;left:44px;top:170px;width:430px;font-size:32px;line-height:1.3;color:#1E2833"><b>Su número</b><br><span style="color:#5B6572">único para cada proceso</span></div>
 </div>"""
     return html, [_stagger(".cd", .1, .5, .5)]
+
+
+def plus_emphasis():
+    cur = ('<svg viewBox="0 0 40 40" width="70" height="70"><path d="M6 4 L6 32 L13 25 L18 36 L23 34 L18 23 L28 23 Z" fill="#fff" '
+           'stroke="#1E2833" stroke-width="2.4" stroke-linejoin="round"/></svg>')
+    html = _bg() + f"""
+<svg class="pe-chev" style="position:absolute;left:150px;top:200px" width="940" height="300" viewBox="0 0 940 300">
+  <polygon points="0,0 860,0 940,150 860,300 0,300 80,150" fill="#D5D8DD"/>
+  <text x="480" y="128" text-anchor="middle" font-family="Outfit" font-size="44" font-weight="500" fill="#2B3A4A">06_P2D_Production to</text>
+  <text x="480" y="182" text-anchor="middle" font-family="Outfit" font-size="44" font-weight="500" fill="#2B3A4A">Delivery</text>
+</svg>
+<div class="pe-plus" style="position:absolute;left:584px;top:420px;width:72px;height:72px;border:6px dotted #1A6BD8;border-radius:8px;background:rgba(255,255,255,.6)">
+  <div style="position:absolute;left:28px;top:12px;width:5px;height:36px;background:#1A6BD8;border-radius:2px"></div>
+  <div style="position:absolute;left:12px;top:28px;width:36px;height:5px;background:#1A6BD8;border-radius:2px"></div>
+</div>
+<div class="pe-ring" style="position:absolute;left:556px;top:392px;width:128px;height:128px;border:5px solid {RED};border-radius:22px;opacity:0"></div>
+<div class="pe-cur" style="position:absolute;left:0;top:0;opacity:0;filter:drop-shadow(0 4px 6px rgba(0,0,0,.3))">{cur}</div>
+<div class="pe-card" style="position:absolute;left:150px;top:640px;width:940px;height:220px;{CARD}border-left:10px solid {RED}">
+  <div style="position:absolute;left:44px;top:40px;font-size:54px;font-weight:700;color:#1E2833">Haz clic en el signo <span style="color:{RED}">+</span></div>
+  <div style="position:absolute;left:44px;top:124px;width:860px;font-size:32px;color:#5B6572">el cuadrito azul punteado debajo del nombre: así se abre el proceso</div>
+</div>"""
+    js = ["tl.fromTo('#{gid} .pe-chev',{opacity:0,x:-40},{opacity:1,x:0,duration:.5,ease:'expo.out'},{t}+.1);",
+          "tl.fromTo('#{gid} .pe-plus',{opacity:0,scale:.4},{opacity:1,scale:1,duration:.5,ease:'back.out(2)'},{t}+.6);",
+          "tl.fromTo('#{gid} .pe-cur',{opacity:0,x:900,y:700},{opacity:1,duration:.2},{t}+1.1);",
+          "tl.to('#{gid} .pe-cur',{x:618,y:452,duration:.8,ease:'power2.inOut'},{t}+1.2);",
+          "tl.to('#{gid} .pe-cur',{scale:.82,duration:.08},{t}+2.1);tl.to('#{gid} .pe-cur',{scale:1,duration:.12},{t}+2.18);",
+          "tl.fromTo('#{gid} .pe-ring',{opacity:0,scale:1.3},{opacity:1,scale:1,duration:.35,ease:'expo.out'},{t}+2.1);",
+          "tl.fromTo('#{gid} .pe-card',{opacity:0,y:30},{opacity:1,y:0,duration:.5,ease:'expo.out'},{t}+2.4);"]
+    return html, js
+
+
+def info_grid6():
+    items = [("flame", "#F07A1A", "Riesgos y oportunidades", "definidos por grupo"),
+             ("list", "#1E2833", "Cláusulas IATF e ISO 45001", "requisitos relacionados"),
+             ("scope", RED, "Alcance", "dónde aplica el procedimiento"),
+             ("list", "#5B6572", "Índice", "cómo está organizado"),
+             ("user", "#1A6BD8", "Actividades y responsables", "quién hace cada tarea"),
+             ("doc", "#1A6BD8", "Documentos relacionados", "attachments o normas")]
+    html = _bg()
+    for i, (k, c, a, b) in enumerate(items):
+        col, row = i % 2, i // 2
+        x, y = 90 + col * 540, 160 + row * 270
+        html += (f'<div class="ig" style="position:absolute;left:{x}px;top:{y}px;width:510px;height:240px;{CARD}">'
+                 f'<div style="position:absolute;left:36px;top:32px">{_ico(k, c, 70)}</div>'
+                 f'<div style="position:absolute;left:36px;top:124px;width:450px;font-size:32px;font-weight:700;color:#1E2833;white-space:nowrap">{a}</div>'
+                 f'<div style="position:absolute;left:36px;top:170px;font-size:28px;color:#5B6572">{b}</div></div>')
+    return html, [_stagger(".ig", .1, .25, .5)]
+
+
+def task_icon_list():
+    rows = [("Procesos antecesores o predecesores", "list", "#5B6572"), ("Transacciones de SAP para la tarea", "screen", "#1A6BD8"),
+            ("Documentos de la tarea o attachments", "doc", "#E0A000"), ("Normas, CSR o regulaciones legales", "shield", "#3E9B3E")]
+    html = _bg() + (f'<div class="tl0" style="position:absolute;left:70px;top:90px;width:1102px;height:380px;{CARD}overflow:hidden">'
+                    f'<img src="assets/img/task-icons.png" style="position:absolute;left:0;top:0;width:1102px;height:380px" alt=""></div>')
+    for i, (a, k, c) in enumerate(rows):
+        html += (f'<div class="tr" style="position:absolute;left:70px;top:{520 + i * 118}px;width:1102px;height:100px;{CARD}">'
+                 f'<div style="position:absolute;left:24px;top:18px">{_ico(k, c, 64)}</div>'
+                 f'<div style="position:absolute;left:112px;top:30px;font-size:32px;font-weight:600;color:#1E2833">{a}</div></div>')
+    return html, ["tl.fromTo('#{gid} .tl0',{opacity:0,y:30},{opacity:1,y:0,duration:.5,ease:'expo.out'},{t}+.1);", _stagger(".tr", .9, .3, .45, "x:-30")]

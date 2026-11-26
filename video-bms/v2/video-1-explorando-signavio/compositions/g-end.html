@@ -1,0 +1,49 @@
+<template>
+  <style>
+#root{position:absolute;inset:0;font-family:'Outfit',sans-serif;color:#1E2833;background:#fff;}
+.panel{position:absolute;left:676px;top:0;width:1244px;height:1080px;background:#F3F4F6;}
+.mock{position:absolute;left:740px;top:136px;width:1100px;height:808px;border-radius:16px;background:#fff;overflow:hidden;
+ box-shadow:0 40px 90px rgba(20,30,45,.16),0 2px 8px rgba(20,30,45,.08);}
+.bar{position:absolute;left:0;top:0;width:1100px;height:50px;background:#F7F8FA;border-bottom:1px solid #E4E7EC;}
+.dots{position:absolute;left:20px;top:19px;}
+.dots i{display:inline-block;width:12px;height:12px;border-radius:6px;background:#D5D9DF;margin-right:8px;}
+.url{position:absolute;left:96px;top:10px;width:820px;height:30px;border-radius:15px;background:#fff;border:1px solid #E1E4E9;
+ font-family:'Inter',sans-serif;font-size:15px;color:#5B6572;line-height:28px;padding-left:36px;white-space:nowrap;overflow:hidden;}
+.url svg{position:absolute;left:13px;top:7px;}
+.url b{color:#1E2833;font-weight:500;}
+.vp{position:absolute;left:0;top:50px;width:1100px;height:758px;overflow:hidden;background:#fff;}
+.scr{position:absolute;left:0;top:0;transform-origin:0 0;overflow:hidden;opacity:0;}
+.scr img{position:absolute;left:0;display:block;}
+.hl{position:absolute;border:3px solid #CE003A;border-radius:10px;opacity:0;box-sizing:border-box;z-index:30;}
+.loupe{position:absolute;overflow:hidden;border-radius:18px;border:3px solid #CE003A;background:#fff;opacity:0;z-index:35;
+ box-shadow:0 24px 50px rgba(20,30,45,.25);}
+.loupe img{position:absolute;display:block;}
+.cursor{position:absolute;left:0;top:0;width:34px;height:34px;opacity:0;transform-origin:5px 3px;z-index:50;filter:drop-shadow(0 3px 4px rgba(0,0,0,.28));}
+.typed{position:absolute;font-family:'Inter',sans-serif;white-space:nowrap;color:#1E2833;}
+.typed span{opacity:0;}
+.cover{position:absolute;background:#fff;}
+.chap{position:absolute;left:110px;top:230px;font-size:30px;font-weight:600;color:#CE003A;}
+.stepn{position:absolute;left:110px;top:280px;font-size:28px;font-weight:500;color:#5B6572;}
+.head{position:absolute;left:110px;top:342px;width:540px;font-size:66px;font-weight:700;line-height:1.08;letter-spacing:-0.015em;opacity:0;}
+.body{position:absolute;left:110px;width:520px;font-size:33px;font-weight:400;line-height:1.36;color:#4B5563;opacity:0;}
+.body b{color:#1E2833;font-weight:600;}
+.prog{position:absolute;left:110px;top:950px;width:520px;height:6px;border-radius:3px;background:#E5E7EB;overflow:hidden;}
+.prog i{position:absolute;left:0;top:0;height:6px;width:520px;background:#CE003A;transform-origin:0 0;}
+.w{display:inline-block;}
+.gfx{position:absolute;left:676px;top:0;width:1244px;height:1080px;overflow:hidden;}
+</style>
+  <div id="root" data-composition-id="g-end" data-width="1920" data-height="1080" data-duration="7.2">
+<div style="position:absolute;left:0;top:0;width:1920px;height:1080px;background:#fff"></div><div id="g-end-c" style="position:absolute;left:0;top:420px;width:1920px;text-align:center;font-size:120px;font-weight:700;letter-spacing:-0.025em"><span class="w">Bienvenido</span> <span class="w">al</span> <span class="w">nuevo</span> <span class="w" style="color:#CE003A">Signavio.</span></div><img id="g-end-logo" src="assets/img/brose-logo.png" alt="Brose" style="position:absolute;left:600px;top:330px;width:720px;height:253px"><div id="g-end-sub" style="position:absolute;left:0;top:640px;width:1920px;text-align:center;font-size:40px;font-weight:500;color:#5B6572">Brose Management System</div><div id="g-end-n" style="position:absolute;left:0;top:820px;width:1920px;text-align:center;font-size:36px;font-weight:500;color:#5B6572">Siguiente video: <span style="color:#1E2833;font-weight:600">Entrar y moverte en el BMS</span></div>
+  </div>
+  <script>
+  (function(){
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo('#g-end-c .w',{opacity:0,filter:'blur(6px)'},{opacity:1,filter:'blur(0px)',duration:.14,stagger:.1},.1);
+    tl.to('#g-end-c',{opacity:0,filter:'blur(12px)',duration:.25,ease:'power2.in'},2.7);
+    tl.fromTo('#g-end-logo',{clipPath:'inset(0% 100% 0% 0%)'},{clipPath:'inset(0% 0% 0% 0%)',duration:.85,ease:'power3.inOut'},3.0);
+    tl.fromTo('#g-end-sub',{opacity:0},{opacity:1,duration:.3},3.8);
+    tl.fromTo('#g-end-n',{opacity:0,filter:'blur(6px)'},{opacity:1,filter:'blur(0px)',duration:.25},4.3);
+    window.__timelines["g-end"] = tl;
+  })();
+  </script>
+</template>

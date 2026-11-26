@@ -283,6 +283,24 @@ class Chapter:
         self.sfx.append((self.t - .2, "pop.mp3", .7, .6, True))
         return self
 
+    def badge(self, n, px, py):
+        """Numbered red marker on the screen (like the guide's 1-2-3 circles)."""
+        bid = self._id("bd")
+        r = 22 / self.cam["scale"]
+        self._add_to_screen(f'<div id="{bid}" style="position:absolute;left:{px - r:.1f}px;top:{py - r:.1f}px;width:{2 * r:.1f}px;height:{2 * r:.1f}px;'
+                            f'border-radius:50%;background:#CE003A;color:#fff;font-weight:700;font-size:{26 / self.cam["scale"]:.1f}px;'
+                            f'line-height:{2 * r:.1f}px;text-align:center;opacity:0;z-index:31;box-shadow:0 4px 10px rgba(0,0,0,.25)">{n}</div>')
+        self.js.append(f"tl.fromTo('#{bid}',{{opacity:0,scale:.3}},{{opacity:1,scale:1,duration:.4,ease:'back.out(2.2)'}},{self.t:.2f});")
+        self.sfx.append((self.t, "pop.mp3", .7, .45, True))
+        self.badges = getattr(self, 'badges', []) + [bid]
+        return bid
+
+    def unbadge(self):
+        for b in getattr(self, 'badges', []):
+            self.js.append(f"tl.to('#{b}',{{opacity:0,duration:.15}},{self.t:.2f});")
+        self.badges = []
+        return self
+
     def wait(self, d):
         self.t += d
         return self
@@ -414,8 +432,8 @@ def title_card(cid, number, title, accent, subtitle):
     body = (f'<div style="position:absolute;left:0;top:0;width:1920px;height:1080px;background:#fff"></div>'
             f'<div id="{cid}-bar" style="position:absolute;left:110px;top:330px;width:10px;height:300px;background:#CE003A;border-radius:5px;transform-origin:50% 0"></div>'
             f'<img src="assets/img/brose-logo.png" alt="Brose" style="position:absolute;left:150px;top:120px;width:250px;height:88px">'
-            f'<div style="position:absolute;left:156px;top:330px;font-size:34px;font-weight:600;color:#5B6572">BMS en un clic · video {number} de 3</div>'
-            f'<div id="{cid}-t" style="position:absolute;left:150px;top:390px;width:1600px;font-size:128px;font-weight:700;line-height:1.04;letter-spacing:-0.025em">{words}</div>'
+            f'<div style="position:absolute;left:156px;top:330px;font-size:34px;font-weight:600;color:#5B6572">BMS en un clic · video {number} de 4</div>'
+            f'<div id="{cid}-t" data-hold style="position:absolute;left:150px;top:390px;width:1600px;font-size:128px;font-weight:700;line-height:1.04;letter-spacing:-0.025em">{words}</div>'
             f'<div id="{cid}-s" style="position:absolute;left:156px;top:690px;width:1400px;font-size:38px;font-weight:400;color:#4B5563">{subtitle}</div>')
     js = [f"tl.fromTo('#{cid}-bar',{{scaleY:0}},{{scaleY:1,duration:.7,ease:'expo.out'}},0);",
           f"tl.fromTo('#{cid}-s',{{opacity:0,filter:'blur(6px)'}},{{opacity:1,filter:'blur(0px)',duration:.3}},.5);",

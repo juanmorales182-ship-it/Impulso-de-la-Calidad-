@@ -130,13 +130,13 @@ def ch_moverte():
 
 
 def video1():
-    return [title_card("v1-title", 1, "Entrar y moverte en el BMS", ["BMS"], "Cómo entrar a Signavio, ubicarte y guardar lo que más usas"),
+    return [title_card("v1-title", 2, "Entrar y moverte en el BMS", ["BMS"], "Cómo entrar a Signavio, ubicarte y guardar lo que más usas"),
             ch_entrar(), ch_moverte(),
             end_card("v1-end", "Ya estás dentro.", ["dentro."], "El mapa de procesos y sus nombres")]
 
 
 def ch_mapa():
-    c = Chapter("v2-mapa", "El mapa de procesos", 5)
+    c = Chapter("v2-mapa", "El mapa de procesos", 6)
     c.show(HOME, cam=(1, None, 0))
     c.step("Tu página de inicio", "Al entrar ves el <b>mapa de procesos de Brose</b>: reúne los 14 procesos principales.")
     c.wait(.6)
@@ -148,6 +148,15 @@ def ch_mapa():
     for r in [(302, 396, 892, 151), (302, 545, 892, 150), (302, 693, 892, 370)]:
         c.box(r, until=c.t + 2.0)
         c.wait(2.2)
+    c.hold()
+
+    c.step("Ábrelo con el signo +", "Para abrir un proceso o un mapa, haz clic en el <b>signo +</b>: el cuadrito azul punteado debajo del nombre.")
+    c.box((1050, 634, 26, 26))
+    c.click(1063, 647)
+    c.loupe((960, 580, 220, 90), w=440, h=180, pos=(1080, 640), hold=2.2)
+    c.unbox()
+    c.cursor_off()
+    gfx(c, G.plus_emphasis, 6.0)
     c.hold()
 
     c.step("Los 14 procesos", "Cada uno reúne los procesos de un área: de la estrategia a la comunicación.")
@@ -193,7 +202,7 @@ def ch_nombres():
 
 
 def video2():
-    return [title_card("v2-title", 2, "El mapa de procesos y sus nombres", ["mapa"], "Cómo está organizado el BMS y cómo leer el nombre de cada proceso"),
+    return [title_card("v2-title", 3, "El mapa de procesos y sus nombres", ["mapa"], "Cómo está organizado el BMS y cómo leer el nombre de cada proceso"),
             ch_mapa(), ch_nombres(),
             end_card("v2-end", "14 procesos, un solo mapa.", ["mapa."], "Leer un proceso y encontrar ayuda")]
 
@@ -230,8 +239,8 @@ def ch_leer():
     c.unbox()
     c.hold()
 
-    c.step("Información clave", "En cada proceso también encuentras <b>riesgos y oportunidades</b>, cláusulas <b>IATF</b>, <b>ISO 45001</b> y el <b>alcance</b>.")
-    gfx(c, G.info_grid, 5.6)
+    c.step("Información clave", "Cada proceso tiene secciones: <b>riesgos y oportunidades</b>, cláusulas <b>IATF</b> e <b>ISO 45001</b>, alcance, actividades, responsables y documentos.")
+    gfx(c, G.info_grid6, 6.4)
     c.hold()
 
     c.step("Sigue el flujo", "El diagrama muestra quién hace qué y en qué orden.")
@@ -276,14 +285,117 @@ def ch_ayuda():
 
 
 def video3():
-    return [title_card("v3-title", 3, "Leer un proceso y encontrar ayuda", ["proceso"], "Busca, entiende cada parte de un proceso y sabe a dónde acudir"),
+    return [title_card("v3-title", 4, "Leer un proceso y encontrar ayuda", ["proceso"], "Busca, entiende cada parte de un proceso y sabe a dónde acudir"),
             ch_leer(), ch_ayuda(),
             end_card("v3-end", "Tu proceso, a un clic.", ["a", "un", "clic."])]
 
 
-VIDEOS.update({"v1": ("video-1-entrar-y-moverte", "BMS en un clic 1 — Entrar y moverte", video1),
-               "v2": ("video-2-mapa-y-nombres", "BMS en un clic 2 — El mapa y los nombres", video2),
-               "v3": ("video-3-leer-y-ayuda", "BMS en un clic 3 — Leer un proceso y ayuda", video3)})
+def ch_g_entrar():
+    c = Chapter("g-entrar", "Cómo entrar", 3)
+    c.show(APPREG, cam=(1, None, 0))
+    c.step("Búscalo en App Register", "En la BBC abre <b>App Register</b>, escribe «Signavio» y da clic en la flecha.")
+    res = c.cover((60, 262, 880, 420))
+    c.wait(.4)
+    c.type_text("SIGNAVIO", 115, 189, 16, cover=(100, 186, 1160, 30))
+    c.click(1327, 200)
+    c.js.append(f"tl.to('#{res}',{{opacity:0,duration:.25}},{c.t:.2f});")
+    c.wait(.4)
+    c.box((494, 270, 408, 329))
+    c.loupe((498, 316, 400, 130), w=620, h=210, pos=(1040, 620), hold=2.2)
+    c.hold()
+
+    c.step("Marca la estrella", "Abre el mosaico <b>Brose Management System</b> y marca la estrella: quedará en tus favoritos.")
+    c.unbox()
+    c.click(877, 297)
+    c.star(877, 297, 26)
+    c.loupe((690, 270, 250, 60), w=440, h=150, pos=(1300, 560), hold=2.0)
+    c.hold()
+
+    c.step("Start Signavio", "Da clic en <b>Start Signavio</b> y llegas directo a la página inicial.")
+    c.box((506, 372, 128, 24))
+    c.click(582, 383)
+    c.unbox()
+    c.cursor_off()
+    c.show(HOME, cam=(1, None, 0))
+    c.wait(1.4)
+    c.hold()
+    return c
+
+
+def ch_g_explorar():
+    c = Chapter("g-explorar", "Explorando Signavio", 6)
+    c.show(HOME, cam=(1, None, 0))
+    c.step("Lo que ya conocías", "Aquí siguen: <b>1</b> el mapa de procesos, <b>2</b> el manual de calidad y <b>3</b> el Plant Specific Landscape.")
+    c.wait(.4)
+    c.badge(1, 210, 420)
+    c.box((302, 396, 892, 667), until=c.t + 2.0)
+    c.wait(2.2)
+    c.badge(2, 820, 300)
+    c.box((818, 293, 260, 70), until=c.t + 2.0)
+    c.loupe((800, 280, 300, 100), w=430, h=140, pos=(1000, 640), hold=1.9)
+    c.badge(3, 1380, 690)
+    c.box((1391, 674, 318, 66), until=c.t + 2.2)
+    c.loupe((1380, 660, 340, 100), w=440, h=130, pos=(1000, 640), hold=2.0)
+    c.hold()
+    c.unbadge()
+
+    c.step("Ábrelo con el signo +", "Para abrir un proceso o un mapa, haz clic en el <b>signo +</b>: el cuadrito azul punteado debajo del nombre.")
+    c.box((1050, 634, 26, 26))
+    c.click(1063, 647)
+    c.loupe((960, 580, 220, 90), w=440, h=180, pos=(1080, 640), hold=2.2)
+    c.unbox()
+    c.cursor_off()
+    gfx(c, G.plus_emphasis, 6.0)
+    c.hold()
+
+    c.step("Busca tu proceso", "Busca por <b>nombre del proceso</b> o por <b>cláusula IATF</b>.")
+    c.cam_to(1.74, 1480, 40)
+    c.box((1300, 6, 364, 42))
+    c.click(1520, 26)
+    c.type_text("GR_00168", 1434, 15, 15, cover=(1428, 12, 200, 28))
+    c.click(1645, 26)
+    c.unbox()
+    c.show(SEARCH, cam=(1.72, 900, 470))
+    c.wait(.4)
+    c.box((428, 478, 1410, 108))
+    c.click(700, 505)
+    c.unbox()
+    c.cursor_off()
+    c.hold()
+
+    c.step("Todo en secciones", "Descripción, flujo e <b>información crítica</b>: riesgos y oportunidades, cláusulas IATF e ISO 45001.")
+    c.show(PROC, cam=(1, None, 0))
+    c.wait(.4)
+    c.box((116, 232, 1731, 491))
+    c.loupe((130, 300, 760, 200), w=760, h=200, pos=(1020, 660), hold=2.4)
+    c.unbox()
+    gfx(c, G.info_grid6, 6.0)
+    c.hold()
+
+    c.step("Íconos nuevos", "Cada tarea te lleva a procesos anteriores, transacciones <b>SAP</b>, documentos y normas.")
+    gfx(c, G.task_icon_list, 6.4)
+    c.hold()
+
+    c.step("BMS Knowledge Portal", "Para capacitaciones específicas, consulta el <b>SharePoint del BMS</b> y elige tu tema.")
+    c.show(PORTAL, cam=(1, None, 0))
+    c.wait(.8)
+    c.box((276, 728, 1340, 255))
+    c.loupe((276, 728, 700, 260), w=700, h=260, pos=(1000, 300), hold=2.8)
+    c.unbox()
+    c.hold()
+    return c
+
+
+def video0():
+    return [title_card("g-title", 1, "Explorando el nuevo Signavio", ["Signavio"], "Lo esencial del nuevo BMS en poco más de un minuto"),
+            ch_g_entrar(), ch_g_explorar(),
+            end_card("g-end", "Bienvenido al nuevo Signavio.", ["Signavio."], "Entrar y moverte en el BMS")]
+
+
+VIDEOS.update({"v0": ("video-1-explorando-signavio", "BMS en un clic 1 — Explorando el nuevo Signavio", video0),
+               "v1": ("video-2-entrar-y-moverte", "BMS en un clic 2 — Entrar y moverte", video1),
+               "v2": ("video-3-mapa-y-nombres", "BMS en un clic 3 — El mapa y los nombres", video2),
+               "v3": ("video-4-leer-y-ayuda", "BMS en un clic 4 — Leer un proceso y ayuda", video3)})
 
 
 if __name__ == "__main__":
