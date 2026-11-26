@@ -301,6 +301,13 @@ class Chapter:
         self.badges = []
         return self
 
+    def vo(self, name, dur, offset=.15):
+        """Narration clip for the current step; the step lasts at least as long as the voice."""
+        t = self.step_start + offset
+        self.sfx.append((t, name, round(dur, 2), 1.0, False))
+        self.step_min = max(self.step_min, t + dur + .45)
+        return self
+
     def wait(self, d):
         self.t += d
         return self
@@ -367,7 +374,7 @@ def scene_file(cid, dur, body, js):
 """
 
 
-def build_video(root, slug, title, scenes, template_dir):
+def build_video(root, slug, title, scenes, template_dir, sfx_gain=1.0):
     proj = os.path.join(root, slug)
     os.makedirs(os.path.join(proj, "compositions"), exist_ok=True)
     for f in ("hyperframes.json", "package.json", "CLAUDE.md", "AGENTS.md"):
@@ -389,7 +396,10 @@ def build_video(root, slug, title, scenes, template_dir):
         lanes = {}
         for (lt, f, d, v, al, *ms) in sorted(sc.sfx, key=lambda e: e[0]):
             st = t + lt + (FR if al else 0)
-            lane = 2
+            is_vo = f.startswith("vo")
+            if not is_vo:
+                v = round(v * sfx_gain, 2)
+            lane = 12 if is_vo else 2
             while lanes.get(lane, -1) > st:
                 lane += 1
             lanes[lane] = st + d
@@ -427,7 +437,7 @@ def build_video(root, slug, title, scenes, template_dir):
     return total
 
 
-def title_card(cid, number, title, accent, subtitle):
+def title_card(cid, number, title, accent, subtitle, vo=None):
     words = " ".join(f'<span class="w"{" style=\"color:#CE003A\"" if w in accent else ""}>{w}</span>' for w in title.split())
     body = (f'<div style="position:absolute;left:0;top:0;width:1920px;height:1080px;background:#fff"></div>'
             f'<div id="{cid}-bar" style="position:absolute;left:110px;top:330px;width:10px;height:300px;background:#CE003A;border-radius:5px;transform-origin:50% 0"></div>'
@@ -437,11 +447,14 @@ def title_card(cid, number, title, accent, subtitle):
             f'<div id="{cid}-s" style="position:absolute;left:156px;top:690px;width:1400px;font-size:38px;font-weight:400;color:#4B5563">{subtitle}</div>')
     js = [f"tl.fromTo('#{cid}-bar',{{scaleY:0}},{{scaleY:1,duration:.7,ease:'expo.out'}},0);",
           f"tl.fromTo('#{cid}-s',{{opacity:0,filter:'blur(6px)'}},{{opacity:1,filter:'blur(0px)',duration:.3}},.5);",
-          f"tl.to('#{cid}-t, #{cid}-s, #{cid}-bar',{{opacity:0,filter:'blur(10px)',duration:.25,ease:'power2.in'}},4.2);"]
-    return Card(cid, body, js, 4.5, sfx=[(0, "whoosh.mp3", .57, .5, False)])
+          f"tl.to('#{cid}-t, #{cid}-s, #{cid}-bar',{{opacity:0,filter:'blur(10px)',duration:.25,ease:'power2.in'}},{{end}});"]
+    dur = 4.5 if not vo else max(4.5, vo[1] + 1.0)
+    js[-1] = js[-1].replace("{end}", f"{dur - .3:.2f}")
+    sfx = [(0, "whoosh.mp3", .57, .5, False)] + ([(.3, vo[0], round(vo[1], 2), 1.0, False)] if vo else [])
+    return Card(cid, body, js, round(dur, 2), sfx=sfx)
 
 
-def end_card(cid, claim, accent, next_title=None):
+def end_card(cid, claim, accent, next_title=None, vo=None):
     words = " ".join(f'<span class="w"{" style=\"color:#CE003A\"" if w in accent else ""}>{w}</span>' for w in claim.split())
     nxt = (f'<div id="{cid}-n" style="position:absolute;left:0;top:820px;width:1920px;text-align:center;font-size:36px;font-weight:500;color:#5B6572">'
            f'Siguiente video: <span style="color:#1E2833;font-weight:600">{next_title}</span></div>') if next_title else ""
@@ -455,4 +468,7 @@ def end_card(cid, claim, accent, next_title=None):
           f"tl.fromTo('#{cid}-sub',{{opacity:0}},{{opacity:1,duration:.3}},3.8);"]
     if next_title:
         js.append(f"tl.fromTo('#{cid}-n',{{opacity:0,filter:'blur(6px)'}},{{opacity:1,filter:'blur(0px)',duration:.25}},4.3);")
-    return Card(cid, body, js, 7.2, sfx=[(1.8, "riser.mp3", 1.4, .35, False, 2.27), (3.0, "impact-bass-1.mp3", 2.1, .6, True)])
+    sfx = [(1.8, "riser.mp3", 1.4, .35, False, 2.27), (3.0, "impact-bass-1.mp3", 2.1, .6, True)]
+    if vo:
+        sfx.append((.15, vo[0], round(vo[1], 2), 1.0, False))
+    return Card(cid, body, js, 7.2, sfx=sfx)

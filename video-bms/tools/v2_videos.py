@@ -298,6 +298,7 @@ def ch_g_entrar():
     c = Chapter("g-entrar", "Cómo entrar", 3)
     c.show(APPREG, cam=(1, None, 0))
     c.step("Búscalo en App Register", "En la BBC abre <b>App Register</b>, escribe «Signavio» y da clic en la flecha.")
+    c.vo("vo1-02.mp3", 6.92)
     res = c.cover((60, 262, 880, 420))
     c.wait(.4)
     c.type_text("SIGNAVIO", 115, 189, 16, cover=(100, 186, 1160, 30))
@@ -309,6 +310,7 @@ def ch_g_entrar():
     c.hold()
 
     c.step("Marca la estrella", "Abre el mosaico <b>Brose Management System</b> y marca la estrella: quedará en tus favoritos.")
+    c.vo("vo1-03.mp3", 6.84)
     c.unbox()
     c.click(877, 297)
     c.star(877, 297, 26)
@@ -316,6 +318,7 @@ def ch_g_entrar():
     c.hold()
 
     c.step("Start Signavio", "Da clic en <b>Start Signavio</b> y llegas directo a la página inicial.")
+    c.vo("vo1-04.mp3", 4.28)
     c.box((506, 372, 128, 24))
     c.click(582, 383)
     c.unbox()
@@ -330,7 +333,8 @@ def ch_g_explorar():
     c = Chapter("g-explorar", "Explorando Signavio", 6)
     c.show(HOME, cam=(1, None, 0))
     c.step("Lo que ya conocías", "Aquí siguen: <b>1</b> el mapa de procesos, <b>2</b> el manual de calidad y <b>3</b> el Plant Specific Landscape.")
-    c.wait(.4)
+    c.vo("vo1-05.mp3", 9.48)
+    c.wait(1.9)
     c.badge(1, 210, 420)
     c.box((302, 396, 892, 667), until=c.t + 2.0)
     c.wait(2.2)
@@ -344,6 +348,7 @@ def ch_g_explorar():
     c.unbadge()
 
     c.step("Ábrelo con el signo +", "Para abrir un proceso o un mapa, haz clic en el <b>signo +</b>: el cuadrito azul punteado debajo del nombre.")
+    c.vo("vo1-06.mp3", 10.45)
     c.box((1050, 634, 26, 26))
     c.click(1063, 647)
     c.loupe((960, 580, 220, 90), w=440, h=180, pos=(1080, 640), hold=2.2)
@@ -353,6 +358,7 @@ def ch_g_explorar():
     c.hold()
 
     c.step("Busca tu proceso", "Busca por <b>nombre del proceso</b> o por <b>cláusula IATF</b>.")
+    c.vo("vo1-07.mp3", 6.77)
     c.cam_to(1.74, 1480, 40)
     c.box((1300, 6, 364, 42))
     c.click(1520, 26)
@@ -368,15 +374,18 @@ def ch_g_explorar():
     c.hold()
 
     c.step("Todo en secciones", "Cada proceso se divide en: <b>1</b> descripción, <b>2</b> flujo y <b>3</b> información crítica, cada una con su ícono.")
+    c.vo("vo1-08.mp3", 19.33)
     c.show(PROC, cam=(1, None, 0))
-    gfx(c, G.page_sections, 10.6)
+    gfx(c, G.page_sections_timed, 10.6)
     c.hold()
 
     c.step("Íconos nuevos", "Arriba de cada tarea: antecesores, transacciones <b>SAP</b>, documentos y normas.")
-    gfx(c, G.task_icon_list, 6.4)
+    c.vo("vo1-09.mp3", 10.61)
+    gfx(c, G.task_icon_list_timed, 6.4)
     c.hold()
 
     c.step("BMS Knowledge Portal", "Para capacitaciones específicas, consulta el <b>SharePoint del BMS</b> y elige tu tema.")
+    c.vo("vo1-10.mp3", 6.53)
     c.show(PORTAL, cam=(1, None, 0))
     c.wait(.8)
     c.box((276, 728, 1340, 255))
@@ -387,9 +396,9 @@ def ch_g_explorar():
 
 
 def video0():
-    return [title_card("g-title", 1, "Explorando el nuevo Signavio", ["Signavio"], "Lo esencial del nuevo BMS en poco más de un minuto"),
+    return [title_card("g-title", 1, "Explorando el nuevo Signavio", ["Signavio"], "Lo esencial del nuevo BMS en poco más de un minuto", vo=("vo1-01.mp3", 6.19)),
             ch_g_entrar(), ch_g_explorar(),
-            end_card("g-end", "Bienvenido al nuevo Signavio.", ["Signavio."], "Entrar y moverte en el BMS")]
+            end_card("g-end", "Bienvenido al nuevo Signavio.", ["Signavio."], "Entrar y moverte en el BMS", vo=("vo1-11.mp3", 4.36))]
 
 
 VIDEOS.update({"v0": ("video-1-explorando-signavio", "BMS en un clic 1 — Explorando el nuevo Signavio", video0),
@@ -401,4 +410,4 @@ VIDEOS.update({"v0": ("video-1-explorando-signavio", "BMS en un clic 1 — Explo
 if __name__ == "__main__":
     for k in (sys.argv[1:] or ["sample"]):
         slug, title, fn = VIDEOS[k]
-        print(k, build_video(ROOT, slug, title, fn(), TEMPLATE))
+        print(k, build_video(ROOT, slug, title, fn(), TEMPLATE, sfx_gain=.55 if k == "v0" else 1.0))

@@ -457,3 +457,31 @@ def page_sections():
     html = _re.sub(r'<div style="position:absolute;left:14px;top:12px">(?:(?!<div class="ps-chip").)*?</div></div>(<div style="position:absolute;left:90px;top:24px;[^>]*>([^<]*)</div>)',
                    chip, html, flags=_re.S)
     return html, js
+
+
+def page_sections_timed(t1=3.4, t2=5.6, tscroll=6.9, t3=7.9, tchips=8.7, stag=1.0):
+    """Same graphic, with each section shown when the narration names it."""
+    import re as _re
+    html, js = page_sections()
+    scroll = _re.search(r"\.ps-scroll',\{y:(-?[0-9.]+)", " ".join(js)).group(1)
+    def show(n, at):
+        return [f"tl.fromTo('#{{gid}} #ps-box{n}',{{opacity:0,scale:1.03}},{{opacity:1,scale:1,duration:.35,ease:'expo.out'}},{{t}}+{at:.2f});",
+                f"tl.fromTo('#{{gid}} #ps-tag{n}',{{opacity:0,x:-30}},{{opacity:1,x:0,duration:.45,ease:'expo.out'}},{{t}}+{at + .1:.2f});"]
+    js = (["tl.fromTo('#{gid} .ps-scroll',{opacity:0,y:40},{opacity:1,y:0,duration:.5,ease:'expo.out'},{t}+.1);"]
+          + show(1, t1) + [f"tl.to('#{{gid}} #ps-box1',{{opacity:0,duration:.2}},{{t}}+{t2 - .1:.2f});"]
+          + show(2, t2) + [f"tl.to('#{{gid}} #ps-box2',{{opacity:0,duration:.2}},{{t}}+{tscroll:.2f});"]
+          + [f"tl.to('#{{gid}} .ps-scroll',{{y:{scroll},duration:.9,ease:'power2.inOut'}},{{t}}+{tscroll:.2f});"]
+          + show(3, t3)
+          + [f"tl.fromTo('#{{gid}} .ps-chip',{{opacity:0,y:16}},{{opacity:1,y:0,duration:.4,stagger:{stag},ease:'expo.out'}},{{t}}+{tchips:.2f});"])
+    return html, js
+
+
+def task_icon_list_timed(times=(2.3, 3.6, 5.1, 7.0)):
+    import re as _re
+    html, js = task_icon_list()
+    out = [js[0]]
+    for i, at in enumerate(times):
+        out += [f"tl.fromTo('#{{gid}} #tlrow{i}',{{opacity:0,x:-30}},{{opacity:1,x:0,duration:.45,ease:'expo.out'}},{{t}}+{at:.2f});",
+                f"tl.fromTo('#{{gid}} #tlr{i}',{{opacity:0,scale:1.4}},{{opacity:1,scale:1,duration:.35,ease:'expo.out'}},{{t}}+{at:.2f});",
+                f"tl.to('#{{gid}} #tlr{i}',{{opacity:0,duration:.2}},{{t}}+{at + 1.3:.2f});"]
+    return html, out
