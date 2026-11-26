@@ -16,8 +16,8 @@ En la presentación animada, la tecla **N** (o el botón *Script*) muestra el gu
 | 2 | Iceland is a small island in the north of Europe, and it has a very high `standard of living`. | Islandia es una isla pequeña en el norte de Europa y tiene un nivel de vida muy alto. |
 | 3 | We should live there because it is ***a lot* safer than** Mexico, salaries are ***much* higher**, and it has **the best** nature in Europe. | Deberíamos vivir ahí porque es mucho más seguro que México, los salarios son mucho más altos y tiene la mejor naturaleza de Europa. |
 | 4 | I am going to talk about housing and food, **the most** `basic` things for a family. | Voy a hablar de vivienda y comida, las cosas más básicas para una familia. |
-| 5 | In Mexico, rent is about 600 dollars a month, but in Iceland it is 2,100 dollars, so it is *much* **more expensive**. | En México la renta es de unos 600 dólares al mes, pero en Islandia es de 2,100, así que es mucho más cara. |
-| 6 | Food is **more expensive** too: a meal in a cheap restaurant costs 10 dollars in Mexico and 28 dollars in Iceland. | La comida también es más cara: una comida en un restaurante barato cuesta 10 dólares en México y 28 en Islandia. |
+| 5 | In Mexico, rent is about 600 dollars a month, and in Iceland it is 2,100 dollars, so it is *much* **more expensive**, but salaries are also *much* **higher**. | En México la renta es de unos 600 dólares al mes y en Islandia es de 2,100, así que es mucho más cara, pero los salarios también son mucho más altos. |
+| 6 | Food is **more expensive** too: a meal in a cheap restaurant costs 10 dollars in Mexico and 28 dollars in Iceland, but it is only a small part of an Icelandic salary. | La comida también es más cara: una comida en un restaurante barato cuesta 10 dólares en México y 28 en Islandia, pero es solo una pequeña parte de un salario islandés. |
 | 7 | Now, Elizabeth will tell you about transport and safety. | Ahora Elizabeth les hablará de transporte y seguridad. |
 | 8 | *(Diapositiva 3)* **The main reason is** housing: rent is more expensive, but people can `afford` it, because it uses only 44 percent of the average `income` in Iceland and 86 percent in Mexico. | La razón principal es la vivienda: la renta es más cara, pero la gente puede pagarla porque usa solo el 44% del ingreso promedio en Islandia y el 86% en México. |
 
@@ -32,7 +32,7 @@ En la presentación animada, la tecla **N** (o el botón *Script*) muestra el gu
 |---|---|---|
 | 1 | Thank you, Areli. I am going to talk about transport and safety. | Gracias, Areli. Voy a hablar de transporte y seguridad. |
 | 2 | A monthly bus pass costs 25 dollars in Mexico, but it costs 90 dollars in Iceland. | Un pase mensual de autobús cuesta 25 dólares en México, pero 90 en Islandia. |
-| 3 | So, transport is ***much* more expensive** in Iceland, and Mexico wins here. | Así que el transporte es mucho más caro en Islandia, y aquí gana México. |
+| 3 | So, transport is ***much* more expensive** in Iceland, but Reykjavík is small, so you can walk or ride a bike to *many* places. | Así que el transporte es mucho más caro en Islandia, pero Reikiavik es pequeña, así que puedes caminar o ir en bici a muchos lugares. |
 | 4 | It is more expensive, but people can `afford` it because their `income` is **higher**. | Es más caro, pero la gente puede pagarlo porque su ingreso es más alto. |
 | 5 | In safety, Iceland wins: it is **the safest** country in the world, number 1, and Mexico is number 135. | En seguridad gana Islandia: es el país más seguro del mundo, el número 1, y México es el 135. |
 | 6 | **The main reason is** that there is very little crime, so people can leave their `possessions` in the car. | La razón principal es que hay muy poco crimen, así que la gente puede dejar sus pertenencias en el coche. |
