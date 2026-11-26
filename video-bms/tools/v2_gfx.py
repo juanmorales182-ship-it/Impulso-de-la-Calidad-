@@ -289,3 +289,71 @@ def task_icon_list():
                  f'<div style="position:absolute;left:24px;top:18px">{_ico(k, c, 64)}</div>'
                  f'<div style="position:absolute;left:112px;top:30px;font-size:32px;font-weight:600;color:#1E2833">{a}</div></div>')
     return html, ["tl.fromTo('#{gid} .tl0',{opacity:0,y:30},{opacity:1,y:0,duration:.5,ease:'expo.out'},{t}+.1);", _stagger(".tr", .9, .3, .45, "x:-30")]
+
+
+def page_sections():
+    """The process page as one scrolling card; each section is outlined and tagged where it lives
+    (1 Descripción, 2 Flujo, 3 Información crítica with its icons inside)."""
+    X, W = 100, 1044
+    s1 = W / 1893          # process-page scale (below native: sharp)
+    s2 = W / 1651          # diagram scale
+    hdr_h = round(215 * s1)
+    y_hdr = 90
+    y_desc = y_hdr + hdr_h + 14
+    h_desc = round(491 * s1)
+    y_flow = y_desc + h_desc + 24
+    h_flow = round(638 * s2)
+    y_info = y_flow + h_flow + 24
+    items = [("flame", "#F07A1A", "Riesgos y oportunidades"), ("list", "#1E2833", "Cláusulas IATF e ISO 45001"),
+             ("scope", RED, "Alcance del procedimiento"), ("list", "#5B6572", "Índice del procedimiento"),
+             ("user", "#1A6BD8", "Actividades y responsables"), ("doc", "#1A6BD8", "Documentos relacionados")]
+    h_info = 90 + 3 * 100
+    card_h = y_info + h_info + 30 - 70
+
+    def tag(n, ico, col, text, y):
+        return (f'<div class="ps-tag" id="ps-tag{n}" style="position:absolute;left:{X + 16}px;top:{y + 14}px;height:64px;padding:0 26px 0 12px;border-radius:32px;'
+                f'background:#1E2833;color:#fff;font-size:30px;font-weight:600;line-height:64px;white-space:nowrap;opacity:0;z-index:5;box-shadow:0 8px 20px rgba(0,0,0,.2)">'
+                f'<span style="display:inline-block;width:44px;height:44px;border-radius:22px;background:{RED};text-align:center;line-height:44px;font-weight:700;margin-right:12px;vertical-align:1px">{n}</span>'
+                f'<span style="display:inline-block;vertical-align:-12px;margin-right:12px">{_ico(ico, col, 40)}</span>{text}</div>')
+
+    def box(n, y, h):
+        return (f'<div id="ps-box{n}" style="position:absolute;left:{X - 8}px;top:{y - 8}px;width:{W + 16}px;height:{h + 16}px;'
+                f'border:4px solid {RED};border-radius:14px;opacity:0;z-index:4"></div>')
+
+    chips = ""
+    for i, (k, c, a) in enumerate(items):
+        col, row = i % 2, i // 2
+        cx, cy = X + 20 + col * 512, y_info + 90 + row * 100
+        chips += (f'<div class="ps-chip" style="position:absolute;left:{cx}px;top:{cy}px;width:492px;height:84px;border-radius:14px;background:#F7F8FA;opacity:0">'
+                  f'<div style="position:absolute;left:14px;top:12px">{_ico(k, c, 60)}</div>'
+                  f'<div style="position:absolute;left:90px;top:24px;font-size:28px;font-weight:600;color:#1E2833;white-space:nowrap">{a}</div></div>')
+
+    inner = (f'<div style="position:absolute;left:{X - 20}px;top:70px;width:{W + 40}px;height:{card_h}px;{CARD}"></div>'
+             f'<div style="position:absolute;left:{X}px;top:{y_hdr}px;width:{W}px;height:{hdr_h}px;overflow:hidden">'
+             f'<img src="assets/img/process-page.png" style="position:absolute;left:0;top:0;width:{W}px;height:{round(887 * s1)}px" alt=""></div>'
+             f'<div style="position:absolute;left:{X}px;top:{y_desc}px;width:{W}px;height:{h_desc}px;overflow:hidden">'
+             f'<img src="assets/img/process-page.png" style="position:absolute;left:0;top:{-round(232 * s1)}px;width:{W}px;height:{round(887 * s1)}px" alt=""></div>'
+             f'<div style="position:absolute;left:{X}px;top:{y_flow}px;width:{W}px;height:{h_flow}px;overflow:hidden">'
+             f'<img src="assets/img/process-diagram.png" style="position:absolute;left:0;top:0;width:{W}px;height:{h_flow}px" alt=""></div>'
+             f'<div style="position:absolute;left:{X}px;top:{y_info}px;width:{W}px;height:{h_info}px;border-radius:14px;background:#fff;border:2px solid #E5E7EB"></div>'
+             + chips
+             + box(1, y_desc, h_desc) + box(2, y_flow, h_flow) + box(3, y_info, h_info)
+             + tag(1, "doc", "#1A6BD8", "Descripción del proceso", y_desc)
+             + tag(2, "list", "#5B6572", "Flujo", y_flow)
+             + tag(3, "flame", "#F07A1A", "Información crítica", y_info))
+    scroll = max(0, y_info + h_info + 40 - 1060)
+    html = _bg() + f'<div class="ps-scroll" style="position:absolute;left:0;top:0;width:1244px;height:{card_h + 140}px">{inner}</div>'
+
+    def show(n, at):
+        return [f"tl.fromTo('#{{gid}} #ps-box{n}',{{opacity:0,scale:1.03}},{{opacity:1,scale:1,duration:.35,ease:'expo.out'}},{{t}}+{at});",
+                f"tl.fromTo('#{{gid}} #ps-tag{n}',{{opacity:0,x:-30}},{{opacity:1,x:0,duration:.45,ease:'expo.out'}},{{t}}+{at + .1:.2f});"]
+
+    def hide(n, at):
+        return [f"tl.to('#{{gid}} #ps-box{n}',{{opacity:0,duration:.2}},{{t}}+{at});"]
+
+    js = (["tl.fromTo('#{gid} .ps-scroll',{opacity:0,y:40},{opacity:1,y:0,duration:.5,ease:'expo.out'},{t}+.1);"]
+          + show(1, .7) + hide(1, 2.9) + show(2, 3.0) + hide(2, 5.2)
+          + [f"tl.to('#{{gid}} .ps-scroll',{{y:{-scroll},duration:1.0,ease:'power2.inOut'}},{{t}}+5.2);"]
+          + show(3, 6.2)
+          + ["tl.fromTo('#{gid} .ps-chip',{opacity:0,y:16},{opacity:1,y:0,duration:.4,stagger:.18,ease:'expo.out'},{t}+6.6);"])
+    return html, js

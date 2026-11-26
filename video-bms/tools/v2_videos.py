@@ -239,8 +239,8 @@ def ch_leer():
     c.unbox()
     c.hold()
 
-    c.step("Información clave", "Cada proceso tiene secciones: <b>riesgos y oportunidades</b>, cláusulas <b>IATF</b> e <b>ISO 45001</b>, alcance, actividades, responsables y documentos.")
-    gfx(c, G.info_grid6, 6.4)
+    c.step("Información clave", "Cada proceso se divide en: <b>1</b> descripción, <b>2</b> flujo y <b>3</b> información crítica, cada una con su ícono.")
+    gfx(c, G.page_sections, 10.6)
     c.hold()
 
     c.step("Sigue el flujo", "El diagrama muestra quién hace qué y en qué orden.")
@@ -363,13 +363,9 @@ def ch_g_explorar():
     c.cursor_off()
     c.hold()
 
-    c.step("Todo en secciones", "Descripción, flujo e <b>información crítica</b>: riesgos y oportunidades, cláusulas IATF e ISO 45001.")
+    c.step("Todo en secciones", "Cada proceso se divide en: <b>1</b> descripción, <b>2</b> flujo y <b>3</b> información crítica, cada una con su ícono.")
     c.show(PROC, cam=(1, None, 0))
-    c.wait(.4)
-    c.box((116, 232, 1731, 491))
-    c.loupe((130, 300, 760, 200), w=760, h=200, pos=(1020, 660), hold=2.4)
-    c.unbox()
-    gfx(c, G.info_grid6, 6.0)
+    gfx(c, G.page_sections, 10.6)
     c.hold()
 
     c.step("Íconos nuevos", "Cada tarea te lleva a procesos anteriores, transacciones <b>SAP</b>, documentos y normas.")
