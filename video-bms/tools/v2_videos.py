@@ -239,7 +239,7 @@ def ch_leer():
     c.unbox()
     c.hold()
 
-    c.step("Información clave", "Cada proceso se divide en: <b>1</b> descripción, <b>2</b> flujo y <b>3</b> información crítica.")
+    c.step("Información clave", "Cada proceso se divide en: <b>1</b> descripción, <b>2</b> flujo y <b>3</b> información crítica, cada una con su ícono.")
     gfx(c, G.page_sections, 10.6)
     c.hold()
 
@@ -367,7 +367,7 @@ def ch_g_explorar():
     c.cursor_off()
     c.hold()
 
-    c.step("Todo en secciones", "Cada proceso se divide en: <b>1</b> descripción, <b>2</b> flujo y <b>3</b> información crítica.")
+    c.step("Todo en secciones", "Cada proceso se divide en: <b>1</b> descripción, <b>2</b> flujo y <b>3</b> información crítica, cada una con su ícono.")
     c.show(PROC, cam=(1, None, 0))
     gfx(c, G.page_sections, 10.6)
     c.hold()

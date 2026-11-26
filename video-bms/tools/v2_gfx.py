@@ -441,3 +441,19 @@ def page_sections():
     html = _re.sub(r'<div style="position:absolute;left:14px;top:12px">.*?</div></div>(<div style="position:absolute;left:90px;top:24px;[^>]*>([^<]*)</div>)',
                    chip, html, flags=_re.S)
     return html, js
+
+
+def page_sections():
+    """Section icons back (as the approved version); risks and documents use the real Signavio icons."""
+    import re as _re
+    html, js = _page_sections_v1()
+    repl = {"Riesgos y oportunidades": real_icon("riesgo", 58), "Documentos relacionados": real_icon("documento", 58)}
+
+    def chip(m):
+        label = m.group(2)
+        if label in repl:
+            return f'<div style="position:absolute;left:14px;top:13px">{repl[label]}</div>' + m.group(1)
+        return m.group(0)
+    html = _re.sub(r'<div style="position:absolute;left:14px;top:12px">(?:(?!<div class="ps-chip").)*?</div></div>(<div style="position:absolute;left:90px;top:24px;[^>]*>([^<]*)</div>)',
+                   chip, html, flags=_re.S)
+    return html, js
